@@ -1,0 +1,5 @@
+describe('GameEngine', () => {
+    describe('getState', () => {
+
+    })
+});
