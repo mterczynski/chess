@@ -4,5 +4,5 @@ import { Rank } from "./Rank";
 
 export interface Position {
     file: ChessFile;
-    row: Rank;
+    rank: Rank;
 }
