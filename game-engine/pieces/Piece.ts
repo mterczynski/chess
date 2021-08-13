@@ -5,4 +5,4 @@ import { Pawn } from "./Pawn";
 import { Queen } from "./Queen";
 import { Rook } from "./Rook";
 
-export type Figure = King | Queen | Rook | Bishop | Knight | Pawn;
+export type Piece = King | Queen | Rook | Bishop | Knight | Pawn;

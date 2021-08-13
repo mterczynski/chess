@@ -1,9 +1,9 @@
 import { Player } from "../Player";
 import { Position } from "../positions";
-import { FigureType } from "./FigureType";
+import { PieceType } from "./PieceType";
 
-export interface FigureBase {
-    type: FigureType,
+export interface PieceBase {
+    type: PieceType,
     player: Player,
     position: Position
 }

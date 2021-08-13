@@ -1,4 +1,4 @@
-export enum FigureType {
+export enum PieceType {
     KING = 'K',
     QUEEN = 'Q',
     ROOK = 'R',

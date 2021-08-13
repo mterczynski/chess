@@ -2,14 +2,14 @@
 
 This document discusses different approaches for storing information about board.
 
-1. Two-dimensional array of squares, where empty squares are represented by nulls, squares with figures are represented by `{type, player}` objects 
+1. Two-dimensional array of squares, where empty squares are represented by nulls, squares with pieces are represented by `{type, player}` objects 
     (rooks and kings will also have an additional property called `hasMoved`, which is used for castling mechanics purposes)
 
     Pros:
-      + faster reading (if we want to check what is on A4, we would do `board[4][0]`, in the second approach we would potentially have to check 32 items in the array (if figures wouldn't be sorted))
+      + faster reading (if we want to check what is on A4, we would do `board[4][0]`, in the second approach we would potentially have to check 32 items in the array (if pieces wouldn't be sorted))
       + (very minor) easier to implement algorithm for displaying board in CLI    
 
-2. One-dimensional array of figures, where each figure has additional information about position in `{rank, file}` format
+2. One-dimensional array of pieces, where each piece has additional information about position in `{rank, file}` format
 
     Pros:
       + easier to understand by devs - each position is described in properties (rank and file) instead of indexes

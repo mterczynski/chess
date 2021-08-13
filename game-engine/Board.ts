@@ -1,6 +1,6 @@
-import { Figure } from "./figures/Figure";
+import { Piece } from "./pieces/Piece";
 import { ChessFile } from "./positions";
 
 export type Board = {
-    [File in ChessFile]: (Figure | null)[];
+    [File in ChessFile]: (Piece | null)[];
 };
