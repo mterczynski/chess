@@ -1,9 +1,8 @@
-import { Player } from "../Player";
-import { Position } from "../positions";
-import { FigureType } from "./FigureType";
+import { Bishop } from "./Bishop";
+import { King } from "./King";
+import { Knight } from "./Knight";
+import { Pawn } from "./Pawn";
+import { Queen } from "./Queen";
+import { Rook } from "./Rook";
 
-export interface Figure {
-    type: FigureType,
-    player: Player,
-    position: Position
-}
+export type Figure = King | Queen | Rook | Bishop | Knight | Pawn;

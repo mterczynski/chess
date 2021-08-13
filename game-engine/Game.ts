@@ -1,23 +1,21 @@
-import { Figure } from "./figures";
+import { Board } from "./Board";
 import { GameState } from "./GameState";
 import { Move } from "./Move";
 import { Player } from "./Player";
+import { ChessFile } from "./positions";
 
 export class Game {
     private state: GameState = GameState.UNSTARTED;
     private currentPlayer: Player = Player.WHITE;
-    /** Array of ranks, each rank is an array representing each square in rank,
-     *  first rank in the board array is the 8th rank, the last one is the 1st rank.
-     *  In each rank, the first item represents square on A file, the last item represents square on H file
-     * Reference image: https://upload.wikimedia.org/wikipedia/commons/2/2c/AAA_SVG_Chessboard_and_chess_pieces_02.svg
-     */
-    private board: Figure[][] = this.createBoard();
+    private hasWhiteCastled = false;
+    private hasBlackCastled = false;
+    private board: Board = this.createBoard();
 
-    getState() {
+    getState(): GameState {
         return this.state;
     }
 
-    move(move: Move) {
+    move(move: Move): void {
         if(this.isValidMove(move)) {
             this.makeMove(move);
             this.changePlayer();
@@ -26,7 +24,6 @@ export class Game {
         }
     }
 
-    /** null will be returned if the getter is called after the end of the game */
     getCurrentPlayer(): Player | null {
         if(this.isGameOver()) {
             return null;
@@ -56,9 +53,16 @@ export class Game {
         // todo
     }
 
-    private createBoard(): Figure[][] {
-        return [
-            [{player: Player.BLACK, }]
-        ];
+    private createBoard(): Board {
+        return {
+            [ChessFile.A]: [],
+            [ChessFile.B]: [],
+            [ChessFile.C]: [],
+            [ChessFile.D]: [],
+            [ChessFile.E]: [],
+            [ChessFile.F]: [],
+            [ChessFile.G]: [],
+            [ChessFile.H]: [],
+        }
     }
 }

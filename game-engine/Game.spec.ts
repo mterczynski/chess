@@ -1,6 +1,7 @@
 import { Game } from "./Game";
 import { GameState } from "./GameState";
 import { Player } from "./Player";
+import { ChessFile } from "./positions";
 
 describe('Game', () => {
     let game: Game;
@@ -23,26 +24,30 @@ describe('Game', () => {
         it('returns Player.BLACK after making a move, then WHITE after making another move', () => {
             game.move({
                 from: {
-                    file: "E",
+                    file: ChessFile.E,
                     rank: 2,
                 },
                 to: {
-                    file: "E",
+                    file: ChessFile.E,
                     rank: 4,
                 },
             });
             expect(game.getCurrentPlayer()).toBe(Player.BLACK);
             game.move({
                 from: {
-                    file: "E",
+                    file: ChessFile.E,
                     rank: 7,
                 },
                 to: {
-                    file: "E",
+                    file: ChessFile.E,
                     rank: 5,
                 },
             });
             expect(game.getCurrentPlayer()).toBe(Player.WHITE);
+        });
+
+        it('returns null after game is finished', () => {
+            // null
         });
     });
 
@@ -50,11 +55,11 @@ describe('Game', () => {
         it('throws an error if invalid move was passed', () => {
             game.move({
                 from: {
-                    file: "A",
+                    file: ChessFile.A,
                     rank: 1,
                 },
                 to: {
-                    file: "A",
+                    file: ChessFile.A,
                     rank: 2,
                 },
             });
