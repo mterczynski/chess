@@ -1,4 +1,8 @@
 {
-  "recommendations": ["EditorConfig.EditorConfig"],
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "firsttris.vscode-jest-runner",
+    "orta.vscode-jest"
+  ],
   "unwantedRecommendations": []
 }

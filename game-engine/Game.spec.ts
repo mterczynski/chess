@@ -1,5 +1,7 @@
 import { Game } from "./Game";
 import { GameState } from "./GameState";
+import { mapIndexToChessFile } from "./mapIndexToChessFile";
+import { Move } from "./Move";
 import { Player } from "./Player";
 import { ChessFile } from "./positions";
 
@@ -47,24 +49,85 @@ describe('Game', () => {
         });
 
         it('returns null after game is finished', () => {
-            // null
+            // todo
         });
     });
 
     describe('move', () => {
         it('throws an error if invalid move was passed', () => {
-            game.move({
-                from: {
-                    file: ChessFile.A,
-                    rank: 1,
-                },
-                to: {
-                    file: ChessFile.A,
-                    rank: 2,
-                },
-            });
-
-            expect(game.move).toThrow('Invalid move');
+            expect(() => {
+                game.move({
+                    from: {
+                        file: ChessFile.A,
+                        rank: 1,
+                    },
+                    to: {
+                        file: ChessFile.A,
+                        rank: 2,
+                    },
+                })
+            }).toThrow('Invalid move');
         });
     });
+
+    describe('getBoard', () => {
+        it('returns starting board when called on new game', () => {
+            const board = game.getBoard();
+
+            expect(board).toMatchSnapshot();
+        });
+
+        it('returns correct board after first move', () => {
+            const board = game.getBoard();
+
+            game.move({
+                from: {
+                    file: ChessFile.E,
+                    rank: 2
+                },
+                to: {
+                    file: ChessFile.E,
+                    rank: 4
+                },
+            })
+
+            expect(board).toMatchSnapshot();
+        });
+    });
+
+    // describe('getAvailableMovesForPiece', () => {
+    //     it('should work for E pawn in new game', () => {
+    //     });
+    // })
+
+
+    // describe('getAvailableMoves', () => {
+    //     it('returns correct moves when called in new game', () => {
+    //         const pawnMoves: Move[] = Array(Game.boardSize).fill(null).flatMap((_, index) => {
+    //             const file = mapIndexToChessFile(index);
+    //             return [
+    //                 {from: {file: file, rank: 2}, to: {file: file, rank: 3}},
+    //                 {from: {file: file, rank: 2}, to: {file: file, rank: 4}}
+    //             ]
+    //         });
+
+    //         const knightMoves: Move[] = [
+    //             {from: {file: ChessFile.B, rank: 1}, to: {file: ChessFile.A, rank: 3}},
+    //             {from: {file: ChessFile.B, rank: 1}, to: {file: ChessFile.C, rank: 3}},
+    //             {from: {file: ChessFile.G, rank: 1}, to: {file: ChessFile.F, rank: 3}},
+    //             {from: {file: ChessFile.G, rank: 1}, to: {file: ChessFile.H, rank: 3}},
+    //         ]
+
+    //         const expectedMoves: Move[] = [
+    //             ...pawnMoves,
+    //             ...knightMoves,
+    //         ];
+
+    //         const result = game.getAvailableMovesForPlayer();
+
+    //         expect(result).toEqual(expect.arrayContaining(expectedMoves));
+    //         expect(result.length).toEqual(expectedMoves.length);
+    //     });
+    // });
+
 });

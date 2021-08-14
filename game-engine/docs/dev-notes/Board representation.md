@@ -13,6 +13,7 @@ This document discusses different approaches for storing information about board
 
     Pros:
       + easier to understand by devs - each position is described in properties (rank and file) instead of indexes
+      + faster to get all player figures
 
 ### Note on the first appraoch
   The first approach can be modified a bit to be more human friendly by changing the board array to an object, where each key is a file name and each value assigned to that key is an array of squares in that file.

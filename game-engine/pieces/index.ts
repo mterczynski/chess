@@ -6,3 +6,4 @@ export * from './Bishop';
 export * from './Rook';
 export * from './Queen';
 export * from './King';
+export * from './PieceWithPosition';
