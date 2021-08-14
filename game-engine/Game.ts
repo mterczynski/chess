@@ -2,10 +2,10 @@ import _ from "lodash";
 import { AvailableMoveCalculator } from "./availableMovesCalculation";
 import { Board } from "./Board";
 import { isCastleablePiece } from "./castling";
+import { createNewBoard } from "./createNewBoard";
 import { GameState } from "./GameState";
 import { Move } from "./Move";
-import { Piece, PieceType, PieceWithPosition } from "./pieces";
-import { PieceFactory } from "./pieces/PieceFactory";
+import { Piece, PieceWithPosition } from "./pieces";
 import { Player } from "./Player";
 import { ChessFile } from "./positions";
 
@@ -13,11 +13,10 @@ export class Game {
     static readonly boardSize = 8;
     private state: GameState = GameState.UNSTARTED;
     private currentPlayer: Player = Player.WHITE;
-    private board: Board = this.createBoard();
+    private board: Board = createNewBoard();
     private lastMove: Move | null = null;
 
     constructor(
-        private readonly pieceFactory: PieceFactory = new PieceFactory(),
         private readonly availableMoveCalculator: AvailableMoveCalculator = new AvailableMoveCalculator(),
     ) {}
 
@@ -99,33 +98,6 @@ export class Game {
 
         if(isCastleablePiece(piece)) {
             piece.hasMoved = true;
-        }
-    }
-
-    private createBoard(): Board {
-        const createSymetricalFile = (pieceType: PieceType): (Piece | null)[] => {
-            return [
-                null,
-                this.pieceFactory.createPiece(pieceType, Player.WHITE),
-                this.pieceFactory.createPiece(PieceType.PAWN, Player.WHITE),
-                null,
-                null,
-                null,
-                null,
-                this.pieceFactory.createPiece(PieceType.PAWN, Player.BLACK),
-                this.pieceFactory.createPiece(pieceType, Player.BLACK)
-            ]
-        }
-
-        return {
-            [ChessFile.A]: createSymetricalFile(PieceType.ROOK),
-            [ChessFile.B]: createSymetricalFile(PieceType.KNIGHT),
-            [ChessFile.C]: createSymetricalFile(PieceType.BISHOP),
-            [ChessFile.D]: createSymetricalFile(PieceType.QUEEN),
-            [ChessFile.E]: createSymetricalFile(PieceType.KING),
-            [ChessFile.F]: createSymetricalFile(PieceType.BISHOP),
-            [ChessFile.G]: createSymetricalFile(PieceType.KNIGHT),
-            [ChessFile.H]: createSymetricalFile(PieceType.ROOK),
         }
     }
 }

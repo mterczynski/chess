@@ -1,5 +1,5 @@
-import { Game } from "..";
 import { Board } from "../Board";
+import { createNewBoard } from "../createNewBoard";
 import { Move } from "../Move";
 import { Pawn, PieceType } from "../pieces";
 import { Player } from "../Player";
@@ -16,7 +16,7 @@ describe('PawnMoveCalculator', () => {
     describe('getAvailableMovesForPawn', () => {
         describe('returns single and double non-attacking moves up if available', () => {
             test('for black', () => {
-                const board: Board = new Game().getBoard();
+                const board: Board = createNewBoard();
                 const lastMove: Move = {
                     from: {file: ChessFile.H, rank: 2},
                     to: {file: ChessFile.H, rank: 3},
@@ -57,7 +57,7 @@ describe('PawnMoveCalculator', () => {
             });
 
             test('for white', () => {
-                const board: Board = new Game().getBoard();
+                const board: Board = createNewBoard();
                 const pawnPosition = {
                     file: ChessFile.E,
                     rank: 2 as Rank,
@@ -94,7 +94,7 @@ describe('PawnMoveCalculator', () => {
 
         describe('includes possible attacking moves (no en passant scenarios)', () => {
             test('for black', () => {
-                const board = new Game().getBoard();
+                const board = createNewBoard();
                 const pawnPosition = {
                     file: ChessFile.B,
                     rank: 7 as Rank,
@@ -141,7 +141,7 @@ describe('PawnMoveCalculator', () => {
             });
 
             test('for white', () => {
-                const board = new Game().getBoard();
+                const board = createNewBoard();
                 const pawnPosition = {
                     file: ChessFile.B,
                     rank: 2 as Rank,
@@ -190,7 +190,7 @@ describe('PawnMoveCalculator', () => {
 
         describe('includes possible en passant moves', () => {
             test('for black', () => {
-                const board = new Game().getBoard();
+                const board = createNewBoard();
                 const blackPawnPosition = {
                     file: ChessFile.B,
                     rank: 4 as Rank,
@@ -234,7 +234,7 @@ describe('PawnMoveCalculator', () => {
             });
 
             test('for white', () => {
-                const board = new Game().getBoard();
+                const board = createNewBoard();
                 const whitePawnPosition = {
                     file: ChessFile.B,
                     rank: 5 as Rank,
