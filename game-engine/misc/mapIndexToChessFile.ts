@@ -1,5 +1,5 @@
-import { Game } from "./Game";
-import { ChessFile } from "./positions"
+import { Game } from "..";
+import { ChessFile } from "../positions";
 
 export const mapIndexToChessFile = (index: number): ChessFile => {
     if(index < 0 || index > Game.boardSize - 1) {

@@ -1,7 +1,5 @@
 import { Game } from "./Game";
 import { GameState } from "./GameState";
-import { mapIndexToChessFile } from "./mapIndexToChessFile";
-import { Move } from "./Move";
 import { Player } from "./Player";
 import { ChessFile } from "./positions";
 

@@ -1,4 +1,4 @@
-import { ChessFile } from "./positions";
+import { ChessFile } from "../positions";
 
 export function addToFile(file: ChessFile, filesToAdd: number): ChessFile | null {
     if(!Number.isInteger(filesToAdd)) {

@@ -32,7 +32,6 @@ describe('PawnMoveCalculator', () => {
                     position: pawnPosition,
                     type: PieceType.PAWN,
                 };
-                const currentPlayer = Player.BLACK;
                 const expectedMoves: Move[] = [
                     {
                         from: pawnPosition,
@@ -50,7 +49,7 @@ describe('PawnMoveCalculator', () => {
                     }
                 ];
 
-                const result = calculator.getAvailableMovesForPawn(pawn, board, currentPlayer, lastMove);
+                const result = calculator.getAvailableMovesForPawn(pawn, board, lastMove);
 
                 expect(result).toEqual(expect.arrayContaining(expectedMoves));
                 expect(result.length).toEqual(expectedMoves.length);
@@ -67,7 +66,6 @@ describe('PawnMoveCalculator', () => {
                     position: pawnPosition,
                     type: PieceType.PAWN,
                 };
-                const currentPlayer = Player.WHITE;
                 const expectedMoves: Move[] = [
                     {
                         from: pawnPosition,
@@ -85,7 +83,7 @@ describe('PawnMoveCalculator', () => {
                     }
                 ];
 
-                const result = calculator.getAvailableMovesForPawn(pawn, board, currentPlayer, null);
+                const result = calculator.getAvailableMovesForPawn(pawn, board, null);
 
                 expect(result).toEqual(expect.arrayContaining(expectedMoves));
                 expect(result.length).toEqual(expectedMoves.length);
@@ -104,7 +102,6 @@ describe('PawnMoveCalculator', () => {
                     position: pawnPosition,
                     type: PieceType.PAWN,
                 };
-                const currentPlayer = Player.BLACK;
                 board[ChessFile.A][6] = {
                     player: Player.WHITE,
                     type: PieceType.KNIGHT,
@@ -134,7 +131,7 @@ describe('PawnMoveCalculator', () => {
                     }
                 ];
 
-                const result = calculator.getAvailableMovesForPawn(pawn, board, currentPlayer, lastMove);
+                const result = calculator.getAvailableMovesForPawn(pawn, board, lastMove);
 
                 expect(result).toEqual(expect.arrayContaining(expectedAttackingMoves));
                 expect(result.length).toEqual(4);
@@ -151,7 +148,6 @@ describe('PawnMoveCalculator', () => {
                     position: pawnPosition,
                     type: PieceType.PAWN,
                 };
-                const currentPlayer = Player.WHITE;
                 board[ChessFile.A][3] = {
                     player: Player.BLACK,
                     type: PieceType.KNIGHT,
@@ -181,7 +177,7 @@ describe('PawnMoveCalculator', () => {
                     }
                 ];
 
-                const result = calculator.getAvailableMovesForPawn(pawn, board, currentPlayer, lastMove);
+                const result = calculator.getAvailableMovesForPawn(pawn, board, lastMove);
 
                 expect(result).toEqual(expect.arrayContaining(expectedAttackingMoves));
                 expect(result.length).toEqual(4);
@@ -209,7 +205,6 @@ describe('PawnMoveCalculator', () => {
                     position: blackPawnPosition,
                     type: PieceType.PAWN,
                 };
-                const currentPlayer = Player.BLACK;
                 const enPassantMove: Move = {
                     from: blackPawnPosition,
                     to: {
@@ -227,7 +222,7 @@ describe('PawnMoveCalculator', () => {
                         rank: 4
                     }
                 };
-                const result = calculator.getAvailableMovesForPawn(blackPawn, board, currentPlayer, lastMove);
+                const result = calculator.getAvailableMovesForPawn(blackPawn, board, lastMove);
 
                 expect(result).toEqual(expect.arrayContaining([enPassantMove]));
                 expect(result.length).toEqual(2);
@@ -253,7 +248,6 @@ describe('PawnMoveCalculator', () => {
                     position: whitePawnPosition,
                     type: PieceType.PAWN,
                 };
-                const currentPlayer = Player.WHITE;
                 const enPassantMove: Move = {
                     from: whitePawnPosition,
                     to: {
@@ -271,7 +265,7 @@ describe('PawnMoveCalculator', () => {
                         rank: 5
                     }
                 };
-                const result = calculator.getAvailableMovesForPawn(whitePawn, board, currentPlayer, lastMove);
+                const result = calculator.getAvailableMovesForPawn(whitePawn, board, lastMove);
 
                 expect(result).toEqual(expect.arrayContaining([enPassantMove]));
                 expect(result.length).toEqual(2);

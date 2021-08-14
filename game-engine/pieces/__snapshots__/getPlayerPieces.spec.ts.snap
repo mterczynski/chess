@@ -1,0 +1,273 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getPlayerPieces matches snapshot for new board, for black 1`] = `
+Array [
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "A",
+      "rank": 7,
+    },
+    "type": "P",
+  },
+  Object {
+    "hasMoved": false,
+    "player": "BLACK",
+    "position": Object {
+      "file": "A",
+      "rank": 8,
+    },
+    "type": "R",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "B",
+      "rank": 7,
+    },
+    "type": "P",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "B",
+      "rank": 8,
+    },
+    "type": "N",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "C",
+      "rank": 7,
+    },
+    "type": "P",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "C",
+      "rank": 8,
+    },
+    "type": "B",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "D",
+      "rank": 7,
+    },
+    "type": "P",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "D",
+      "rank": 8,
+    },
+    "type": "Q",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "E",
+      "rank": 7,
+    },
+    "type": "P",
+  },
+  Object {
+    "hasMoved": false,
+    "player": "BLACK",
+    "position": Object {
+      "file": "E",
+      "rank": 8,
+    },
+    "type": "K",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "F",
+      "rank": 7,
+    },
+    "type": "P",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "F",
+      "rank": 8,
+    },
+    "type": "B",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "G",
+      "rank": 7,
+    },
+    "type": "P",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "G",
+      "rank": 8,
+    },
+    "type": "N",
+  },
+  Object {
+    "player": "BLACK",
+    "position": Object {
+      "file": "H",
+      "rank": 7,
+    },
+    "type": "P",
+  },
+  Object {
+    "hasMoved": false,
+    "player": "BLACK",
+    "position": Object {
+      "file": "H",
+      "rank": 8,
+    },
+    "type": "R",
+  },
+]
+`;
+
+exports[`getPlayerPieces matches snapshot for new board, for white 1`] = `
+Array [
+  Object {
+    "hasMoved": false,
+    "player": "WHITE",
+    "position": Object {
+      "file": "A",
+      "rank": 1,
+    },
+    "type": "R",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "A",
+      "rank": 2,
+    },
+    "type": "P",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "B",
+      "rank": 1,
+    },
+    "type": "N",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "B",
+      "rank": 2,
+    },
+    "type": "P",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "C",
+      "rank": 1,
+    },
+    "type": "B",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "C",
+      "rank": 2,
+    },
+    "type": "P",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "D",
+      "rank": 1,
+    },
+    "type": "Q",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "D",
+      "rank": 2,
+    },
+    "type": "P",
+  },
+  Object {
+    "hasMoved": false,
+    "player": "WHITE",
+    "position": Object {
+      "file": "E",
+      "rank": 1,
+    },
+    "type": "K",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "E",
+      "rank": 2,
+    },
+    "type": "P",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "F",
+      "rank": 1,
+    },
+    "type": "B",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "F",
+      "rank": 2,
+    },
+    "type": "P",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "G",
+      "rank": 1,
+    },
+    "type": "N",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "G",
+      "rank": 2,
+    },
+    "type": "P",
+  },
+  Object {
+    "hasMoved": false,
+    "player": "WHITE",
+    "position": Object {
+      "file": "H",
+      "rank": 1,
+    },
+    "type": "R",
+  },
+  Object {
+    "player": "WHITE",
+    "position": Object {
+      "file": "H",
+      "rank": 2,
+    },
+    "type": "P",
+  },
+]
+`;

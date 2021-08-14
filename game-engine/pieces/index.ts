@@ -7,3 +7,4 @@ export * from './Rook';
 export * from './Queen';
 export * from './King';
 export * from './PieceWithPosition';
+export * from './getPlayerPieces';

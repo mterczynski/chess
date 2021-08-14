@@ -5,9 +5,8 @@ import { isCastleablePiece } from "./castling";
 import { createNewBoard } from "./createNewBoard";
 import { GameState } from "./GameState";
 import { Move } from "./Move";
-import { Piece, PieceWithPosition } from "./pieces";
+import { Piece } from "./pieces";
 import { Player } from "./Player";
-import { ChessFile } from "./positions";
 
 export class Game {
     static readonly boardSize = 8;
@@ -39,9 +38,7 @@ export class Game {
     }
 
     getAvailableMovesForPlayer(): Move[] {
-        const currentPlayerPieces = this.getCurrentPlayerPieces();
-
-        return currentPlayerPieces.flatMap(piece => this.availableMoveCalculator.getAvailableMovesForPiece(piece, this.board, this.currentPlayer, this.lastMove));
+        return this.availableMoveCalculator.getAvailableMovesForPlayer(this.board, this.currentPlayer, this.lastMove);
     }
 
     getCurrentPlayer(): Player | null {
@@ -50,20 +47,6 @@ export class Game {
         }
 
         return this.currentPlayer;
-    }
-
-    private getCurrentPlayerPieces(): PieceWithPosition[] {
-        const pieces = Object.entries(this.board).flatMap(([fileName, fileContent]) => {
-            return fileContent.map((piece, rank) => (piece === null ? null : {
-                ...piece,
-                position: {
-                    file: fileName as ChessFile,
-                    rank,
-                }
-            })).filter((square): square is PieceWithPosition => !!square)
-        });
-
-        return pieces.filter(piece => piece!.player === this.currentPlayer);
     }
 
     private changePlayer(): void {
