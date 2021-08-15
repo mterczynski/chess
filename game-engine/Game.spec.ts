@@ -93,12 +93,6 @@ describe('Game', () => {
         });
     });
 
-    // describe('getAvailableMovesForPiece', () => {
-    //     it('should work for E pawn in new game', () => {
-    //     });
-    // })
-
-
     // describe('getAvailableMoves', () => {
     //     it('returns correct moves when called in new game', () => {
     //         const pawnMoves: Move[] = Array(Game.boardSize).fill(null).flatMap((_, index) => {

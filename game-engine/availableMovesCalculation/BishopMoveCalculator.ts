@@ -4,14 +4,15 @@ import { Move } from "../Move";
 import { Bishop } from "../pieces";
 import { Player } from "../Player";
 import { Position } from "../positions";
+import { MoveCalculator } from "./MoveCalculator";
 
 interface Diagonal {
     fileIncrement: number,
     rankIncrement: number,
 }
 
-export class BishopMoveCalculator {
-    getAvailableMovesForBishop(bishop: Bishop & {position: Position}, board: Board) {
+export class BishopMoveCalculator implements MoveCalculator {
+    getAvailableMovesForPieceIgnoringKingSafety(bishop: Bishop & {position: Position}, board: Board) {
         const diagonals: Diagonal[] = [
             {fileIncrement: -1,  rankIncrement: -1},
             {fileIncrement: -1,  rankIncrement: 1},
@@ -54,3 +55,5 @@ export class BishopMoveCalculator {
         return availableMoves;
     }
 }
+
+

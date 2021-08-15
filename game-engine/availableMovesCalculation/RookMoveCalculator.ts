@@ -10,7 +10,7 @@ interface Line {
 }
 
 export class RookMoveCalculator {
-    getAvailableMovesForRook(rook: Rook & {position: Position}, board: Board): Move[] {
+    getAvailableMovesForPieceIgnoringKingSafety(rook: Rook & {position: Position}, board: Board): Move[] {
         const lines: Line[] = [
             {fileIncrement: -1,  rankIncrement: 0}, // left
             {fileIncrement: 1,  rankIncrement: 0}, // right

@@ -4,7 +4,7 @@ import { Queen } from "../pieces";
 import { Position } from "../positions";
 
 export class QueenMoveCalculator {
-    getAvailableMovesForQueen(queen: Queen & {position: Position}, board: Board): Move[] {
+    getAvailableMovesForPieceIgnoringKingSafety(queen: Queen & {position: Position}, board: Board): Move[] {
         // todo
         return [];
     }

@@ -12,7 +12,7 @@ describe('RookMoveCalculator', () => {
         calculator = new RookMoveCalculator();
     });
 
-    describe('getAvailableMovesForRook', () => {
+    describe('getAvailableMovesForPieceIgnoringKingSafety', () => {
         it('should get available moves for rook', () => {
             const board = getEmptyBoard();
             board[ChessFile.D][6] = {player: Player.WHITE, type: PieceType.QUEEN};
@@ -48,7 +48,7 @@ describe('RookMoveCalculator', () => {
 
             ];
 
-            const result = calculator.getAvailableMovesForRook(rook, board);
+            const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(rook, board);
             expect(result).toEqual(expect.arrayContaining(expectedMoves));
             expect(result.length).toEqual(expectedMoves.length);
         });

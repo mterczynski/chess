@@ -5,10 +5,11 @@ import { Move } from "../Move";
 import { Pawn, Piece, PieceType } from "../pieces";
 import { Player } from "../Player";
 import { ChessFile, Position, Rank } from "../positions";
+import { MoveCalculator } from "./MoveCalculator";
 
-export class PawnMoveCalculator {
+export class PawnMoveCalculator implements MoveCalculator {
     /** lastMove can be null only before white has made the first move */
-    getAvailableMovesForPawn(pawn: Pawn & {position: Position}, board: Board, lastMove: Move | null): Move[] {
+    getAvailableMovesForPieceIgnoringKingSafety(pawn: Pawn & {position: Position}, board: Board, lastMove: Move | null): Move[] {
         const availableMoves: Move[] = [
             ...this.getForwardMoves(pawn, board),
             ...this.getEnPassantMoves(pawn, board, lastMove),

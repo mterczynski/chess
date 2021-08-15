@@ -6,7 +6,7 @@ import { Player } from "../Player";
 import { Position } from "../positions";
 
 export class KnightMoveCalculator {
-    getAvailableMovesForKnight(knight: Knight & {position: Position}, board: Board): Move[] {
+    getAvailableMovesForPieceIgnoringKingSafety(knight: Knight & {position: Position}, board: Board): Move[] {
         const allMoves = [
             {from: knight.position, to: {file: addToFile(knight.position.file, -2), rank: addToRank(knight.position.rank, -1)}},
             {from: knight.position, to: {file: addToFile(knight.position.file, -2), rank: addToRank(knight.position.rank, 1)}},

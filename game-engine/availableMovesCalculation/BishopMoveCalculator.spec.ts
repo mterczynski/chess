@@ -13,7 +13,7 @@ describe('BishopMoveCalculator', () => {
         calculator = new BishopMoveCalculator();
     });
 
-    describe('getAvailableMovesForBishop', () => {
+    describe('getAvailableMovesForPieceIgnoringKingSafety', () => {
         describe('returns all attacking and non attacking moves', () => {
             test('for white', () => {
                 const board = getEmptyBoard();
@@ -33,7 +33,7 @@ describe('BishopMoveCalculator', () => {
                 // queen hidden by F2 queen, cannot be attacked
                 board[ChessFile.G][1] = {player: Player.BLACK, type: PieceType.QUEEN};
 
-                const result = calculator.getAvailableMovesForBishop(bishop, board);
+                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(bishop, board);
 
                 const expectedMoves: Move[] = [
                     // top left diagonal

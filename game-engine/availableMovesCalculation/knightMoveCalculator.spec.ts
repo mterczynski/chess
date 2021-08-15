@@ -12,7 +12,7 @@ describe('KnightMoveCalculator', () => {
         calculator = new KnightMoveCalculator();
     });
 
-    describe('getAvailableMovesForKnight', () => {
+    describe('getAvailableMovesForPieceIgnoringKingSafety', () => {
         describe('returns all attacking and non attacking moves', () => {
             test('for white', () => {
                 const board = getEmptyBoard();
@@ -28,7 +28,7 @@ describe('KnightMoveCalculator', () => {
                 board[ChessFile.D][8] = {player: Player.BLACK, type: PieceType.QUEEN};
                 board[ChessFile.D][6] = {player: Player.WHITE, type: PieceType.ROOK, hasMoved: true};
 
-                const result = calculator.getAvailableMovesForKnight(knight, board);
+                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(knight, board);
 
                 expect(result).toEqual(expect.arrayContaining([
                     {from: knight.position, to: {file: ChessFile.A, rank: 5}},
@@ -52,7 +52,7 @@ describe('KnightMoveCalculator', () => {
                 board[ChessFile.D][8] = {player: Player.WHITE, type: PieceType.QUEEN};
                 board[ChessFile.D][6] = {player: Player.BLACK, type: PieceType.ROOK, hasMoved: true};
 
-                const result = calculator.getAvailableMovesForKnight(knight, board);
+                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(knight, board);
 
                 expect(result).toEqual(expect.arrayContaining([
                     {from: knight.position, to: {file: ChessFile.A, rank: 5}},

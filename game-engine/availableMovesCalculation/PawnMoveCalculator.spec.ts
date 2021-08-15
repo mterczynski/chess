@@ -13,7 +13,7 @@ describe('PawnMoveCalculator', () => {
         calculator = new PawnMoveCalculator();
     })
 
-    describe('getAvailableMovesForPawn', () => {
+    describe('getAvailableMovesForPieceIgnoringKingSafety', () => {
         describe('returns single and double non-attacking moves up if available', () => {
             test('for black', () => {
                 const board: Board = createNewBoard();
@@ -49,7 +49,7 @@ describe('PawnMoveCalculator', () => {
                     }
                 ];
 
-                const result = calculator.getAvailableMovesForPawn(pawn, board, lastMove);
+                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, lastMove);
 
                 expect(result).toEqual(expect.arrayContaining(expectedMoves));
                 expect(result.length).toEqual(expectedMoves.length);
@@ -83,7 +83,7 @@ describe('PawnMoveCalculator', () => {
                     }
                 ];
 
-                const result = calculator.getAvailableMovesForPawn(pawn, board, null);
+                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, null);
 
                 expect(result).toEqual(expect.arrayContaining(expectedMoves));
                 expect(result.length).toEqual(expectedMoves.length);
@@ -131,7 +131,7 @@ describe('PawnMoveCalculator', () => {
                     }
                 ];
 
-                const result = calculator.getAvailableMovesForPawn(pawn, board, lastMove);
+                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, lastMove);
 
                 expect(result).toEqual(expect.arrayContaining(expectedAttackingMoves));
                 expect(result.length).toEqual(4);
@@ -177,7 +177,7 @@ describe('PawnMoveCalculator', () => {
                     }
                 ];
 
-                const result = calculator.getAvailableMovesForPawn(pawn, board, lastMove);
+                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, lastMove);
 
                 expect(result).toEqual(expect.arrayContaining(expectedAttackingMoves));
                 expect(result.length).toEqual(4);
@@ -222,7 +222,7 @@ describe('PawnMoveCalculator', () => {
                         rank: 4
                     }
                 };
-                const result = calculator.getAvailableMovesForPawn(blackPawn, board, lastMove);
+                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(blackPawn, board, lastMove);
 
                 expect(result).toEqual(expect.arrayContaining([enPassantMove]));
                 expect(result.length).toEqual(2);
@@ -265,7 +265,7 @@ describe('PawnMoveCalculator', () => {
                         rank: 5
                     }
                 };
-                const result = calculator.getAvailableMovesForPawn(whitePawn, board, lastMove);
+                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(whitePawn, board, lastMove);
 
                 expect(result).toEqual(expect.arrayContaining([enPassantMove]));
                 expect(result.length).toEqual(2);
