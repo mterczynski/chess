@@ -58,7 +58,7 @@ export class Game {
     }
 
     private isGameOver(): boolean {
-        return this.state === GameState.WHITE_WON || this.state === GameState.BLACK_WON || this.state === GameState.DRAW
+        return [GameState.WHITE_WON, GameState.BLACK_WON, GameState.DRAW].includes(this.state);
     }
 
     private isValidMove(move: Move): boolean {
