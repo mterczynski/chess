@@ -2,7 +2,6 @@ import { Board } from "../Board";
 import { addToFile, addToRank } from "../misc";
 import { Move } from "../Moves";
 import { Knight } from "../pieces";
-import { Player } from "../Player";
 import { Position } from "../positions";
 
 export class KnightMoveCalculator {

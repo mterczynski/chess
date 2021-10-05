@@ -22,8 +22,9 @@ Object {
       "type": "P",
     },
     Object {
+      "hasMoved": false,
       "player": "BLACK",
-      "type": "P",
+      "type": "R",
     },
   ],
   "B": Array [
@@ -46,7 +47,7 @@ Object {
     },
     Object {
       "player": "BLACK",
-      "type": "P",
+      "type": "N",
     },
   ],
   "C": Array [
@@ -69,7 +70,7 @@ Object {
     },
     Object {
       "player": "BLACK",
-      "type": "P",
+      "type": "B",
     },
   ],
   "D": Array [
@@ -92,7 +93,7 @@ Object {
     },
     Object {
       "player": "BLACK",
-      "type": "P",
+      "type": "Q",
     },
   ],
   "E": Array [
@@ -115,8 +116,9 @@ Object {
       "type": "P",
     },
     Object {
+      "hasMoved": false,
       "player": "BLACK",
-      "type": "P",
+      "type": "K",
     },
   ],
   "F": Array [
@@ -139,7 +141,7 @@ Object {
     },
     Object {
       "player": "BLACK",
-      "type": "P",
+      "type": "B",
     },
   ],
   "G": Array [
@@ -162,7 +164,7 @@ Object {
     },
     Object {
       "player": "BLACK",
-      "type": "P",
+      "type": "N",
     },
   ],
   "H": Array [
@@ -185,8 +187,9 @@ Object {
       "type": "P",
     },
     Object {
+      "hasMoved": false,
       "player": "BLACK",
-      "type": "P",
+      "type": "R",
     },
   ],
 }
@@ -214,8 +217,9 @@ Object {
       "type": "P",
     },
     Object {
+      "hasMoved": false,
       "player": "BLACK",
-      "type": "P",
+      "type": "R",
     },
   ],
   "B": Array [
@@ -238,7 +242,7 @@ Object {
     },
     Object {
       "player": "BLACK",
-      "type": "P",
+      "type": "N",
     },
   ],
   "C": Array [
@@ -261,7 +265,7 @@ Object {
     },
     Object {
       "player": "BLACK",
-      "type": "P",
+      "type": "B",
     },
   ],
   "D": Array [
@@ -284,7 +288,7 @@ Object {
     },
     Object {
       "player": "BLACK",
-      "type": "P",
+      "type": "Q",
     },
   ],
   "E": Array [
@@ -307,8 +311,9 @@ Object {
       "type": "P",
     },
     Object {
+      "hasMoved": false,
       "player": "BLACK",
-      "type": "P",
+      "type": "K",
     },
   ],
   "F": Array [
@@ -331,7 +336,7 @@ Object {
     },
     Object {
       "player": "BLACK",
-      "type": "P",
+      "type": "B",
     },
   ],
   "G": Array [
@@ -354,7 +359,7 @@ Object {
     },
     Object {
       "player": "BLACK",
-      "type": "P",
+      "type": "N",
     },
   ],
   "H": Array [
@@ -377,8 +382,9 @@ Object {
       "type": "P",
     },
     Object {
+      "hasMoved": false,
       "player": "BLACK",
-      "type": "P",
+      "type": "R",
     },
   ],
 }
