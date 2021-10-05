@@ -1,7 +1,8 @@
 import { Board } from "../Board";
-import { addToFile, addToRank, negatePlayer } from "../utils";
+import { negatePlayer } from "../utils";
 import { Move } from "../Moves";
 import { PieceWithPosition } from "../pieces";
+import { addToRank, addToFile } from "../positions";
 
 interface Diagonal {
     fileIncrement: number,

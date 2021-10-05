@@ -1,6 +1,4 @@
-export * from './addToFile';
-export * from './addToRank';
-export * from './arePositionsEqual';
+export * from '../positions/addToFile';
 export * from './createNewBoard';
 export * from './getFileDifference';
 export * from './getFileRange';

@@ -1,5 +1,5 @@
 import { ChessFile } from "../positions";
-import { addToFile } from "./addToFile";
+import { addToFile } from "../positions/addToFile";
 
 /** @param `inclusive` - informs whether from and to should be included in returned file range */
 export const getFileRange = (from: ChessFile, to: ChessFile, { inclusive = true } = {}): ChessFile[] => {

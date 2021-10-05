@@ -1,13 +1,13 @@
-import { ChessFile } from "../positions";
+import { ChessFile } from ".";
 
 export function addToFile(file: ChessFile, filesToAdd: number): ChessFile | null {
-    if(!Number.isInteger(filesToAdd)) {
+    if (!Number.isInteger(filesToAdd)) {
         throw new Error('filesToAdd must be an integer');
     }
 
     const newFile = String.fromCharCode(file.charCodeAt(0) + filesToAdd);
 
-    if(Object.values<string>(ChessFile).includes(newFile)) {
+    if (Object.values<string>(ChessFile).includes(newFile)) {
         return newFile as ChessFile;
     } else {
         return null;

@@ -1,9 +1,8 @@
 import { Board } from "../Board";
-import { addToFile, addToRank, negatePlayer } from "../utils";
-import { getFileRange } from "../utils/getFileRange";
+import { negatePlayer, getFileRange } from "../utils";
 import { Move, SpecialMoveType } from "../Moves";
 import { getPlayerPieces, King, PieceType } from "../pieces";
-import { ChessFile, Position } from "../positions";
+import { ChessFile, Position, addToFile, addToRank, } from "../positions";
 
 interface RelativeMove {
     fileIncrement: number,

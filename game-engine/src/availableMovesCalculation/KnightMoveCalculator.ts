@@ -1,8 +1,7 @@
 import { Board } from "../Board";
-import { addToFile, addToRank } from "../utils";
 import { Move } from "../Moves";
 import { Knight } from "../pieces";
-import { Position } from "../positions";
+import { addToFile, addToRank, Position } from "../positions";
 
 export class KnightMoveCalculator {
     getAvailableMovesForPieceIgnoringKingSafety(knight: Knight & { position: Position }, board: Board): Move[] {

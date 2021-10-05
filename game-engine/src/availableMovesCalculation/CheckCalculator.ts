@@ -1,9 +1,9 @@
 import { Board } from "../Board";
-import { arePositionsEqual } from "../utils/arePositionsEqual";
 import { Move } from "../Moves";
 import { Piece, PieceWithPosition } from "../pieces";
 import { getPlayerKing } from "../pieces/getPlayerKing";
 import { Player } from "../Player";
+import { arePositionsEqual } from "../positions";
 
 
 export class CheckCalculator {

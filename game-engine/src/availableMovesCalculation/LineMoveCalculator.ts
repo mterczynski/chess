@@ -1,7 +1,8 @@
 import { Board } from "../Board";
-import { addToFile, addToRank, negatePlayer } from "../utils";
 import { Move } from "../Moves";
 import { PieceWithPosition } from "../pieces";
+import { addToFile, addToRank } from "../positions";
+import { negatePlayer } from "../utils";
 
 interface Line {
     fileIncrement: number,
