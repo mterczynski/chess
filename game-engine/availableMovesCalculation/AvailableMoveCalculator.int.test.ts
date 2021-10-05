@@ -253,5 +253,62 @@ describe('AvailableMoveCalculator int.', () => {
 
             expect(availableMoveCalculator.getAvailableMovesForPlayer(board, Player.WHITE, null)).toEqual(expectedAvailableMoves);
         });
+
+        it(`doesn't allow the king to castle when he is in check`, () => {
+            const board = getEmptyBoard();
+
+            board.E[8] = createKing(Player.BLACK);
+            board.A[8] = createRook(Player.BLACK);
+            board.E[1] = createRook(Player.WHITE);
+
+            const result = availableMoveCalculator.getAvailableMovesForPlayer(board, Player.BLACK, null);
+
+            const expectedResult: Move[] = [
+                {
+                    from: {
+                        file: ChessFile.E,
+                        rank: 8,
+                    },
+                    to: {
+                        file: ChessFile.D,
+                        rank: 7,
+                    },
+                },
+                {
+                    from: {
+                        file: ChessFile.E,
+                        rank: 8,
+                    },
+                    to: {
+                        file: ChessFile.D,
+                        rank: 8,
+                    },
+                },
+                {
+                    from: {
+                        file: ChessFile.E,
+                        rank: 8,
+                    },
+                    to: {
+                        file: ChessFile.F,
+                        rank: 7,
+                    },
+                },
+                {
+                    from: {
+                        file: ChessFile.E,
+                        rank: 8,
+                    },
+                    to: {
+                        file: ChessFile.F,
+                        rank: 8,
+                    },
+                }
+            ]
+
+
+            expect(result).toEqual(expect.arrayContaining(expectedResult));
+            expect(result.length).toEqual(expectedResult.length);
+        });
     });
 });

@@ -54,7 +54,9 @@ export class AvailableMoveCalculator {
 
     private isCastlingMoveSafeForKing(move: CastlingMove, board: Board, king: King): boolean {
         const currentPlayer = king.player;
-        const isKingInCheck = this.getAvailableMovesForPlayerIgnoringKingSafety(board, negatePlayer(currentPlayer), null).length === 0;
+        const availableEnemyMoves = this.getAvailableMovesForPlayerIgnoringKingSafety(board, negatePlayer(currentPlayer), null);
+        const checkingPiecesOfEnemy = this.checkCalculator.getCheckingEnemyPieces(currentPlayer, board, availableEnemyMoves);
+        const isKingInCheck = checkingPiecesOfEnemy.length > 0;
 
         if (isKingInCheck) {
             return false;
