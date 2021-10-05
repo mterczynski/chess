@@ -47,7 +47,7 @@ describe('Game', () => {
         });
 
         it('returns null after game is finished', () => {
-            // todo
+            throw new Error('todo');
         });
     });
 
@@ -93,33 +93,36 @@ describe('Game', () => {
         });
     });
 
-    // describe('getAvailableMoves', () => {
-    //     it('returns correct moves when called in new game', () => {
-    //         const pawnMoves: Move[] = Array(Game.boardSize).fill(null).flatMap((_, index) => {
-    //             const file = mapIndexToChessFile(index);
-    //             return [
-    //                 {from: {file: file, rank: 2}, to: {file: file, rank: 3}},
-    //                 {from: {file: file, rank: 2}, to: {file: file, rank: 4}}
-    //             ]
-    //         });
+    describe('getAvailableMoves', () => {
+        it('todo', () => {
+            throw new Error('todo');
+        });
+        // it('returns correct moves when called in new game', () => {
+        //     const pawnMoves: Move[] = Array(Game.boardSize).fill(null).flatMap((_, index) => {
+        //         const file = mapIndexToChessFile(index);
+        //         return [
+        //             {from: {file: file, rank: 2}, to: {file: file, rank: 3}},
+        //             {from: {file: file, rank: 2}, to: {file: file, rank: 4}}
+        //         ]
+        //     });
 
-    //         const knightMoves: Move[] = [
-    //             {from: {file: ChessFile.B, rank: 1}, to: {file: ChessFile.A, rank: 3}},
-    //             {from: {file: ChessFile.B, rank: 1}, to: {file: ChessFile.C, rank: 3}},
-    //             {from: {file: ChessFile.G, rank: 1}, to: {file: ChessFile.F, rank: 3}},
-    //             {from: {file: ChessFile.G, rank: 1}, to: {file: ChessFile.H, rank: 3}},
-    //         ]
+        //     const knightMoves: Move[] = [
+        //         {from: {file: ChessFile.B, rank: 1}, to: {file: ChessFile.A, rank: 3}},
+        //         {from: {file: ChessFile.B, rank: 1}, to: {file: ChessFile.C, rank: 3}},
+        //         {from: {file: ChessFile.G, rank: 1}, to: {file: ChessFile.F, rank: 3}},
+        //         {from: {file: ChessFile.G, rank: 1}, to: {file: ChessFile.H, rank: 3}},
+        //     ]
 
-    //         const expectedMoves: Move[] = [
-    //             ...pawnMoves,
-    //             ...knightMoves,
-    //         ];
+        //     const expectedMoves: Move[] = [
+        //         ...pawnMoves,
+        //         ...knightMoves,
+        //     ];
 
-    //         const result = game.getAvailableMovesForPlayer();
+        //     const result = game.getAvailableMovesForPlayer();
 
-    //         expect(result).toEqual(expect.arrayContaining(expectedMoves));
-    //         expect(result.length).toEqual(expectedMoves.length);
-    //     });
-    // });
+        //     expect(result).toEqual(expect.arrayContaining(expectedMoves));
+        //     expect(result.length).toEqual(expectedMoves.length);
+        // });
+    });
 
 });
