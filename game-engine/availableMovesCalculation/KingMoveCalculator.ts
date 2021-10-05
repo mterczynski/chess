@@ -78,7 +78,7 @@ export class KingMoveCalculator {
                 rank: king.position.rank,
                 file: addToFile(king.position.file, rook.position.file > king.position.file ? 2 : -2) as ChessFile
             },
-            type: SpecialMoveType.CASTLE,
+            type: SpecialMoveType.CASTLING,
         }))
     }
 }

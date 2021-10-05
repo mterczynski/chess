@@ -2,7 +2,7 @@ import { Position } from "./positions";
 import { PromotablePieceType } from "./PromotablePieceType";
 
 export enum SpecialMoveType {
-    CASTLE = 'CASTLE',
+    CASTLING = 'CASTLING',
     PROMOTION = 'PROMOTION',
     EN_PASSANT = 'EN_PASSANT',
 }
@@ -17,8 +17,8 @@ export interface EnPassantMove extends NormalMove {
     type: SpecialMoveType.EN_PASSANT;
 }
 
-export interface CastleMove extends NormalMove {
-    type: SpecialMoveType.CASTLE,
+export interface CastlingMove extends NormalMove {
+    type: SpecialMoveType.CASTLING,
 }
 
 export interface PromotionMove extends NormalMove {
@@ -26,4 +26,4 @@ export interface PromotionMove extends NormalMove {
     promoteTo: PromotablePieceType,
 }
 
-export type Move = NormalMove | CastleMove | PromotionMove | EnPassantMove;
+export type Move = NormalMove | CastlingMove | PromotionMove | EnPassantMove;

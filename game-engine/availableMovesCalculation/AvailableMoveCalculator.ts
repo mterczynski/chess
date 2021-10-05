@@ -2,8 +2,8 @@ import _ from "lodash";
 import { Board } from "../Board";
 import { addToFile, negatePlayer } from "../misc";
 import { getFileDifference } from "../misc/getFileDifference";
-import { isCastleMove } from "../misc/isCastleMove";
-import { CastleMove, Move } from "../Moves";
+import { isCastlingMove } from "../misc/isCastlingMove";
+import { CastlingMove, Move } from "../Moves";
 import { getPlayerPieces, King, Piece, PieceType, PieceWithPosition } from "../pieces";
 import { Player } from "../Player";
 import { ChessFile } from "../positions";
@@ -44,15 +44,15 @@ export class AvailableMoveCalculator {
             // const boardClone = _.cloneDeep(board);
             const piece = board[move.from.file][move.from.rank] as Piece;
 
-            if (isCastleMove(move)) {
-                return this.isCastleMoveSafeForKing(move, board, piece as King);
+            if (isCastlingMove(move)) {
+                return this.isCastlingMoveSafeForKing(move, board, piece as King);
             } else {
                 return this.isMoveLegal(move, board, currentPlayer);
             }
         });
     }
 
-    private isCastleMoveSafeForKing(move: CastleMove, board: Board, king: King): boolean {
+    private isCastlingMoveSafeForKing(move: CastlingMove, board: Board, king: King): boolean {
         const currentPlayer = king.player;
         const isKingInCheck = this.getAvailableMovesForPlayerIgnoringKingSafety(board, negatePlayer(currentPlayer), null).length === 0;
 

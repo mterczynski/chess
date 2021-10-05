@@ -75,8 +75,8 @@ describe('KingMoveCalculator', () => {
             board[ChessFile.H][7] = createRook();
 
             const expectedMoves: Move[] = [
-                { from: king.position, to: { file: ChessFile.G, rank: 1 }, type: SpecialMoveType.CASTLE },
-                { from: king.position, to: { file: ChessFile.C, rank: 1 }, type: SpecialMoveType.CASTLE },
+                { from: king.position, to: { file: ChessFile.G, rank: 1 }, type: SpecialMoveType.CASTLING },
+                { from: king.position, to: { file: ChessFile.C, rank: 1 }, type: SpecialMoveType.CASTLING },
                 { from: king.position, to: { file: ChessFile.D, rank: 1 } },
                 { from: king.position, to: { file: ChessFile.D, rank: 2 } },
                 { from: king.position, to: { file: ChessFile.E, rank: 2 } },

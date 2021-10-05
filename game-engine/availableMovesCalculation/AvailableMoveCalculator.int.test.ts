@@ -124,7 +124,7 @@ describe('AvailableMoveCalculator int.', () => {
                         file: ChessFile.G,
                         rank: 1
                     },
-                    type: SpecialMoveType.CASTLE,
+                    type: SpecialMoveType.CASTLING,
                 },
 
                 // right rook moves
