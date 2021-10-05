@@ -1,5 +1,5 @@
 import { Board } from "../Board";
-import { createNewBoard } from "../createNewBoard";
+import { createNewBoard } from "../utils";
 import { EnPassantMove, Move, SpecialMoveType } from "../Moves";
 import { Pawn, PieceType } from "../pieces";
 import { createKnight, createPawn } from "../pieces/PieceFactory";

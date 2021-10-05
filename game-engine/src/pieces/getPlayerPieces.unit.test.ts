@@ -1,4 +1,4 @@
-import { createNewBoard } from "../createNewBoard";
+import { createNewBoard } from "../utils";
 import { getPlayerPieces } from "./getPlayerPieces";
 import { Player } from "../Player";
 

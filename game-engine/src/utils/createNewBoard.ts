@@ -1,8 +1,8 @@
-import { Board } from "./Board";
-import { PieceType, Piece } from "./pieces";
-import { createPawn, createPiece } from "./pieces/PieceFactory";
-import { Player } from "./Player";
-import { ChessFile } from "./positions";
+import { Board } from "../Board";
+import { PieceType, Piece } from "../pieces";
+import { createPawn, createPiece } from "../pieces/PieceFactory";
+import { Player } from "../Player";
+import { ChessFile } from "../positions";
 
 export function createNewBoard(): Board {
     const createSymetricalFile = (pieceType: PieceType): (Piece | null)[] => {

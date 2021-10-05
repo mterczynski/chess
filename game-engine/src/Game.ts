@@ -2,7 +2,7 @@ import _ from "lodash";
 import { AvailableMoveCalculator } from "./availableMovesCalculation";
 import { CheckCalculator } from "./availableMovesCalculation/CheckCalculator";
 import { Board } from "./Board";
-import { createNewBoard } from "./createNewBoard";
+import { createNewBoard } from "./utils";
 import { GameState } from "./GameState";
 import { isCastleablePiece, negatePlayer } from "./utils";
 import { Move } from "./Moves";
