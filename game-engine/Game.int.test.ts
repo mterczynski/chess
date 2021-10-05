@@ -1,7 +1,10 @@
 import { Game } from "./Game";
 import { GameState } from "./GameState";
+import { mapIndexToChessFile } from "./misc";
+import { Move } from "./Moves";
 import { Player } from "./Player";
 import { ChessFile } from "./positions";
+import { playFoolsMate } from "./test-utils/playFoolsMate";
 
 describe('Game', () => {
     let game: Game;
@@ -13,6 +16,11 @@ describe('Game', () => {
     describe('getState', () => {
         it('returns GameState.UNSTARTED by default', () => {
             expect(game.getState()).toBe(GameState.UNSTARTED);
+        });
+
+        it('returns GameState.InProgress after making the first move', () => {
+            game.move({ from: { file: ChessFile.A, rank: 2 }, to: { file: ChessFile.A, rank: 4 } });
+            expect(game.getState()).toBe(GameState.IN_PROGRESS);
         });
     });
 
@@ -44,10 +52,6 @@ describe('Game', () => {
                 },
             });
             expect(game.getCurrentPlayer()).toBe(Player.WHITE);
-        });
-
-        it('returns null after game is finished', () => {
-            throw new Error('todo');
         });
     });
 
@@ -94,35 +98,39 @@ describe('Game', () => {
     });
 
     describe('getAvailableMoves', () => {
-        it('todo', () => {
-            throw new Error('todo');
+        it('returns correct moves when called in new game', () => {
+            const pawnMoves: Move[] = Array(Game.boardSize).fill(null).flatMap((_, index) => {
+                const file = mapIndexToChessFile(index);
+                return [
+                    { from: { file: file, rank: 2 }, to: { file: file, rank: 3 } },
+                    { from: { file: file, rank: 2 }, to: { file: file, rank: 4 } }
+                ]
+            });
+
+            const knightMoves: Move[] = [
+                { from: { file: ChessFile.B, rank: 1 }, to: { file: ChessFile.A, rank: 3 } },
+                { from: { file: ChessFile.B, rank: 1 }, to: { file: ChessFile.C, rank: 3 } },
+                { from: { file: ChessFile.G, rank: 1 }, to: { file: ChessFile.F, rank: 3 } },
+                { from: { file: ChessFile.G, rank: 1 }, to: { file: ChessFile.H, rank: 3 } },
+            ]
+
+            const expectedMoves: Move[] = [
+                ...pawnMoves,
+                ...knightMoves,
+            ];
+
+            const result = game.getAvailableMovesForPlayer();
+
+            expect(result).toEqual(expect.arrayContaining(expectedMoves));
+            expect(result.length).toEqual(expectedMoves.length);
         });
-        // it('returns correct moves when called in new game', () => {
-        //     const pawnMoves: Move[] = Array(Game.boardSize).fill(null).flatMap((_, index) => {
-        //         const file = mapIndexToChessFile(index);
-        //         return [
-        //             {from: {file: file, rank: 2}, to: {file: file, rank: 3}},
-        //             {from: {file: file, rank: 2}, to: {file: file, rank: 4}}
-        //         ]
-        //     });
-
-        //     const knightMoves: Move[] = [
-        //         {from: {file: ChessFile.B, rank: 1}, to: {file: ChessFile.A, rank: 3}},
-        //         {from: {file: ChessFile.B, rank: 1}, to: {file: ChessFile.C, rank: 3}},
-        //         {from: {file: ChessFile.G, rank: 1}, to: {file: ChessFile.F, rank: 3}},
-        //         {from: {file: ChessFile.G, rank: 1}, to: {file: ChessFile.H, rank: 3}},
-        //     ]
-
-        //     const expectedMoves: Move[] = [
-        //         ...pawnMoves,
-        //         ...knightMoves,
-        //     ];
-
-        //     const result = game.getAvailableMovesForPlayer();
-
-        //     expect(result).toEqual(expect.arrayContaining(expectedMoves));
-        //     expect(result.length).toEqual(expectedMoves.length);
-        // });
     });
 
+    it('prevents from making move after game is finished', () => {
+        const game = playFoolsMate();
+
+        expect(() => {
+            game.move({ from: { file: ChessFile.A, rank: 2 }, to: { file: ChessFile.A, rank: 3 } });
+        }).toThrow('Game has already finished, no more moves can be made');
+    })
 });
