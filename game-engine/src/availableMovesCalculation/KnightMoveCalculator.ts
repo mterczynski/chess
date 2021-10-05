@@ -1,5 +1,5 @@
 import { Board } from "../Board";
-import { addToFile, addToRank } from "../misc";
+import { addToFile, addToRank } from "../utils";
 import { Move } from "../Moves";
 import { Knight } from "../pieces";
 import { Position } from "../positions";

@@ -1,5 +1,5 @@
 import { Board } from "../Board";
-import { addToFile, addToRank, negatePlayer } from "../misc";
+import { addToFile, addToRank, negatePlayer } from "../utils";
 import { Move } from "../Moves";
 import { PieceWithPosition } from "../pieces";
 

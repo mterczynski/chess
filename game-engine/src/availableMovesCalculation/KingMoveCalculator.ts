@@ -1,6 +1,6 @@
 import { Board } from "../Board";
-import { addToFile, addToRank, negatePlayer } from "../misc";
-import { getFileRange } from "../misc/getFileRange";
+import { addToFile, addToRank, negatePlayer } from "../utils";
+import { getFileRange } from "../utils/getFileRange";
 import { Move, SpecialMoveType } from "../Moves";
 import { getPlayerPieces, King, PieceType } from "../pieces";
 import { ChessFile, Position } from "../positions";

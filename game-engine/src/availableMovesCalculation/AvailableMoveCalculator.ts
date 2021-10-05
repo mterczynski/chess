@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { Board } from "../Board";
-import { addToFile, negatePlayer } from "../misc";
-import { getFileDifference } from "../misc/getFileDifference";
-import { isCastlingMove } from "../misc/isCastlingMove";
+import { addToFile, negatePlayer } from "../utils";
+import { getFileDifference } from "../utils/getFileDifference";
+import { isCastlingMove } from "../utils/isCastlingMove";
 import { CastlingMove, Move } from "../Moves";
 import { getPlayerPieces, King, Piece, PieceType, PieceWithPosition } from "../pieces";
 import { Player } from "../Player";

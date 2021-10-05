@@ -4,7 +4,7 @@ import { CheckCalculator } from "./availableMovesCalculation/CheckCalculator";
 import { Board } from "./Board";
 import { createNewBoard } from "./createNewBoard";
 import { GameState } from "./GameState";
-import { isCastleablePiece, negatePlayer } from "./misc";
+import { isCastleablePiece, negatePlayer } from "./utils";
 import { Move } from "./Moves";
 import { Piece } from "./pieces";
 import { Player } from "./Player";

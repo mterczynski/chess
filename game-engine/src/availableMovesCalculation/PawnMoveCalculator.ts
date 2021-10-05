@@ -1,6 +1,6 @@
 import { Game } from "../Game";
 import { Board } from "../Board";
-import { addToRank, addToFile } from "../misc";
+import { addToRank, addToFile } from "../utils";
 import { Move, SpecialMoveType } from "../Moves";
 import { Pawn, Piece, PieceType } from "../pieces";
 import { Player } from "../Player";

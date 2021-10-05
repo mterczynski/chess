@@ -1,4 +1,4 @@
-import { isCastleablePieceType } from "../misc";
+import { isCastleablePieceType } from "../utils";
 import { Player } from "../Player";
 import { Bishop, King, Knight, Pawn, Piece, PieceType, Queen, Rook } from "./types";
 

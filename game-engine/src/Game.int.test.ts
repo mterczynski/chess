@@ -1,6 +1,6 @@
 import { Game } from "./Game";
 import { GameState } from "./GameState";
-import { mapIndexToChessFile } from "./misc";
+import { mapIndexToChessFile } from "./utils";
 import { Move } from "./Moves";
 import { Player } from "./Player";
 import { ChessFile } from "./positions";
@@ -56,19 +56,36 @@ describe('Game', () => {
     });
 
     describe('move', () => {
-        it('throws an error if invalid move was passed', () => {
-            expect(() => {
-                game.move({
-                    from: {
-                        file: ChessFile.A,
-                        rank: 1,
-                    },
-                    to: {
-                        file: ChessFile.A,
-                        rank: 2,
-                    },
-                })
-            }).toThrow('Invalid move');
+        describe('throws an error if invalid move was passed', () => {
+            test('invalid move - busy destination square', () => {
+                expect(() => {
+                    game.move({
+                        from: {
+                            file: ChessFile.A,
+                            rank: 1,
+                        },
+                        to: {
+                            file: ChessFile.A,
+                            rank: 2,
+                        },
+                    })
+                }).toThrow('Invalid move');
+            });
+
+            test('invalid move - empty origin square', () => {
+                expect(() => {
+                    game.move({
+                        from: {
+                            file: ChessFile.A,
+                            rank: 3,
+                        },
+                        to: {
+                            file: ChessFile.A,
+                            rank: 4,
+                        },
+                    })
+                }).toThrow('Invalid move');
+            });
         });
     });
 
