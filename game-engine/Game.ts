@@ -1,9 +1,9 @@
 import _ from "lodash";
 import { AvailableMoveCalculator } from "./availableMovesCalculation";
 import { Board } from "./Board";
-import { isCastleablePiece } from "./castling";
 import { createNewBoard } from "./createNewBoard";
 import { GameState } from "./GameState";
+import { isCastleablePiece } from "./misc";
 import { Move } from "./Moves";
 import { Piece } from "./pieces";
 import { Player } from "./Player";
