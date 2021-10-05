@@ -4,7 +4,7 @@ import { Board } from "./Board";
 import { isCastleablePiece } from "./castling";
 import { createNewBoard } from "./createNewBoard";
 import { GameState } from "./GameState";
-import { Move } from "./Move";
+import { Move } from "./Moves";
 import { Piece } from "./pieces";
 import { Player } from "./Player";
 
@@ -17,19 +17,19 @@ export class Game {
 
     constructor(
         private readonly availableMoveCalculator: AvailableMoveCalculator = new AvailableMoveCalculator(),
-    ) {}
+    ) { }
 
     getState(): GameState {
         return this.state;
     }
 
-    /** Returns clone of original board */
+    /** Returns clone of the original board */
     getBoard(): Board {
         return _.cloneDeep(this.board);
     }
 
     move(move: Move): void {
-        if(this.isValidMove(move)) {
+        if (this.isValidMove(move)) {
             this.applyMove(move);
             this.changePlayer();
         } else {
@@ -42,7 +42,7 @@ export class Game {
     }
 
     getCurrentPlayer(): Player | null {
-        if(this.isGameOver()) {
+        if (this.isGameOver()) {
             return null;
         }
 
@@ -50,7 +50,7 @@ export class Game {
     }
 
     private changePlayer(): void {
-        if(this.currentPlayer === Player.WHITE) {
+        if (this.currentPlayer === Player.WHITE) {
             this.currentPlayer = Player.BLACK;
         } else {
             this.currentPlayer = Player.WHITE;
@@ -79,7 +79,7 @@ export class Game {
         this.board[move.to.file][move.to.rank] = piece;
         this.board[move.from.file][move.from.rank] = null;
 
-        if(isCastleablePiece(piece)) {
+        if (isCastleablePiece(piece)) {
             piece.hasMoved = true;
         }
     }

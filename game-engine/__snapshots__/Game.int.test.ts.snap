@@ -1,0 +1,385 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Game getBoard returns correct board after first move 1`] = `
+Object {
+  "A": Array [
+    null,
+    Object {
+      "hasMoved": false,
+      "player": "WHITE",
+      "type": "R",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "B": Array [
+    null,
+    Object {
+      "player": "WHITE",
+      "type": "N",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "C": Array [
+    null,
+    Object {
+      "player": "WHITE",
+      "type": "B",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "D": Array [
+    null,
+    Object {
+      "player": "WHITE",
+      "type": "Q",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "E": Array [
+    null,
+    Object {
+      "hasMoved": false,
+      "player": "WHITE",
+      "type": "K",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "F": Array [
+    null,
+    Object {
+      "player": "WHITE",
+      "type": "B",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "G": Array [
+    null,
+    Object {
+      "player": "WHITE",
+      "type": "N",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "H": Array [
+    null,
+    Object {
+      "hasMoved": false,
+      "player": "WHITE",
+      "type": "R",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+}
+`;
+
+exports[`Game getBoard returns starting board when called on new game 1`] = `
+Object {
+  "A": Array [
+    null,
+    Object {
+      "hasMoved": false,
+      "player": "WHITE",
+      "type": "R",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "B": Array [
+    null,
+    Object {
+      "player": "WHITE",
+      "type": "N",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "C": Array [
+    null,
+    Object {
+      "player": "WHITE",
+      "type": "B",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "D": Array [
+    null,
+    Object {
+      "player": "WHITE",
+      "type": "Q",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "E": Array [
+    null,
+    Object {
+      "hasMoved": false,
+      "player": "WHITE",
+      "type": "K",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "F": Array [
+    null,
+    Object {
+      "player": "WHITE",
+      "type": "B",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "G": Array [
+    null,
+    Object {
+      "player": "WHITE",
+      "type": "N",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+  "H": Array [
+    null,
+    Object {
+      "hasMoved": false,
+      "player": "WHITE",
+      "type": "R",
+    },
+    Object {
+      "player": "WHITE",
+      "type": "P",
+    },
+    null,
+    null,
+    null,
+    null,
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+    Object {
+      "player": "BLACK",
+      "type": "P",
+    },
+  ],
+}
+`;

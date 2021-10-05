@@ -1,6 +1,6 @@
 import { Board } from "../Board";
 import { createNewBoard } from "../createNewBoard";
-import { Move } from "../Move";
+import { EnPassantMove, Move, SpecialMoveType } from "../Moves";
 import { Pawn, PieceType } from "../pieces";
 import { Player } from "../Player";
 import { ChessFile, Position, Rank } from "../positions";
@@ -11,23 +11,31 @@ describe('PawnMoveCalculator', () => {
 
     beforeEach(() => {
         calculator = new PawnMoveCalculator();
-    })
+    });
+
+    // todo - test promotion
+
+    describe('promotion', () => {
+        test('it works', () => {
+            throw new Error('todo');
+        });
+    });
 
     describe('getAvailableMovesForPieceIgnoringKingSafety', () => {
         describe('returns single and double non-attacking moves up if available', () => {
             test('for black', () => {
                 const board: Board = createNewBoard();
                 const lastMove: Move = {
-                    from: {file: ChessFile.H, rank: 2},
-                    to: {file: ChessFile.H, rank: 3},
+                    from: { file: ChessFile.H, rank: 2 },
+                    to: { file: ChessFile.H, rank: 3 },
                 };
                 board[ChessFile.H][2] = null;
-                board[ChessFile.H][3] = {player: Player.WHITE, type: PieceType.PAWN};
+                board[ChessFile.H][3] = { player: Player.WHITE, type: PieceType.PAWN };
                 const pawnPosition = {
                     file: ChessFile.E,
                     rank: 7 as Rank,
                 };
-                const pawn: Pawn & {position: Position} = {
+                const pawn: Pawn & { position: Position } = {
                     player: Player.BLACK,
                     position: pawnPosition,
                     type: PieceType.PAWN,
@@ -61,7 +69,7 @@ describe('PawnMoveCalculator', () => {
                     file: ChessFile.E,
                     rank: 2 as Rank,
                 };
-                const pawn: Pawn & {position: Position} = {
+                const pawn: Pawn & { position: Position } = {
                     player: Player.WHITE,
                     position: pawnPosition,
                     type: PieceType.PAWN,
@@ -97,7 +105,7 @@ describe('PawnMoveCalculator', () => {
                     file: ChessFile.B,
                     rank: 7 as Rank,
                 };
-                const pawn: Pawn & {position: Position} = {
+                const pawn: Pawn & { position: Position } = {
                     player: Player.BLACK,
                     position: pawnPosition,
                     type: PieceType.PAWN,
@@ -111,8 +119,8 @@ describe('PawnMoveCalculator', () => {
                     type: PieceType.KNIGHT,
                 };
                 const lastMove: Move = {
-                    from: {file: ChessFile.B, rank: 4},
-                    to: {file: ChessFile.A, rank: 6},
+                    from: { file: ChessFile.B, rank: 4 },
+                    to: { file: ChessFile.A, rank: 6 },
                 }
                 const expectedAttackingMoves: Move[] = [
                     {
@@ -143,7 +151,7 @@ describe('PawnMoveCalculator', () => {
                     file: ChessFile.B,
                     rank: 2 as Rank,
                 };
-                const pawn: Pawn & {position: Position} = {
+                const pawn: Pawn & { position: Position } = {
                     player: Player.WHITE,
                     position: pawnPosition,
                     type: PieceType.PAWN,
@@ -157,8 +165,8 @@ describe('PawnMoveCalculator', () => {
                     type: PieceType.KNIGHT,
                 }
                 const lastMove: Move = {
-                    from: {file: ChessFile.B, rank: 5},
-                    to: {file: ChessFile.A, rank: 3},
+                    from: { file: ChessFile.B, rank: 5 },
+                    to: { file: ChessFile.A, rank: 3 },
                 }
                 const expectedAttackingMoves: Move[] = [
                     {
@@ -200,17 +208,18 @@ describe('PawnMoveCalculator', () => {
                     player: Player.WHITE,
                     type: PieceType.PAWN,
                 };
-                const blackPawn: Pawn & {position: Position} = {
+                const blackPawn: Pawn & { position: Position } = {
                     player: Player.BLACK,
                     position: blackPawnPosition,
                     type: PieceType.PAWN,
                 };
-                const enPassantMove: Move = {
+                const enPassantMove: EnPassantMove = {
                     from: blackPawnPosition,
                     to: {
                         file: ChessFile.C,
                         rank: 3,
-                    }
+                    },
+                    type: SpecialMoveType.EN_PASSANT,
                 };
                 const lastMove: Move = {
                     from: {
@@ -243,17 +252,18 @@ describe('PawnMoveCalculator', () => {
                     player: Player.BLACK,
                     type: PieceType.PAWN,
                 };
-                const whitePawn: Pawn & {position: Position} = {
+                const whitePawn: Pawn & { position: Position } = {
                     player: Player.WHITE,
                     position: whitePawnPosition,
                     type: PieceType.PAWN,
                 };
-                const enPassantMove: Move = {
+                const enPassantMove: EnPassantMove = {
                     from: whitePawnPosition,
                     to: {
                         file: ChessFile.C,
                         rank: 6,
-                    }
+                    },
+                    type: SpecialMoveType.EN_PASSANT,
                 };
                 const lastMove: Move = {
                     from: {

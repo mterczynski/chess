@@ -1,6 +1,6 @@
 import { Board } from "../Board";
 import { addToFile, addToRank, negatePlayer } from "../misc";
-import { Move } from "../Move";
+import { Move } from "../Moves";
 import { PieceWithPosition } from "../pieces";
 
 interface Line {
@@ -11,10 +11,10 @@ interface Line {
 export class LineMoveCalculator {
     getAvailableMovesOnLineIgnoringKingSafety(piece: PieceWithPosition, board: Board): Move[] {
         const lines: Line[] = [
-            {fileIncrement: -1,  rankIncrement: 0}, // left
-            {fileIncrement: 1,  rankIncrement: 0}, // right
-            {fileIncrement: 0,  rankIncrement: -1}, // bottom
-            {fileIncrement: 0,  rankIncrement: 1}, // top
+            { fileIncrement: -1, rankIncrement: 0 }, // left
+            { fileIncrement: 1, rankIncrement: 0 }, // right
+            { fileIncrement: 0, rankIncrement: -1 }, // bottom
+            { fileIncrement: 0, rankIncrement: 1 }, // top
         ]
 
         return lines.flatMap(line => this.getAvailableMovesForLine(piece, board, line));
@@ -26,18 +26,18 @@ export class LineMoveCalculator {
         let nextRank = addToRank(piece.position.rank, line.rankIncrement);
         let iteration = 1;
 
-        while(nextFile && nextRank) {
+        while (nextFile && nextRank) {
             const nextSquare = board[nextFile][nextRank];
 
-            if(!nextSquare) {
+            if (!nextSquare) {
                 availableMoves.push({
                     from: piece.position,
-                    to: {file: nextFile, rank: nextRank}
+                    to: { file: nextFile, rank: nextRank }
                 });
-            } else if(nextSquare.player === negatePlayer(piece.player)) {
+            } else if (nextSquare.player === negatePlayer(piece.player)) {
                 availableMoves.push({
                     from: piece.position,
-                    to: {file: nextFile, rank: nextRank}
+                    to: { file: nextFile, rank: nextRank }
                 });
                 break;
             } else {

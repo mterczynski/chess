@@ -1,6 +1,10 @@
 # Board representation
 
+## About
+
 This document discusses different approaches for storing information about board.
+
+## Approaches
 
 1. Two-dimensional array of squares, where empty squares are represented by nulls, squares with pieces are represented by `{type, player}` objects 
     (rooks and kings will also have an additional property called `hasMoved`, which is used for castling mechanics purposes)

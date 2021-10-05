@@ -1,7 +1,7 @@
 import { Game } from "..";
 import { Board } from "../Board";
 import { addToRank, addToFile } from "../misc";
-import { Move } from "../Move";
+import { Move, SpecialMoveType } from "../Moves";
 import { Pawn, Piece, PieceType } from "../pieces";
 import { Player } from "../Player";
 import { ChessFile, Position, Rank } from "../positions";
@@ -9,7 +9,7 @@ import { MoveCalculator } from "./MoveCalculator";
 
 export class PawnMoveCalculator implements MoveCalculator {
     /** lastMove can be null only before white has made the first move */
-    getAvailableMovesForPieceIgnoringKingSafety(pawn: Pawn & {position: Position}, board: Board, lastMove: Move | null): Move[] {
+    getAvailableMovesForPieceIgnoringKingSafety(pawn: Pawn & { position: Position }, board: Board, lastMove: Move | null): Move[] {
         const availableMoves: Move[] = [
             ...this.getForwardMoves(pawn, board),
             ...this.getEnPassantMoves(pawn, board, lastMove),
@@ -19,7 +19,7 @@ export class PawnMoveCalculator implements MoveCalculator {
         return availableMoves;
     }
 
-    private getForwardMoves(pawn: Pawn & {position: Position}, board: Board): Move[] {
+    private getForwardMoves(pawn: Pawn & { position: Position }, board: Board): Move[] {
         const direction = this.getDirection(pawn.player);
         const file = pawn.position.file;
         const nextRank: Rank = pawn.position.rank + direction as Rank;
@@ -29,8 +29,8 @@ export class PawnMoveCalculator implements MoveCalculator {
         const startingRank = pawn.player === Player.WHITE ? 2 : Game.boardSize - 1;
         const hasntMoved: boolean = pawn.position.rank === startingRank;
 
-        const forwardSingleMove: Move | null = firstSquareUp === null ? {from: pawn.position, to: {file, rank: nextRank}} : null;
-        const forwardDoubleMove: Move | null = (forwardSingleMove && hasntMoved && secondSquareUp === null) ? {from: pawn.position, to: {file, rank: nextSecondRank}} : null;
+        const forwardSingleMove: Move | null = firstSquareUp === null ? { from: pawn.position, to: { file, rank: nextRank } } : null;
+        const forwardDoubleMove: Move | null = (forwardSingleMove && hasntMoved && secondSquareUp === null) ? { from: pawn.position, to: { file, rank: nextSecondRank } } : null;
 
         return [
             ...(forwardSingleMove ? [forwardSingleMove] : []),
@@ -38,21 +38,21 @@ export class PawnMoveCalculator implements MoveCalculator {
         ];
     };
 
-    private getNonEnPassantAttackingMoves(pawn: Pawn & {position: Position}, board: Board): Move[] {
+    private getNonEnPassantAttackingMoves(pawn: Pawn & { position: Position }, board: Board): Move[] {
         const direction = this.getDirection(pawn.player);
         const attackingMoves: Move[] = [];
 
         const nextRank = addToRank(pawn.position.rank, direction);
 
-        if(nextRank === null) {
+        if (nextRank === null) {
             return [];
         }
 
         const checkForPossibleAttackOnFile = (file: ChessFile | null): void => {
-            if(file) {
+            if (file) {
                 const squareToAttack = board[file][nextRank];
 
-                if(squareToAttack && squareToAttack.player !== pawn.player) {
+                if (squareToAttack && squareToAttack.player !== pawn.player) {
                     attackingMoves.push({
                         from: pawn.position,
                         to: {
@@ -73,8 +73,8 @@ export class PawnMoveCalculator implements MoveCalculator {
         return attackingMoves;
     }
 
-    private getEnPassantMoves(pawn: Pawn & {position: Position}, board: Board, lastMove: Move | null): Move[] {
-        if(!lastMove) {
+    private getEnPassantMoves(pawn: Pawn & { position: Position }, board: Board, lastMove: Move | null): Move[] {
+        if (!lastMove) {
             return [];
         }
 
@@ -85,14 +85,15 @@ export class PawnMoveCalculator implements MoveCalculator {
         const wasLastMoveDoublePawnMove = lastMove && wasPawnMovedInLastMove && wasLastMoveBy2Ranks;
         const isLastMovedPieceNextToPawn = pawn.position.rank === lastMove.to.rank && (addToFile(pawn.position.file, 1) === lastMove.to.file || addToFile(pawn.position.file, -1) === lastMove.to.file)
 
-        if(!wasLastMoveDoublePawnMove && isLastMovedPieceNextToPawn) {
+        if (!wasLastMoveDoublePawnMove && isLastMovedPieceNextToPawn) {
             return [
                 {
                     from: pawn.position,
                     to: {
                         file: lastMove.to.file,
                         rank: addToRank(pawn.position.rank, direction) as Rank,
-                    }
+                    },
+                    type: SpecialMoveType.EN_PASSANT,
                 }
             ];
         }

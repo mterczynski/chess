@@ -1,23 +1,21 @@
 import { Board } from "./Board";
 import { PieceType, Piece } from "./pieces";
-import { PieceFactory } from "./pieces/PieceFactory";
+import { createPawn, createPiece } from "./pieces/PieceFactory";
 import { Player } from "./Player";
 import { ChessFile } from "./positions";
 
 export function createNewBoard(): Board {
-    const pieceFactory = new PieceFactory();
-
     const createSymetricalFile = (pieceType: PieceType): (Piece | null)[] => {
         return [
             null,
-            pieceFactory.createPiece(pieceType, Player.WHITE),
-            pieceFactory.createPiece(PieceType.PAWN, Player.WHITE),
+            createPiece(pieceType, Player.WHITE),
+            createPawn(Player.WHITE),
             null,
             null,
             null,
             null,
-            pieceFactory.createPiece(PieceType.PAWN, Player.BLACK),
-            pieceFactory.createPiece(pieceType, Player.BLACK)
+            createPawn(Player.BLACK),
+            createPiece(pieceType, Player.BLACK),
         ]
     }
 

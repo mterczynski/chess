@@ -6,6 +6,7 @@ import { getEmptyBoard } from "./test-utils/getEmptyBoard";
 
 describe('getSquareAttackers', () => {
     it('should return list of square atackers of specific player together with their positions', () => {
+        // todo - add a case where enemy king can castle to player's position
         const board = getEmptyBoard();
 
         board[ChessFile.A][6] = {player: Player.BLACK, type: PieceType.KNIGHT};

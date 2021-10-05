@@ -1,6 +1,6 @@
 import { Board } from "../Board";
 import { addToFile, addToRank, negatePlayer } from "../misc";
-import { Move } from "../Move";
+import { Move } from "../Moves";
 import { Bishop, PieceWithPosition } from "../pieces";
 
 interface Diagonal {
@@ -11,10 +11,10 @@ interface Diagonal {
 export class DiagonalMoveCalculator {
     getAvailableMovesOnLineIgnoringKingSafety(piece: PieceWithPosition, board: Board): Move[] {
         const diagonals: Diagonal[] = [
-            {fileIncrement: -1,  rankIncrement: -1},
-            {fileIncrement: -1,  rankIncrement: 1},
-            {fileIncrement: 1,  rankIncrement: -1},
-            {fileIncrement: 1,  rankIncrement: 1},
+            { fileIncrement: -1, rankIncrement: -1 },
+            { fileIncrement: -1, rankIncrement: 1 },
+            { fileIncrement: 1, rankIncrement: -1 },
+            { fileIncrement: 1, rankIncrement: 1 },
         ];
 
         return diagonals.flatMap(diag => this.getAvailableMovesForDiagonal(piece, board, diag));
@@ -26,18 +26,18 @@ export class DiagonalMoveCalculator {
         let nextRank = addToRank(piece.position.rank, diagonal.rankIncrement);
         let iteration = 1;
 
-        while(nextFile && nextRank) {
+        while (nextFile && nextRank) {
             const nextSquare = board[nextFile][nextRank];
 
-            if(!nextSquare) {
+            if (!nextSquare) {
                 availableMoves.push({
                     from: piece.position,
-                    to: {file: nextFile, rank: nextRank}
+                    to: { file: nextFile, rank: nextRank }
                 });
-            } else if(nextSquare.player === negatePlayer(piece.player)) {
+            } else if (nextSquare.player === negatePlayer(piece.player)) {
                 availableMoves.push({
                     from: piece.position,
-                    to: {file: nextFile, rank: nextRank}
+                    to: { file: nextFile, rank: nextRank }
                 });
                 break;
             } else {

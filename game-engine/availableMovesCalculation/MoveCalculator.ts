@@ -1,5 +1,5 @@
 import { Board } from "../Board";
-import { Move } from "../Move";
+import { Move } from "../Moves";
 import { PieceWithPosition } from "../pieces";
 
 export interface MoveCalculator {

@@ -1,21 +1,24 @@
 import _ from "lodash";
 import { Board } from "../Board";
-import { Move } from "../Move";
-import { getPlayerPieces, Piece, PieceType, PieceWithPosition } from "../pieces";
+import { addToFile, negatePlayer } from "../misc";
+import { getFileDifference } from "../misc/getFileDifference";
+import { isCastleMove } from "../misc/isCastleMove";
+import { CastleMove, Move } from "../Moves";
+import { getPlayerPieces, King, Piece, PieceType, PieceWithPosition } from "../pieces";
 import { Player } from "../Player";
+import { ChessFile } from "../positions";
 import { BishopMoveCalculator } from "./BishopMoveCalculator";
 import { CheckCalculator } from "./CheckCalculator";
 import { KingMoveCalculator } from "./KingMoveCalculator";
 import { KnightMoveCalculator } from "./KnightMoveCalculator";
-import { MoveCalculator } from "./MoveCalculator";
 import { PawnMoveCalculator } from "./PawnMoveCalculator";
 import { QueenMoveCalculator } from "./QueenMoveCalculator";
 import { RookMoveCalculator } from "./RookMoveCalculator";
 
 /**
- * Class for calculating available moves
+ * Class for calculating available moves of a player
  */
-export class AvailableMoveCalculator implements MoveCalculator {
+export class AvailableMoveCalculator {
     constructor(
         private readonly checkCalculator: CheckCalculator = new CheckCalculator(),
         private readonly pawnMoveCalculator: PawnMoveCalculator = new PawnMoveCalculator(),
@@ -24,7 +27,7 @@ export class AvailableMoveCalculator implements MoveCalculator {
         private readonly rookMoveCalculator: RookMoveCalculator = new RookMoveCalculator(),
         private readonly queenMoveCalculator: QueenMoveCalculator = new QueenMoveCalculator(),
         private readonly kingMoveCalculator: KingMoveCalculator = new KingMoveCalculator(),
-    ) {}
+    ) { }
 
     getAvailableMovesForPlayer(board: Board, player: Player, lastMove: Move | null): Move[] {
         const currentPlayerPieces = getPlayerPieces(board, player);
@@ -32,40 +35,86 @@ export class AvailableMoveCalculator implements MoveCalculator {
         return currentPlayerPieces.flatMap(piece => this.getAvailableMovesForPiece(piece, board, lastMove));
     }
 
-    getAvailableMovesForPiece(pieceWithPostion: PieceWithPosition, board: Board, lastMove: Move | null): Move[] {
+
+    private getAvailableMovesForPiece(pieceWithPostion: PieceWithPosition, board: Board, lastMove: Move | null): Move[] {
         const availableMovesIgnoringKingSafety = this.getAvailableMovesForPieceIgnoringKingSafety(pieceWithPostion, board, lastMove);
+        const currentPlayer = pieceWithPostion.player;
 
         return availableMovesIgnoringKingSafety.filter(move => {
-            const boardClone = _.cloneDeep(board);
+            // const boardClone = _.cloneDeep(board);
+            const piece = board[move.from.file][move.from.rank] as Piece;
 
-            const piece = boardClone[move.from.file][move.from.rank] as Piece;
-            const playerOfPiece = piece.player;
-            boardClone[move.to.file][move.to.rank] = piece;
-            boardClone[move.from.file][move.from.rank] = null;
-
-            const checkingPiecesAfterMove = this.checkCalculator.getCheckingPieces(boardClone);
-            const checkingPiecesOfEnemyAfterMove = checkingPiecesAfterMove.filter(check => check.player !== piece.player);
-
-            return checkingPiecesOfEnemyAfterMove.length === 0;
+            if (isCastleMove(move)) {
+                return this.isCastleMoveSafeForKing(move, board, piece as King);
+            } else {
+                return this.isMoveLegal(move, board, currentPlayer);
+            }
         });
     }
 
-    getAvailableMovesForPieceIgnoringKingSafety(pieceWithPostion: PieceWithPosition, board: Board, lastMove: Move | null): Move[] {
-        const player = pieceWithPostion.player;
-        if(pieceWithPostion.type === PieceType.PAWN) {
+    private isCastleMoveSafeForKing(move: CastleMove, board: Board, king: King): boolean {
+        const currentPlayer = king.player;
+        const isKingInCheck = this.getAvailableMovesForPlayerIgnoringKingSafety(board, negatePlayer(currentPlayer), null).length === 0;
+
+        if (isKingInCheck) {
+            return false;
+        }
+
+        const moveVector = getFileDifference(move.from.file, move.to.file);
+        const moveVectorDividedBy2 = moveVector / 2;
+        /** Move of the king by one file in the direction of castleable rook, used to check if king can move by one field towards the rook,
+         * if it can't, the king can't castle */
+        const intermediateMove: Move = {
+            ...move,
+            to: {
+                file: addToFile(move.from.file, moveVectorDividedBy2) as ChessFile,
+                rank: move.to.rank
+            }
+        }
+
+        return !isKingInCheck &&
+            this.isMoveLegal(intermediateMove, board, currentPlayer) &&
+            this.isMoveLegal(move, board, currentPlayer);
+    }
+
+    private getAvailableMovesForPieceIgnoringKingSafety(pieceWithPostion: PieceWithPosition, board: Board, lastMove: Move | null): Move[] {
+        if (pieceWithPostion.type === PieceType.PAWN) {
             return this.pawnMoveCalculator.getAvailableMovesForPieceIgnoringKingSafety(pieceWithPostion, board, lastMove);
-        } else if(pieceWithPostion.type === PieceType.KNIGHT) {
+        } else if (pieceWithPostion.type === PieceType.KNIGHT) {
             return this.knightMoveCalculator.getAvailableMovesForPieceIgnoringKingSafety(pieceWithPostion, board);
-        } else if(pieceWithPostion.type === PieceType.BISHOP) {
+        } else if (pieceWithPostion.type === PieceType.BISHOP) {
             return this.bishopMoveCalculator.getAvailableMovesForPieceIgnoringKingSafety(pieceWithPostion, board);
-        } else if(pieceWithPostion.type === PieceType.ROOK) {
+        } else if (pieceWithPostion.type === PieceType.ROOK) {
             return this.rookMoveCalculator.getAvailableMovesForPieceIgnoringKingSafety(pieceWithPostion, board);
-        } else if(pieceWithPostion.type === PieceType.QUEEN) {
+        } else if (pieceWithPostion.type === PieceType.QUEEN) {
             return this.queenMoveCalculator.getAvailableMovesForPieceIgnoringKingSafety(pieceWithPostion, board);
-        } else if(pieceWithPostion.type === PieceType.KING) {
+        } else if (pieceWithPostion.type === PieceType.KING) {
             return this.kingMoveCalculator.getAvailableMovesForPieceIgnoringKingSafety(pieceWithPostion, board);
         }
 
         return [];
+    }
+
+    private getAvailableMovesForPlayerIgnoringKingSafety(board: Board, player: Player, lastMove: Move | null): Move[] {
+        const currentPlayerPieces = getPlayerPieces(board, player);
+
+        return currentPlayerPieces.flatMap(piece => this.getAvailableMovesForPieceIgnoringKingSafety(piece, board, lastMove));
+    }
+
+    /** This function only checks if the `move` wouldn't cause the current player's king to be in check */
+    private isMoveLegal(move: Move, board: Board, currentPlayer: Player): boolean {
+        const boardClone = _.cloneDeep(board);
+        const piece = boardClone[move.from.file][move.from.rank] as Piece;
+
+        boardClone[move.to.file][move.to.rank] = piece;
+        boardClone[move.from.file][move.from.rank] = null;
+
+        /** List of moves that enemy can perform (ignoring king safety), the list of moves might include moves that would cause enemy king to be in check.
+         * This list of moves is used to check what enemy pieces would check current player's king after making the `move`
+         */
+        const availableEnemyMovesAfterMove = this.getAvailableMovesForPlayerIgnoringKingSafety(boardClone, negatePlayer(currentPlayer), null);
+        const checkingPiecesOfEnemyAfterMove = this.checkCalculator.getCheckingEnemyPieces(currentPlayer, boardClone, availableEnemyMovesAfterMove);
+
+        return checkingPiecesOfEnemyAfterMove.length === 0;
     }
 }
