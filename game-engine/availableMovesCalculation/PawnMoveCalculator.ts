@@ -29,13 +29,27 @@ export class PawnMoveCalculator implements MoveCalculator {
         const startingRank = pawn.player === Player.WHITE ? 2 : Game.boardSize - 1;
         const hasntMoved: boolean = pawn.position.rank === startingRank;
 
-        const forwardSingleMove: Move | null = firstSquareUp === null ? { from: pawn.position, to: { file, rank: nextRank } } : null;
+        let forwardSingleMove: Move | null = firstSquareUp === null ? { from: pawn.position, to: { file, rank: nextRank } } : null;
         const forwardDoubleMove: Move | null = (forwardSingleMove && hasntMoved && secondSquareUp === null) ? { from: pawn.position, to: { file, rank: nextSecondRank } } : null;
+        const forwardMoves: Move[] = [...(forwardDoubleMove ? [forwardDoubleMove] : [])];
 
-        return [
-            ...(forwardSingleMove ? [forwardSingleMove] : []),
-            ...(forwardDoubleMove ? [forwardDoubleMove] : []),
-        ];
+        const isPromotionAvailable = forwardSingleMove?.to.rank === 1 || forwardSingleMove?.to.rank === Game.boardSize;
+
+        if (forwardSingleMove) {
+            if (isPromotionAvailable) {
+                forwardMoves.push(
+                    { ...forwardSingleMove, type: SpecialMoveType.PROMOTION, promoteTo: PieceType.KNIGHT },
+                    { ...forwardSingleMove, type: SpecialMoveType.PROMOTION, promoteTo: PieceType.BISHOP },
+                    { ...forwardSingleMove, type: SpecialMoveType.PROMOTION, promoteTo: PieceType.ROOK },
+                    { ...forwardSingleMove, type: SpecialMoveType.PROMOTION, promoteTo: PieceType.QUEEN },
+                );
+            } else {
+                forwardMoves.push(forwardSingleMove);
+            }
+
+        }
+
+        return forwardMoves;
     };
 
     private getNonEnPassantAttackingMoves(pawn: Pawn & { position: Position }, board: Board): Move[] {
