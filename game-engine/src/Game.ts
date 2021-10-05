@@ -8,6 +8,7 @@ import { isCastleablePiece, negatePlayer } from "./utils";
 import { Move } from "./Moves";
 import { Piece } from "./pieces";
 import { Player } from "./Player";
+import { arePositionsEqual } from "./positions";
 
 export class Game {
     static readonly boardSize = 8;
@@ -40,7 +41,7 @@ export class Game {
         }
 
         this.applyMove(move);
-        this.updateStateAfterMove();
+        this.state = this.getNewGameStateAfterMove();
 
         if (this.state === GameState.IN_PROGRESS) {
             this.changePlayer();
@@ -60,11 +61,9 @@ export class Game {
     }
 
     private changePlayer(): void {
-        if (this.currentPlayer === Player.WHITE) {
-            this.currentPlayer = Player.BLACK;
-        } else {
-            this.currentPlayer = Player.WHITE;
-        }
+        this.currentPlayer = this.currentPlayer === Player.WHITE ?
+            Player.BLACK :
+            Player.WHITE;
     }
 
     private isGameOver(): boolean {
@@ -72,16 +71,11 @@ export class Game {
     }
 
     private isValidMove(move: Move): boolean {
-        return this.hasMove(this.getAvailableMovesForPlayer(), move);
-    }
-
-    private hasMove(moves: Move[], move: Move): boolean {
-        return moves
-            .filter(_move => _move.from.file === move.from.file)
-            .filter(_move => _move.from.rank === move.from.rank)
-            .filter(_move => _move.to.file === move.to.file)
-            .filter(_move => _move.to.rank === move.to.rank)
-            .length >= 1;
+        const availableMoves = this.getAvailableMovesForPlayer();
+        return availableMoves.some(availableMove =>
+            arePositionsEqual(availableMove.from, move.from) &&
+            arePositionsEqual(availableMove.to, move.to)
+        );
     }
 
     private applyMove(move: Move): void {
@@ -94,10 +88,11 @@ export class Game {
         }
     }
 
-    private updateStateAfterMove(): void {
+    // todo - extract to separate class (?)
+    // maybe extract it to a class called GameStateHandler (?)
+    private getNewGameStateAfterMove(): GameState {
         if (this.state === GameState.UNSTARTED) {
-            this.state = GameState.IN_PROGRESS;
-            return;
+            return GameState.IN_PROGRESS;
         }
 
         const enemy = negatePlayer(this.currentPlayer);
@@ -109,12 +104,14 @@ export class Game {
             const checkingPiecesOfCurrentPlayer = this.checkCalculator.getCheckingEnemyPieces(enemy, this.board, availableCurrentPlayerMoves);
 
             if (checkingPiecesOfCurrentPlayer.length === 0) {
-                this.state = GameState.DRAW;
+                return GameState.DRAW;
             } else {
-                this.state = this.currentPlayer === Player.WHITE ?
+                return this.currentPlayer === Player.WHITE ?
                     GameState.WHITE_WON :
                     GameState.BLACK_WON;
             }
         }
+
+        return this.state;
     }
 }
