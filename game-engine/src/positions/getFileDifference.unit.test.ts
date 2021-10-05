@@ -1,4 +1,4 @@
-import { ChessFile } from "../positions";
+import { ChessFile } from "./index";
 import { getFileDifference } from "./getFileDifference";
 
 describe('getFileDifference', () => {

@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { Board } from "../Board";
 import { addToFile, negatePlayer } from "../utils";
-import { getFileDifference } from "../utils/getFileDifference";
+import { getFileDifference } from "../positions/getFileDifference";
 import { isCastlingMove } from "../utils/isCastlingMove";
 import { CastlingMove, Move } from "../Moves";
 import { getPlayerPieces, King, Piece, PieceType, PieceWithPosition } from "../pieces";
