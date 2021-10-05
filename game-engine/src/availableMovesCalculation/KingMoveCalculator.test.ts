@@ -2,7 +2,7 @@ import { Move, SpecialMoveType } from "../Moves";
 import { King, Pawn, PieceType, Rook } from "../pieces";
 import { Player } from "../Player";
 import { ChessFile, Position } from "../positions";
-import { getEmptyBoard } from "../test-utils/getEmptyBoard";
+import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { KingMoveCalculator } from "./KingMoveCalculator";
 
 describe('KingMoveCalculator', () => {

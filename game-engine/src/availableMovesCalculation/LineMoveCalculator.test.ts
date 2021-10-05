@@ -1,4 +1,4 @@
-import { getEmptyBoard } from "../test-utils/getEmptyBoard";
+import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { ChessFile, Position } from "../positions";
 import { PieceType, Rook } from "../pieces";
 import { Player } from "../Player";

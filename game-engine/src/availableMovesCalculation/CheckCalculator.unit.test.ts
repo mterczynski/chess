@@ -3,7 +3,7 @@ import { PieceType, PieceWithPosition } from "../pieces";
 import { createBishop, createKing, createKnight, createPawn, createQueen, createRook } from "../pieces/PieceFactory";
 import { Player } from "../Player";
 import { ChessFile, Position } from "../positions";
-import { getEmptyBoard } from "../test-utils/getEmptyBoard";
+import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { CheckCalculator } from "./CheckCalculator";
 
 describe('CheckCalculator', () => {

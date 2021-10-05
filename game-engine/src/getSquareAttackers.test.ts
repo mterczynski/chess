@@ -2,7 +2,7 @@ import { getSquareAttackers } from "./getSquareAttackers";
 import { PieceType, PieceWithPosition } from "./pieces";
 import { Player } from "./Player";
 import { ChessFile } from "./positions";
-import { getEmptyBoard } from "./test-utils/getEmptyBoard";
+import { getEmptyBoard } from "../test-utils/getEmptyBoard";
 
 describe('getSquareAttackers', () => {
     it('should return list of square atackers of specific player together with their positions', () => {

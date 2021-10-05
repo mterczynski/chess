@@ -1,7 +1,7 @@
 import { Knight, PieceType } from "../pieces";
 import { Player } from "../Player";
 import { ChessFile, Position, Rank } from "../positions";
-import { getEmptyBoard } from "../test-utils/getEmptyBoard";
+import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { KnightMoveCalculator } from "./KnightMoveCalculator";
 
 describe('KnightMoveCalculator', () => {

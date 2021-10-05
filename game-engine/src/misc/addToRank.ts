@@ -1,4 +1,4 @@
-import { Game } from "..";
+import { Game } from "../Game";
 import { Rank } from "../positions";
 
 export function addToRank(currentRank: Rank, ranksToAdd: number): Rank | null {

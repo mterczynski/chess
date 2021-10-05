@@ -5,7 +5,7 @@ import { Pawn, PieceType } from "../pieces";
 import { createKnight, createPawn } from "../pieces/PieceFactory";
 import { Player } from "../Player";
 import { ChessFile, Position, Rank } from "../positions";
-import { getEmptyBoard } from "../test-utils/getEmptyBoard";
+import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { PawnMoveCalculator } from "./PawnMoveCalculator";
 
 describe('PawnMoveCalculator', () => {

@@ -1,6 +1,6 @@
 import { Player } from "../Player";
 import { ChessFile } from "../positions";
-import { getEmptyBoard } from "../test-utils/getEmptyBoard";
+import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { getPlayerKing } from "./getPlayerKing";
 import { PieceType } from "./PieceType";
 

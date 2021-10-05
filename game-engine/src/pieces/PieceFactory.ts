@@ -1,4 +1,4 @@
-import { Bishop, Knight, Queen } from ".";
+import { Bishop, Knight, Queen } from "./index";
 import { isCastleablePieceType } from "../misc";
 import { Player } from "../Player";
 import { King } from "./King";

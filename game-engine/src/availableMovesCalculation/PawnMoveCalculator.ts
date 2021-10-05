@@ -1,4 +1,4 @@
-import { Game } from "..";
+import { Game } from "../Game";
 import { Board } from "../Board";
 import { addToRank, addToFile } from "../misc";
 import { Move, SpecialMoveType } from "../Moves";

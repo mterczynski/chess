@@ -2,7 +2,7 @@ import { Move } from "../Moves";
 import { Bishop, PieceType } from "../pieces";
 import { Player } from "../Player";
 import { ChessFile, Position, Rank } from "../positions";
-import { getEmptyBoard } from "../test-utils/getEmptyBoard";
+import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { DiagonalMoveCalculator } from "./DiagonalMoveCalculator";
 
 describe('DiagonalMoveCalculator', () => {

@@ -4,7 +4,7 @@ import { mapIndexToChessFile } from "./misc";
 import { Move } from "./Moves";
 import { Player } from "./Player";
 import { ChessFile } from "./positions";
-import { playFoolsMate } from "./test-utils/playFoolsMate";
+import { playFoolsMate } from "../test-utils/playFoolsMate";
 
 describe('Game', () => {
     let game: Game;

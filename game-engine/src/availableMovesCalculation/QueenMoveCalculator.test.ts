@@ -2,7 +2,7 @@ import { Move } from "../Moves";
 import { PieceType, Queen, Rook } from "../pieces";
 import { Player } from "../Player";
 import { ChessFile, Position } from "../positions";
-import { getEmptyBoard } from "../test-utils/getEmptyBoard";
+import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { QueenMoveCalculator } from "./QueenMoveCalculator";
 
 describe('QueenMoveCalculator', () => {

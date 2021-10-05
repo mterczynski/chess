@@ -1,4 +1,4 @@
-import { ChessFile } from "../positions"
+import { ChessFile } from "../src/positions"
 import { getEmptyBoard } from "./getEmptyBoard"
 
 describe('getEmptyBoard', () => {

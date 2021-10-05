@@ -4,9 +4,9 @@
     https://www.chessgames.com/perl/chessgame?gid=1018910
 */
 
-import { Game } from "..";
-import { GameState } from "../GameState";
-import { ChessFile } from "../positions";
+import { Game } from "../src/Game";
+import { GameState } from "../src/GameState";
+import { ChessFile } from "../src/positions";
 
 describe('Immortal game', () => {
     test('play all the moves, check that white won', () => {
