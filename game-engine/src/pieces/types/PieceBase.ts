@@ -1,4 +1,4 @@
-import { Player } from "../Player";
+import { Player } from "../../Player";
 import { PieceType } from "./PieceType";
 
 export interface PieceBase {

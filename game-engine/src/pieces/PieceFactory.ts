@@ -1,11 +1,6 @@
-import { Bishop, Knight, Queen } from "./index";
 import { isCastleablePieceType } from "../misc";
 import { Player } from "../Player";
-import { King } from "./King";
-import { Pawn } from "./Pawn";
-import { Piece } from "./Piece";
-import { PieceType } from "./PieceType";
-import { Rook } from "./Rook";
+import { Bishop, King, Knight, Pawn, Piece, PieceType, Queen, Rook } from "./types";
 
 export function createPiece(type: PieceType, player: Player): Piece {
     if (isCastleablePieceType(type)) {

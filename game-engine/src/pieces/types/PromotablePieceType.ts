@@ -1,4 +1,4 @@
-import { PieceType } from "./pieces";
+import { PieceType } from ".";
 
 export type PromotablePieceType =
     PieceType.BISHOP |

@@ -1,5 +1,5 @@
 import { Position } from "./positions";
-import { PromotablePieceType } from "./PromotablePieceType";
+import { PromotablePieceType } from "./pieces";
 
 export enum SpecialMoveType {
     CASTLING = 'CASTLING',

@@ -1,7 +1,7 @@
 import { Board } from "../Board";
 import { Player } from "../Player";
 import { ChessFile } from "../positions";
-import { PieceWithPosition } from "./PieceWithPosition";
+import { PieceWithPosition } from "./types/PieceWithPosition";
 
 export function getPlayerPieces(board: Board, player: Player): PieceWithPosition[] {
     const pieces = Object.entries(board).flatMap(([fileName, fileContent]) => {
