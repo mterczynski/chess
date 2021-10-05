@@ -15,7 +15,17 @@ describe('getFileRange', () => {
         expect(getFileRange(ChessFile.H, ChessFile.H)).toEqual([ChessFile.H]);
     });
 
-    it('returns all files withing specific range, excluding from and to when inclusive = false', () => {
-        expect(getFileRange(ChessFile.A, ChessFile.D, { inclusive: false })).toEqual([ChessFile.B, ChessFile.C]);
+    describe('inclusive = false', () => {
+        it('returns all files withing specific range, excluding from and to', () => {
+            expect(getFileRange(ChessFile.A, ChessFile.D, { inclusive: false })).toEqual([ChessFile.B, ChessFile.C]);
+        });
+
+        it('returns empty array if the files are the same', () => {
+            expect(getFileRange(ChessFile.D, ChessFile.D, { inclusive: false })).toEqual([]);
+        });
+
+        it('returns empty array if the files are adjacent', () => {
+            expect(getFileRange(ChessFile.D, ChessFile.E, { inclusive: false })).toEqual([]);
+        });
     });
 });

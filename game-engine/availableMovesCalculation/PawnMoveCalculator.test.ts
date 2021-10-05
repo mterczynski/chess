@@ -179,10 +179,7 @@ describe('PawnMoveCalculator', () => {
                 };
                 board[ChessFile.C][4] = createPawn(Player.WHITE);
                 // pawn next to the black pawn to check if only the last moved white pawn can be target of en passant
-                board[ChessFile.A][4] = {
-                    player: Player.WHITE,
-                    type: PieceType.PAWN,
-                };
+                board[ChessFile.A][4] = createPawn(Player.WHITE);
                 const blackPawn: Pawn & { position: Position } = {
                     ...createPawn(Player.BLACK),
                     position: blackPawnPosition,
@@ -217,8 +214,8 @@ describe('PawnMoveCalculator', () => {
                     file: ChessFile.B,
                     rank: 5 as Rank,
                 };
-                board[ChessFile.C][5] = createPawn(Player.BLACK);
                 // pawn next to the black pawn to check if only the last moved white pawn can be target of en passant
+                board[ChessFile.C][5] = createPawn(Player.BLACK);
                 board[ChessFile.A][5] = createPawn(Player.BLACK);
                 const whitePawn: Pawn & { position: Position } = {
                     ...createPawn(Player.WHITE),
@@ -227,18 +224,18 @@ describe('PawnMoveCalculator', () => {
                 const enPassantMove: EnPassantMove = {
                     from: whitePawnPosition,
                     to: {
-                        file: ChessFile.C,
+                        file: ChessFile.A,
                         rank: 6,
                     },
                     type: SpecialMoveType.EN_PASSANT,
                 };
                 const lastMove: Move = {
                     from: {
-                        file: ChessFile.C,
+                        file: ChessFile.A,
                         rank: 7,
                     },
                     to: {
-                        file: ChessFile.C,
+                        file: ChessFile.A,
                         rank: 5
                     }
                 };

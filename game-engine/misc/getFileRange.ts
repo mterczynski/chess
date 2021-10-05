@@ -22,9 +22,7 @@ export const getFileRange = (from: ChessFile, to: ChessFile, { inclusive = true 
         currentFile = addToFile(currentFile, 1);
     }
 
-    if (biggerFile !== smallerFile) {
-        files.push(biggerFile);
-    }
+    files.push(biggerFile);
 
     if (!inclusive) {
         return files
