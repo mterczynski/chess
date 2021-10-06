@@ -67,7 +67,10 @@ export class Game {
     }
 
     private isGameOver(): boolean {
-        return [GameState.WHITE_WON, GameState.BLACK_WON, GameState.DRAW].includes(this.state);
+        const draws = [GameState.DRAW_BY_50_MOVE_RULE, GameState.DRAW_BY_75_MOVE_RULE, GameState.DRAW_BY_AGREEMENT,
+        GameState.DRAW_BY_INSUFFICIENT_MATERIAL, GameState.DRAW_BY_REPETITION, GameState.DRAW_BY_STALEMATE];
+
+        return [GameState.WHITE_WON, GameState.BLACK_WON, ...draws].includes(this.state);
     }
 
     private isValidMove(move: Move): boolean {
@@ -104,7 +107,7 @@ export class Game {
             const checkingPiecesOfCurrentPlayer = this.checkCalculator.getCheckingEnemyPieces(enemy, this.board, availableCurrentPlayerMoves);
 
             if (checkingPiecesOfCurrentPlayer.length === 0) {
-                return GameState.DRAW;
+                return GameState.DRAW_BY_STALEMATE;
             } else {
                 return this.currentPlayer === Player.WHITE ?
                     GameState.WHITE_WON :

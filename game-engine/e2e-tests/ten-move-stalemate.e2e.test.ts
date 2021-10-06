@@ -2,7 +2,7 @@
  * https://chess.stackexchange.com/a/28803
  * https://www.chess.com/forum/view/game-showcase/fastest-stalemate-known-in-chess
  *
- * Draw in 10 moves by Sam Loyd, one of the fastest known ways to draw
+ * Stalemate in 10 moves by Sam Loyd, one of the fastest known ways to stalemate
  *
 */
 
@@ -43,6 +43,6 @@ describe('Ten move draw', () => {
 
         game.move({ from: { file: ChessFile.C, rank: 8 }, to: { file: ChessFile.E, rank: 6 } });
 
-        expect(game.getState()).toEqual(GameState.DRAW);
+        expect(game.getState()).toEqual(GameState.DRAW_BY_STALEMATE);
     });
 });

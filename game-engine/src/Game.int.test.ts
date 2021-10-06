@@ -149,5 +149,52 @@ describe('Game', () => {
         expect(() => {
             game.move({ from: { file: ChessFile.A, rank: 2 }, to: { file: ChessFile.A, rank: 3 } });
         }).toThrow('Game has already finished, no more moves can be made');
+    });
+
+    describe('it ends in a draw when none of the players can win due to insuffiecient pieces to cause a check mate', () => {
+        test('king vs king', () => {
+            throw 'todo';
+        });
+
+        test('king + bishop vs king', () => {
+            throw 'todo';
+        });
+
+        test('king + knight vs king', () => {
+
+        });
+
+        describe('2 knights + king vs king', () => {
+            test('2 knights + king vs king is a draw', () => {
+                throw 'todo';
+            });
+
+            test('2 knights + king vs king + pawn is not a draw', () => {
+                throw 'todo';
+            });
+        });
+
+        test('king and bishop versus king and bishop with the bishops on the same color', () => {
+
+        });
+        // todo - add more scenarios
+    });
+
+    describe('it ends in a draw when the board position is repeated 3 times', () => {
+        test('todo', () => {
+            throw 'todo';
+        })
+    });
+
+    describe('50 move rule', () => {
+        it('enables players to end a game with a draw when no capture or pawn has been moved in 50 consecutive moves', () => {
+            throw 'todo';
+        });
     })
+
+    describe('75 move rule', () => {
+        it('causes game to end automatically with a draw when no capture or pawn has been moved in 75 consecutive moves', () => {
+            throw 'todo';
+        });
+    });
 });
