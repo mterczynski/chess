@@ -15,7 +15,7 @@ export class Game {
     private state: GameState = GameState.UNSTARTED;
     private currentPlayer: Player = Player.WHITE;
     private board: Board = createNewBoard();
-    private lastMove: Move | null = null;
+    private moves: Move[] = [];
 
     constructor(
         private readonly checkCalculator = new CheckCalculator(),
@@ -49,7 +49,7 @@ export class Game {
     }
 
     getAvailableMovesForPlayer(): Move[] {
-        return this.availableMoveCalculator.getAvailableMovesForPlayer(this.board, this.currentPlayer, this.lastMove);
+        return this.availableMoveCalculator.getAvailableMovesForPlayer(this.board, this.currentPlayer, this.getLastMove());
     }
 
     getCurrentPlayer(): Player | null {
@@ -58,6 +58,10 @@ export class Game {
         }
 
         return this.currentPlayer;
+    }
+
+    private getLastMove(): Move | null {
+        return this.moves.slice(-1)[0] || null;
     }
 
     private changePlayer(): void {
@@ -89,6 +93,8 @@ export class Game {
         if (isCastleablePiece(piece)) {
             piece.hasMoved = true;
         }
+
+        this.moves.push(move);
     }
 
     // todo - extract to separate class (?)
@@ -99,10 +105,10 @@ export class Game {
         }
 
         const enemy = negatePlayer(this.currentPlayer);
-        const enemyMoves = this.availableMoveCalculator.getAvailableMovesForPlayer(this.board, enemy, this.lastMove);
+        const enemyMoves = this.availableMoveCalculator.getAvailableMovesForPlayer(this.board, enemy, this.getLastMove());
 
         if (enemyMoves.length === 0) {
-            const availableCurrentPlayerMoves = this.availableMoveCalculator.getAvailableMovesForPlayer(this.board, this.currentPlayer, this.lastMove);
+            const availableCurrentPlayerMoves = this.availableMoveCalculator.getAvailableMovesForPlayer(this.board, this.currentPlayer, this.getLastMove());
 
             const checkingPiecesOfCurrentPlayer = this.checkCalculator.getCheckingEnemyPieces(enemy, this.board, availableCurrentPlayerMoves);
 

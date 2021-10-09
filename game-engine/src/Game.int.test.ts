@@ -194,7 +194,19 @@ describe('Game', () => {
 
     describe('75 move rule', () => {
         it('causes game to end automatically with a draw when no capture or pawn has been moved in 75 consecutive moves', () => {
-            throw 'todo';
+            const game = new Game();
+
+            for (let i = 0; i < 74 / 2; i++) {
+                game.move({ from: { file: ChessFile.B, rank: 1 }, to: { file: ChessFile.A, rank: 3 } });
+                game.move({ from: { file: ChessFile.B, rank: 8 }, to: { file: ChessFile.A, rank: 6 } });
+
+                game.move({ from: { file: ChessFile.A, rank: 3 }, to: { file: ChessFile.B, rank: 1 } });
+                game.move({ from: { file: ChessFile.A, rank: 6 }, to: { file: ChessFile.B, rank: 8 } });
+            }
+
+            expect(game.getState()).toEqual(GameState.IN_PROGRESS);
+            game.move({ from: { file: ChessFile.B, rank: 1 }, to: { file: ChessFile.A, rank: 3 } });
+            expect(game.getState()).toEqual(GameState.DRAW_BY_75_MOVE_RULE);
         });
     });
 });
