@@ -12,6 +12,7 @@ import { arePositionsEqual } from "./positions";
 
 export class Game {
     static readonly boardSize = 8;
+    private isMoveValidatorEnabled = true;
     private state: GameState = GameState.UNSTARTED;
     private currentPlayer: Player = Player.WHITE;
     private board: Board = createNewBoard();
@@ -21,6 +22,10 @@ export class Game {
         private readonly checkCalculator = new CheckCalculator(),
         private readonly availableMoveCalculator: AvailableMoveCalculator = new AvailableMoveCalculator(checkCalculator),
     ) { }
+
+    disableMoveValidityChecking(): void {
+        this.isMoveValidatorEnabled = false;
+    }
 
     getState(): GameState {
         return this.state;
@@ -36,7 +41,7 @@ export class Game {
             throw new Error('Game has already finished, no more moves can be made');
         }
 
-        if (!this.isValidMove(move)) {
+        if (this.isMoveValidatorEnabled && !this.isValidMove(move)) {
             throw new Error('Invalid move');
         }
 
