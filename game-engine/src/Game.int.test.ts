@@ -24,6 +24,21 @@ describe('Game', () => {
         });
     });
 
+    describe('clone', () => {
+        it('should deep clone the game without modyfing the original existing game', () => {
+            const originalGame = new Game();
+            const clone = originalGame.clone();
+
+            expect(originalGame).toEqual(clone);
+            expect(originalGame === clone).toBe(false);
+
+            originalGame.move({ from: { file: ChessFile.E, rank: 2 }, to: { file: ChessFile.E, rank: 4 } });
+
+            expect(originalGame.getCurrentPlayer()).toEqual(Player.BLACK);
+            expect(clone.getCurrentPlayer()).toEqual(Player.WHITE);
+        });
+    });
+
     describe('getCurrentPlayer', () => {
         it('returns Player.WHITE by default', () => {
             expect(game.getCurrentPlayer()).toBe(Player.WHITE);

@@ -65,6 +65,17 @@ export class Game {
         return this.currentPlayer;
     }
 
+    clone(): Game {
+        const clone = new Game();
+        clone.isMoveValidatorEnabled = this.isMoveValidatorEnabled;
+        clone.state = this.state;
+        clone.currentPlayer = this.currentPlayer
+        clone.board = _.cloneDeep(this.board);
+        clone.moves = _.cloneDeep(this.moves);
+
+        return clone;
+    }
+
     private getLastMove(): Move | null {
         return this.moves.slice(-1)[0] || null;
     }
