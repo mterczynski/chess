@@ -1,5 +1,9 @@
 {
     "name": "chess-game-solo",
+    "workspaces": [
+        "packages/*",
+        "apps/*"
+    ],
     "version": "1.0.0",
     "description": "Chess game",
     "scripts": {
