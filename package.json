@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "Chess game",
     "scripts": {
+        "start": "cd ./client && npm start",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:ci": "jest --ci",
