@@ -2,6 +2,10 @@
     "name": "chess-game-solo",
     "version": "1.0.0",
     "description": "Chess game",
+    "workspaces": [
+        "client",
+        "game-engine"
+    ],
     "scripts": {
         "start": "cd ./client && npm start",
         "test": "jest",
