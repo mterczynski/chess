@@ -1,13 +1,11 @@
-import React, { useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
 import { Game } from "game-engine";
+import { useRef } from "react";
+import "./App.css";
+import logo from "./logo.svg";
 
 function App() {
-    const [game] = useState(new Game());
-    const board = [];
-
-    console.log("game.getState()", game.getState());
+    const gameRef = useRef(new Game());
+    console.log("game.getState()", gameRef.current.getState());
 
     return (
         <div className="App">

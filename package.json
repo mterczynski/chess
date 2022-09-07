@@ -11,7 +11,8 @@
         "test": "jest",
         "test:watch": "jest --watch",
         "test:ci": "jest --ci",
-        "postinstall": "sh link-packages.sh"
+        "postinstall": "sh link-packages.sh",
+        "build:engine": "cd ./game-engine && npm run build"
     },
     "keywords": [
         "chess",
