@@ -5,7 +5,7 @@ import { Board } from "./Board";
 import { createNewBoard } from "./utils";
 import { GameState } from "./GameState";
 import { isCastleablePiece, negatePlayer } from "./utils";
-import { Move } from "./Moves";
+import { EnPassantMove, Move, SpecialMoveType } from "./Moves";
 import { King, Piece, PieceType, Rook } from "./pieces";
 import { Player } from "./Player";
 import {
@@ -17,7 +17,6 @@ import {
 
 export class Game {
     static readonly boardSize = 8;
-    private isMoveValidatorEnabled = true;
     private state: GameState = GameState.UNSTARTED;
     private currentPlayer: Player = Player.WHITE;
     private board: Board = createNewBoard();
@@ -29,10 +28,6 @@ export class Game {
             checkCalculator
         )
     ) {}
-
-    disableMoveValidityChecking(): void {
-        this.isMoveValidatorEnabled = false;
-    }
 
     getState(): GameState {
         return this.state;
@@ -50,14 +45,13 @@ export class Game {
             );
         }
 
-        if (this.isMoveValidatorEnabled && !this.isValidMove(move)) {
+        const updatedMove = this.checkMoveValidityAndAddMetadata(move);
+        if (!updatedMove) {
             throw new Error("Invalid move");
         }
 
-        this.applyMove(move);
+        this.applyMove(updatedMove);
         this.state = this.getNewGameStateAfterMove();
-
-        const f1 = this.board[ChessFile.F][1];
 
         if (this.state === GameState.IN_PROGRESS) {
             this.changePlayer();
@@ -82,7 +76,6 @@ export class Game {
 
     clone(): Game {
         const clone = new Game();
-        clone.isMoveValidatorEnabled = this.isMoveValidatorEnabled;
         clone.state = this.state;
         clone.currentPlayer = this.currentPlayer;
         clone.board = _.cloneDeep(this.board);
@@ -115,13 +108,15 @@ export class Game {
         );
     }
 
-    private isValidMove(move: Move): boolean {
+    private checkMoveValidityAndAddMetadata(move: Move): Move | null {
         const availableMoves = this.getAvailableMovesForPlayer();
-        return availableMoves.some(
+        const availableMove = availableMoves.find(
             (availableMove) =>
                 arePositionsEqual(availableMove.from, move.from) &&
                 arePositionsEqual(availableMove.to, move.to)
         );
+
+        return availableMove || null;
     }
 
     private castleRook(kingMove: Move) {
@@ -148,6 +143,15 @@ export class Game {
         return isKing && filesToMove === 2;
     }
 
+    private enPassantIfAppliable(move: Move, piece: Piece) {
+        if ((move as EnPassantMove).type === SpecialMoveType.EN_PASSANT) {
+            this.board[move.to.file][
+                move.to.rank +
+                    (this.getCurrentPlayer() === Player.WHITE ? -1 : 1)
+            ] = null;
+        }
+    }
+
     private applyMove(move: Move): void {
         const piece = this.board[move.from.file][move.from.rank] as Piece;
         this.board[move.to.file][move.to.rank] = piece;
@@ -156,11 +160,13 @@ export class Game {
         if (isCastleablePiece(piece)) {
             piece.hasMoved = true;
 
+            // TODO - use SpecialMoveType (?)
             if (this.checkForCastle(move, piece)) {
                 this.castleRook(move);
             }
         }
 
+        this.enPassantIfAppliable(move, piece);
         this.moves.push(move);
     }
 
