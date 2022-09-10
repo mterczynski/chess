@@ -35,13 +35,14 @@ export const BoardContextProvider = ({
             return;
         }
 
-        const availablePlayerMoves = gameContext.getAvailableMovesForPlayer();
-        const availableSelectedPieceMoves = availablePlayerMoves.filter(
-            (move) =>
-                move.from.file ===
-                    mapIndexToChessFile(selectedPiece.fileIndex) &&
-                move.from.rank === mapRankIndexToRank(selectedPiece.tileIndex)
-        );
+        const availableSelectedPieceMoves =
+            gameContext.availableMovesForPlayer.filter(
+                (move) =>
+                    move.from.file ===
+                        mapIndexToChessFile(selectedPiece.fileIndex) &&
+                    move.from.rank ===
+                        mapRankIndexToRank(selectedPiece.tileIndex)
+            );
         setAvailableMoves(availableSelectedPieceMoves);
     }, [selectedPiece, gameContext]);
 

@@ -1,5 +1,7 @@
 import { Board as BoardType } from "game-engine";
+import { useContext } from "react";
 import styled from "styled-components";
+import { GameContext } from "../GameContext";
 import { File } from "./File";
 
 const BoardContainer = styled.div`
@@ -10,12 +12,9 @@ const BoardContainer = styled.div`
     transform: translate(-50%, -50%);
 `;
 
-interface BoardProps {
-    state: BoardType;
-}
-
-export const Board = ({ state }: BoardProps) => {
-    const files = Object.values(state);
+export const Board = () => {
+    const gameContext = useContext(GameContext);
+    const files = Object.values(gameContext.board);
 
     return (
         <BoardContainer>

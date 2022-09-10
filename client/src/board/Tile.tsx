@@ -47,15 +47,27 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
     );
 
     const onClick = useCallback(() => {
-        if (gameContext.getCurrentPlayer() !== playerSide) {
+        if (gameContext.currentPlayer !== playerSide) {
             return;
         }
 
-        if (piece !== null && piece.player === playerSide) {
+        const isEmptyTile = piece === null;
+        const isOwnPieceSelected = !isEmptyTile && piece.player === playerSide;
+        const avaiableMoveToSelectedTile = boardContext.availableMoves.find(
+            (move) =>
+                arePositionsEqual(move.to, {
+                    file: mapIndexToChessFile(fileIndex),
+                    rank: mapRankIndexToRank(tileIndex),
+                })
+        );
+
+        if (isOwnPieceSelected) {
             // select unless castling
             // TODO - check for castling
-
             boardContext.setSelectedPiece({ fileIndex, tileIndex });
+        } else if (avaiableMoveToSelectedTile && isEmptyTile) {
+            gameContext.move(avaiableMoveToSelectedTile);
+            // TODO - perform a move
         }
     }, [boardContext, fileIndex, gameContext, piece, tileIndex]);
 
