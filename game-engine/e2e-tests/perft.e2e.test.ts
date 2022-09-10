@@ -38,13 +38,11 @@ describe("Perft", () => {
 
     it("is 20 for maxDepth=1", () => {
         const game = new Game();
-        game.disableMoveValidityChecking();
         expect(getAvailableMovesAmountForGameTree(game, 1)).toEqual(20);
     });
 
     it("is 400 for maxDepth=2", () => {
         const game = new Game();
-        game.disableMoveValidityChecking();
         expect(getAvailableMovesAmountForGameTree(game, 2)).toEqual(400 + 20);
     });
 
