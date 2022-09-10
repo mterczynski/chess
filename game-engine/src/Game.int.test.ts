@@ -282,7 +282,92 @@ describe("Game", () => {
                 PieceType.ROOK
             );
         });
+
+        test("short castling (black side)", () => {
+            const game = new Game();
+
+            makeAnyMove(game);
+            game.move({
+                from: { file: ChessFile.G, rank: 8 },
+                to: { file: ChessFile.H, rank: 6 },
+            });
+            makeAnyMove(game);
+            game.move({
+                from: { file: ChessFile.G, rank: 7 },
+                to: { file: ChessFile.G, rank: 6 },
+            });
+            makeAnyMove(game);
+            game.move({
+                from: { file: ChessFile.F, rank: 8 },
+                to: { file: ChessFile.G, rank: 7 },
+            });
+            makeAnyMove(game);
+            game.move({
+                from: { file: ChessFile.E, rank: 8 },
+                to: { file: ChessFile.G, rank: 8 },
+            });
+
+            expect(game.getBoard()[ChessFile.F][8]?.type).toEqual(
+                PieceType.ROOK
+            );
+            expect(game.getBoard()[ChessFile.G][8]?.type).toEqual(
+                PieceType.KING
+            );
+            expect(game.getBoard()[ChessFile.H][8]).toBe(null);
+        });
+
+        test("long castling (black side)", () => {
+            const moveWhiteKnightForward = () => {
+                game.move({
+                    from: { file: ChessFile.B, rank: 1 },
+                    to: { file: ChessFile.A, rank: 3 },
+                });
+            };
+            const moveWhiteKnightBackward = () => {
+                game.move({
+                    from: { file: ChessFile.A, rank: 3 },
+                    to: { file: ChessFile.B, rank: 1 },
+                });
+            };
+            const game = new Game();
+
+            moveWhiteKnightForward();
+            game.move({
+                from: { file: ChessFile.D, rank: 7 },
+                to: { file: ChessFile.D, rank: 6 },
+            });
+            moveWhiteKnightBackward();
+            game.move({
+                from: { file: ChessFile.C, rank: 8 },
+                to: { file: ChessFile.E, rank: 6 },
+            });
+            moveWhiteKnightForward();
+            game.move({
+                from: { file: ChessFile.D, rank: 8 },
+                to: { file: ChessFile.D, rank: 7 },
+            });
+            moveWhiteKnightBackward();
+            game.move({
+                from: { file: ChessFile.B, rank: 8 },
+                to: { file: ChessFile.A, rank: 6 },
+            });
+            moveWhiteKnightForward();
+            game.move({
+                from: { file: ChessFile.E, rank: 8 },
+                to: { file: ChessFile.C, rank: 8 },
+            });
+
+            expect(game.getBoard()[ChessFile.A][8]).toBe(null);
+            expect(game.getBoard()[ChessFile.C][8]?.type).toEqual(
+                PieceType.KING
+            );
+            expect(game.getBoard()[ChessFile.D][8]?.type).toEqual(
+                PieceType.ROOK
+            );
+        });
     });
+
+    // TODO - add en-passant tests
 
     it("prevents from making move after game is finished", () => {
         const game = playFoolsMate();
