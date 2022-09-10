@@ -392,46 +392,44 @@ describe("PawnMoveCalculator", () => {
         });
 
         it("doesn't miscalculate some moves as en passant", () => {
-            it("works", () => {
-                const game = new Game();
+            const game = new Game();
 
-                game.move({
-                    from: {
-                        file: ChessFile.B,
-                        rank: 2,
-                    },
-                    to: {
-                        file: ChessFile.B,
-                        rank: 4,
-                    },
-                });
-                game.move({
-                    from: {
-                        file: ChessFile.A,
-                        rank: 7,
-                    },
-                    to: {
-                        file: ChessFile.A,
-                        rank: 5,
-                    },
-                });
-                game.move({
-                    from: {
-                        file: ChessFile.B,
-                        rank: 4,
-                    },
-                    to: {
-                        file: ChessFile.B,
-                        rank: 5,
-                    },
-                });
-
-                expect(
-                    game
-                        .getAvailableMovesForPlayer()
-                        .filter((move) => (move as any).type).length
-                ).toEqual(0);
+            game.move({
+                from: {
+                    file: ChessFile.B,
+                    rank: 2,
+                },
+                to: {
+                    file: ChessFile.B,
+                    rank: 4,
+                },
             });
+            game.move({
+                from: {
+                    file: ChessFile.A,
+                    rank: 7,
+                },
+                to: {
+                    file: ChessFile.A,
+                    rank: 5,
+                },
+            });
+            game.move({
+                from: {
+                    file: ChessFile.B,
+                    rank: 4,
+                },
+                to: {
+                    file: ChessFile.B,
+                    rank: 5,
+                },
+            });
+
+            expect(
+                game
+                    .getAvailableMovesForPlayer()
+                    .filter((move) => (move as any).type).length
+            ).toEqual(0);
         });
     });
 });
