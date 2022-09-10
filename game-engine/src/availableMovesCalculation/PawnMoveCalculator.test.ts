@@ -1,6 +1,6 @@
 import { Board } from "../Board";
 import { createNewBoard } from "../utils";
-import { EnPassantMove, Move, SpecialMoveType } from "../Moves";
+import { EnPassantMove, Move, PromotionMove, SpecialMoveType } from "../Moves";
 import { Pawn, PieceType } from "../pieces";
 import { createKnight, createPawn } from "../pieces/PieceFactory";
 import { Player } from "../Player";
@@ -8,6 +8,7 @@ import { ChessFile, Position, Rank } from "../positions";
 import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { PawnMoveCalculator } from "./PawnMoveCalculator";
 import { Game } from "../Game";
+import { createGameWithMoveBeforeWhitePawnPromotion } from "../utils/test/createGameWithMoveBeforeWhitePawnPromotion";
 
 describe("PawnMoveCalculator", () => {
     let calculator: PawnMoveCalculator;
@@ -389,6 +390,41 @@ describe("PawnMoveCalculator", () => {
                 expect(result).toEqual(expect.arrayContaining(expectedMoves));
                 expect(result.length).toEqual(expectedMoves.length);
             });
+        });
+
+        it("includes possible attacking promotion moves", () => {
+            const game = createGameWithMoveBeforeWhitePawnPromotion();
+            const expectedPromotionMoveBase: Omit<PromotionMove, "promoteTo"> =
+                {
+                    from: { file: ChessFile.B, rank: 7 },
+                    to: { file: ChessFile.A, rank: 8 },
+                    type: SpecialMoveType.PROMOTION,
+                };
+
+            expect(
+                game
+                    .getAvailableMovesForPlayer()
+                    .filter((move) => move.to.rank === 8)
+            ).toEqual(
+                expect.arrayContaining([
+                    {
+                        ...expectedPromotionMoveBase,
+                        promoteTo: PieceType.KNIGHT,
+                    },
+                    {
+                        ...expectedPromotionMoveBase,
+                        promoteTo: PieceType.BISHOP,
+                    },
+                    {
+                        ...expectedPromotionMoveBase,
+                        promoteTo: PieceType.ROOK,
+                    },
+                    {
+                        ...expectedPromotionMoveBase,
+                        promoteTo: PieceType.QUEEN,
+                    },
+                ])
+            );
         });
 
         it("doesn't miscalculate some moves as en passant", () => {

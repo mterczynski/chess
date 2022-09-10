@@ -99,18 +99,57 @@ export class PawnMoveCalculator implements MoveCalculator {
         }
 
         const checkForPossibleAttackOnFile = (file: ChessFile | null): void => {
-            if (file) {
-                const squareToAttack = board[file][nextRank];
+            if (!file) {
+                return;
+            }
 
-                if (squareToAttack && squareToAttack.player !== pawn.player) {
-                    attackingMoves.push({
-                        from: pawn.position,
-                        to: {
-                            file,
-                            rank: nextRank,
-                        },
-                    });
-                }
+            const squareToAttack = board[file][nextRank];
+
+            if (
+                !squareToAttack ||
+                squareToAttack?.player === null ||
+                squareToAttack?.player === pawn.player
+            ) {
+                return;
+            }
+
+            const promotingRank =
+                pawn.player === Player.WHITE ? Game.boardSize : 0;
+            const isPromotionAvailable = nextRank === promotingRank;
+
+            if (isPromotionAvailable) {
+                const promotingMoveBase = {
+                    from: pawn.position,
+                    to: {
+                        file,
+                        rank: nextRank,
+                    },
+                    type: SpecialMoveType.PROMOTION,
+                };
+                attackingMoves.push({
+                    ...promotingMoveBase,
+                    promoteTo: PieceType.KNIGHT,
+                });
+                attackingMoves.push({
+                    ...promotingMoveBase,
+                    promoteTo: PieceType.BISHOP,
+                });
+                attackingMoves.push({
+                    ...promotingMoveBase,
+                    promoteTo: PieceType.ROOK,
+                });
+                attackingMoves.push({
+                    ...promotingMoveBase,
+                    promoteTo: PieceType.QUEEN,
+                });
+            } else {
+                attackingMoves.push({
+                    from: pawn.position,
+                    to: {
+                        file,
+                        rank: nextRank,
+                    },
+                });
             }
         };
 
