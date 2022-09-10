@@ -25,3 +25,7 @@ npm i
 | ------------- | ------------ | ---------------------------------------------------------------- |
 | `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done                                                      |
 | `client`      | 🟩🟩⬛⬛⬛⬛ | movable pieces, en passant, castling, checks, checkmates working |
+
+## Preview
+
+<img src="./preview.PNG" alt="" width="400" height="400"/>
