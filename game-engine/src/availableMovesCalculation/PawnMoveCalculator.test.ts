@@ -7,17 +7,18 @@ import { Player } from "../Player";
 import { ChessFile, Position, Rank } from "../positions";
 import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { PawnMoveCalculator } from "./PawnMoveCalculator";
+import { Game } from "../Game";
 
-describe('PawnMoveCalculator', () => {
+describe("PawnMoveCalculator", () => {
     let calculator: PawnMoveCalculator;
 
     beforeEach(() => {
         calculator = new PawnMoveCalculator();
     });
 
-    describe('getAvailableMovesForPieceIgnoringKingSafety', () => {
-        describe('returns single and double non-attacking moves up if available', () => {
-            test('for black', () => {
+    describe("getAvailableMovesForPieceIgnoringKingSafety", () => {
+        describe("returns single and double non-attacking moves up if available", () => {
+            test("for black", () => {
                 const board: Board = createNewBoard();
                 const lastMove: Move = {
                     from: { file: ChessFile.H, rank: 2 },
@@ -39,24 +40,29 @@ describe('PawnMoveCalculator', () => {
                         to: {
                             file: ChessFile.E,
                             rank: 6,
-                        }
+                        },
                     },
                     {
                         from: pawnPosition,
                         to: {
                             file: ChessFile.E,
                             rank: 5,
-                        }
-                    }
+                        },
+                    },
                 ];
 
-                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, lastMove);
+                const result =
+                    calculator.getAvailableMovesForPieceIgnoringKingSafety(
+                        pawn,
+                        board,
+                        lastMove
+                    );
 
                 expect(result).toEqual(expect.arrayContaining(expectedMoves));
                 expect(result.length).toEqual(expectedMoves.length);
             });
 
-            test('for white', () => {
+            test("for white", () => {
                 const board: Board = createNewBoard();
                 const pawnPosition = {
                     file: ChessFile.E,
@@ -72,26 +78,31 @@ describe('PawnMoveCalculator', () => {
                         to: {
                             file: ChessFile.E,
                             rank: 3,
-                        }
+                        },
                     },
                     {
                         from: pawnPosition,
                         to: {
                             file: ChessFile.E,
                             rank: 4,
-                        }
-                    }
+                        },
+                    },
                 ];
 
-                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, null);
+                const result =
+                    calculator.getAvailableMovesForPieceIgnoringKingSafety(
+                        pawn,
+                        board,
+                        null
+                    );
 
                 expect(result).toEqual(expect.arrayContaining(expectedMoves));
                 expect(result.length).toEqual(expectedMoves.length);
             });
         });
 
-        describe('includes possible attacking moves (no en passant scenarios)', () => {
-            test('for black', () => {
+        describe("includes possible attacking moves (no en passant scenarios)", () => {
+            test("for black", () => {
                 const board = createNewBoard();
                 const pawnPosition = {
                     file: ChessFile.B,
@@ -106,31 +117,38 @@ describe('PawnMoveCalculator', () => {
                 const lastMove: Move = {
                     from: { file: ChessFile.B, rank: 4 },
                     to: { file: ChessFile.A, rank: 6 },
-                }
+                };
                 const expectedAttackingMoves: Move[] = [
                     {
                         from: pawnPosition,
                         to: {
                             file: ChessFile.A,
                             rank: 6,
-                        }
+                        },
                     },
                     {
                         from: pawnPosition,
                         to: {
                             file: ChessFile.C,
                             rank: 6,
-                        }
-                    }
+                        },
+                    },
                 ];
 
-                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, lastMove);
+                const result =
+                    calculator.getAvailableMovesForPieceIgnoringKingSafety(
+                        pawn,
+                        board,
+                        lastMove
+                    );
 
-                expect(result).toEqual(expect.arrayContaining(expectedAttackingMoves));
+                expect(result).toEqual(
+                    expect.arrayContaining(expectedAttackingMoves)
+                );
                 expect(result.length).toEqual(4);
             });
 
-            test('for white', () => {
+            test("for white", () => {
                 const board = createNewBoard();
                 const pawnPosition = {
                     file: ChessFile.B,
@@ -145,33 +163,40 @@ describe('PawnMoveCalculator', () => {
                 const lastMove: Move = {
                     from: { file: ChessFile.B, rank: 5 },
                     to: { file: ChessFile.A, rank: 3 },
-                }
+                };
                 const expectedAttackingMoves: Move[] = [
                     {
                         from: pawnPosition,
                         to: {
                             file: ChessFile.A,
                             rank: 3,
-                        }
+                        },
                     },
                     {
                         from: pawnPosition,
                         to: {
                             file: ChessFile.C,
                             rank: 3,
-                        }
-                    }
+                        },
+                    },
                 ];
 
-                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, lastMove);
+                const result =
+                    calculator.getAvailableMovesForPieceIgnoringKingSafety(
+                        pawn,
+                        board,
+                        lastMove
+                    );
 
-                expect(result).toEqual(expect.arrayContaining(expectedAttackingMoves));
+                expect(result).toEqual(
+                    expect.arrayContaining(expectedAttackingMoves)
+                );
                 expect(result.length).toEqual(4);
             });
         });
 
-        describe('includes possible en passant moves', () => {
-            test('for black', () => {
+        describe("includes possible en passant moves", () => {
+            test("for black", () => {
                 const board = createNewBoard();
                 const blackPawnPosition = {
                     file: ChessFile.B,
@@ -199,16 +224,21 @@ describe('PawnMoveCalculator', () => {
                     },
                     to: {
                         file: ChessFile.C,
-                        rank: 4
-                    }
+                        rank: 4,
+                    },
                 };
-                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(blackPawn, board, lastMove);
+                const result =
+                    calculator.getAvailableMovesForPieceIgnoringKingSafety(
+                        blackPawn,
+                        board,
+                        lastMove
+                    );
 
                 expect(result).toEqual(expect.arrayContaining([enPassantMove]));
                 expect(result.length).toEqual(2);
             });
 
-            test('for white', () => {
+            test("for white", () => {
                 const board = createNewBoard();
                 const whitePawnPosition = {
                     file: ChessFile.B,
@@ -236,18 +266,23 @@ describe('PawnMoveCalculator', () => {
                     },
                     to: {
                         file: ChessFile.A,
-                        rank: 5
-                    }
+                        rank: 5,
+                    },
                 };
-                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(whitePawn, board, lastMove);
+                const result =
+                    calculator.getAvailableMovesForPieceIgnoringKingSafety(
+                        whitePawn,
+                        board,
+                        lastMove
+                    );
 
                 expect(result).toEqual(expect.arrayContaining([enPassantMove]));
                 expect(result.length).toEqual(2);
             });
         });
 
-        describe('includes possible promotion moves', () => {
-            test('for black', () => {
+        describe("includes possible promotion moves", () => {
+            test("for black", () => {
                 const board = getEmptyBoard();
                 board.A[2] = createPawn(Player.BLACK);
 
@@ -255,12 +290,13 @@ describe('PawnMoveCalculator', () => {
                     from: {
                         file: ChessFile.A,
                         rank: 2,
-                    }, to: {
+                    },
+                    to: {
                         file: ChessFile.A,
                         rank: 1,
                     },
                     type: SpecialMoveType.PROMOTION,
-                }
+                };
 
                 const pawn: Pawn & { position: Position } = {
                     ...createPawn(Player.BLACK),
@@ -268,34 +304,39 @@ describe('PawnMoveCalculator', () => {
                         file: ChessFile.A,
                         rank: 2,
                     },
-                }
+                };
 
                 const expectedMoves: Move[] = [
                     {
                         ...(promotionMoveBase as any),
-                        promoteTo: PieceType.KNIGHT
+                        promoteTo: PieceType.KNIGHT,
                     },
                     {
                         ...(promotionMoveBase as any),
-                        promoteTo: PieceType.BISHOP
+                        promoteTo: PieceType.BISHOP,
                     },
                     {
                         ...(promotionMoveBase as any),
-                        promoteTo: PieceType.ROOK
+                        promoteTo: PieceType.ROOK,
                     },
                     {
                         ...(promotionMoveBase as any),
-                        promoteTo: PieceType.QUEEN
+                        promoteTo: PieceType.QUEEN,
                     },
                 ];
 
-                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, null);
+                const result =
+                    calculator.getAvailableMovesForPieceIgnoringKingSafety(
+                        pawn,
+                        board,
+                        null
+                    );
 
                 expect(result).toEqual(expect.arrayContaining(expectedMoves));
                 expect(result.length).toEqual(expectedMoves.length);
             });
 
-            test('for white', () => {
+            test("for white", () => {
                 const board = getEmptyBoard();
                 board.A[7] = createPawn(Player.WHITE);
 
@@ -303,12 +344,13 @@ describe('PawnMoveCalculator', () => {
                     from: {
                         file: ChessFile.A,
                         rank: 7,
-                    }, to: {
+                    },
+                    to: {
                         file: ChessFile.A,
                         rank: 8,
                     },
                     type: SpecialMoveType.PROMOTION,
-                }
+                };
 
                 const pawn: Pawn & { position: Position } = {
                     ...createPawn(Player.WHITE),
@@ -316,33 +358,80 @@ describe('PawnMoveCalculator', () => {
                         file: ChessFile.A,
                         rank: 7,
                     },
-                }
+                };
 
                 const expectedMoves: Move[] = [
                     {
                         ...(promotionMoveBase as any),
-                        promoteTo: PieceType.KNIGHT
+                        promoteTo: PieceType.KNIGHT,
                     },
                     {
                         ...(promotionMoveBase as any),
-                        promoteTo: PieceType.BISHOP
+                        promoteTo: PieceType.BISHOP,
                     },
                     {
                         ...(promotionMoveBase as any),
-                        promoteTo: PieceType.ROOK
+                        promoteTo: PieceType.ROOK,
                     },
                     {
                         ...(promotionMoveBase as any),
-                        promoteTo: PieceType.QUEEN
+                        promoteTo: PieceType.QUEEN,
                     },
                 ];
 
-                const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, null);
+                const result =
+                    calculator.getAvailableMovesForPieceIgnoringKingSafety(
+                        pawn,
+                        board,
+                        null
+                    );
 
                 expect(result).toEqual(expect.arrayContaining(expectedMoves));
                 expect(result.length).toEqual(expectedMoves.length);
             });
         });
 
+        it("doesn't miscalculate some moves as en passant", () => {
+            it("works", () => {
+                const game = new Game();
+
+                game.move({
+                    from: {
+                        file: ChessFile.B,
+                        rank: 2,
+                    },
+                    to: {
+                        file: ChessFile.B,
+                        rank: 4,
+                    },
+                });
+                game.move({
+                    from: {
+                        file: ChessFile.A,
+                        rank: 7,
+                    },
+                    to: {
+                        file: ChessFile.A,
+                        rank: 5,
+                    },
+                });
+                game.move({
+                    from: {
+                        file: ChessFile.B,
+                        rank: 4,
+                    },
+                    to: {
+                        file: ChessFile.B,
+                        rank: 5,
+                    },
+                });
+
+                expect(
+                    game
+                        .getAvailableMovesForPlayer()
+                        .filter((move) => (move as any).type).length
+                ).toEqual(0);
+            });
+        });
     });
 });
