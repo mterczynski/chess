@@ -1,7 +1,9 @@
 import { Move } from "game-engine";
 import { mapIndexToChessFile, mapRankIndexToRank } from "game-engine/positions";
+import _ from "lodash";
 import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from "../GameContext";
+import { playerSide } from "./playerSide";
 
 interface SelectedPiece {
     fileIndex: number;
@@ -45,6 +47,22 @@ export const BoardContextProvider = ({
             );
         setAvailableMoves(availableSelectedPieceMoves);
     }, [selectedPiece, gameContext]);
+
+    // make a random enemy move after player move
+    useEffect(() => {
+        if (
+            gameContext.currentPlayer !== null &&
+            gameContext.currentPlayer !== playerSide
+        ) {
+            setTimeout(() => {
+                const randomMove = _.sample(
+                    gameContext.availableMovesForPlayer
+                ) as Move;
+                gameContext.move(randomMove);
+            }, 500);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [gameContext.currentPlayer]);
 
     return (
         <BoardContext.Provider
