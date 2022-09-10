@@ -61,13 +61,11 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
                 })
         );
 
-        if (isOwnPieceSelected) {
-            // select unless castling
-            // TODO - check for castling
-            boardContext.setSelectedPiece({ fileIndex, tileIndex });
-        } else if (avaiableMoveToSelectedTile && isEmptyTile) {
+        // TODO - test castling
+        if (avaiableMoveToSelectedTile) {
             gameContext.move(avaiableMoveToSelectedTile);
-            // TODO - perform a move
+        } else if (isOwnPieceSelected) {
+            boardContext.setSelectedPiece({ fileIndex, tileIndex });
         }
     }, [boardContext, fileIndex, gameContext, piece, tileIndex]);
 
