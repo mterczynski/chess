@@ -169,7 +169,7 @@ describe("Game", () => {
                 });
 
                 expect(game.getBoard()[ChessFile.A][8]).toEqual({
-                    pieceType: PieceType.KNIGHT,
+                    type: PieceType.KNIGHT,
                     player: Player.WHITE,
                 });
             });
@@ -185,7 +185,7 @@ describe("Game", () => {
                 });
 
                 expect(game.getBoard()[ChessFile.A][8]).toEqual({
-                    pieceType: PieceType.KNIGHT,
+                    type: PieceType.KNIGHT,
                     player: Player.WHITE,
                 });
             });

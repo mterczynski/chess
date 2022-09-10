@@ -12,7 +12,12 @@ import {
     ChessFile,
     getFileDifference,
 } from "./positions";
-import { createNewBoard, isCastleablePiece, negatePlayer } from "./utils";
+import {
+    createNewBoard,
+    isCastleablePiece,
+    isCastleablePieceType,
+    negatePlayer,
+} from "./utils";
 
 export class Game {
     static readonly boardSize = 8;
@@ -154,13 +159,28 @@ export class Game {
         return isKing && filesToMove === 2;
     }
 
-    private enPassantIfAppliable(move: Move, piece: Piece) {
+    private enPassantIfAppliable(move: Move) {
         if ((move as EnPassantMove).type === SpecialMoveType.EN_PASSANT) {
             this.board[move.to.file][
                 move.to.rank +
                     (this.getCurrentPlayer() === Player.WHITE ? -1 : 1)
             ] = null;
         }
+    }
+
+    private promote(move: PromotionMove) {
+        this.board[move.to.file][move.to.rank] = isCastleablePieceType(
+            move.promoteTo
+        )
+            ? {
+                  player: this.currentPlayer,
+                  type: move.promoteTo,
+                  hasMoved: true,
+              }
+            : {
+                  player: this.currentPlayer,
+                  type: move.promoteTo,
+              };
     }
 
     private applyMove(move: Move): void {
@@ -176,8 +196,10 @@ export class Game {
                 this.castleRook(move);
             }
         }
-
-        this.enPassantIfAppliable(move, piece);
+        this.enPassantIfAppliable(move);
+        if ((move as any).type === SpecialMoveType.PROMOTION) {
+            this.promote(move as PromotionMove);
+        }
         this.moves.push(move);
     }
 
