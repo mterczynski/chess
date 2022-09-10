@@ -5,6 +5,7 @@ export * from "./ChessFile";
 export * from "./getFileDifference";
 export * from "./getFileRange";
 export * from "./mapIndexToChessFile";
+export * from "./mapFileToFileIndex";
 export * from "./mapRankIndexToRank";
 export * from "./Position";
 export * from "./Rank";
