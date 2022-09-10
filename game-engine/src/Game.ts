@@ -130,6 +130,8 @@ export class Game {
             if (!(move as PromotionMove).promoteTo) {
                 throw new Error(`Invalid move: (missing 'promoteTo')`);
             }
+
+            return move;
         }
 
         return availableMove || null;

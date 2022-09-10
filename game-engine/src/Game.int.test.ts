@@ -181,11 +181,11 @@ describe("Game", () => {
                     from: { file: ChessFile.B, rank: 7 },
                     to: { file: ChessFile.A, rank: 8 },
                     type: SpecialMoveType.PROMOTION,
-                    promoteTo: PieceType.KNIGHT,
+                    promoteTo: PieceType.QUEEN,
                 });
 
                 expect(game.getBoard()[ChessFile.A][8]).toEqual({
-                    type: PieceType.KNIGHT,
+                    type: PieceType.QUEEN,
                     player: Player.WHITE,
                 });
             });
