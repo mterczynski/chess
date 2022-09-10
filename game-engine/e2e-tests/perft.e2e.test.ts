@@ -48,20 +48,22 @@ describe("Perft", () => {
         expect(getAvailableMovesAmountForGameTree(game, 2)).toEqual(400 + 20);
     });
 
-    it("is 8902 for maxDepth=3", () => {
-        const game = new Game();
-        game.disableMoveValidityChecking();
-        expect(getAvailableMovesAmountForGameTree(game, 3)).toEqual(
-            8902 + 400 + 20
-        );
-    });
+    // commented due to slow speed
 
-    it("is 197281 for maxDepth=4", () => {
-        const game = new Game();
-        expect(getAvailableMovesAmountForGameTree(game, 4)).toEqual(
-            197281 + 8902 + 400 + 20
-        );
-    });
+    // it("is 8902 for maxDepth=3", () => {
+    //     const game = new Game();
+    //     game.disableMoveValidityChecking();
+    //     expect(getAvailableMovesAmountForGameTree(game, 3)).toEqual(
+    //         8902 + 400 + 20
+    //     );
+    // });
+
+    // it("is 197281 for maxDepth=4", () => {
+    //     const game = new Game();
+    //     expect(getAvailableMovesAmountForGameTree(game, 4)).toEqual(
+    //         197281 + 8902 + 400 + 20
+    //     );
+    // });
 
     // it('is 4865609 for maxDepth=5', () => {
     //     const game = new Game();
