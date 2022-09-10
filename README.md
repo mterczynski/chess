@@ -21,7 +21,7 @@ npm i
 
 ## 🚧 Work progress
 
-| Repository    | Progress     | Comments                |
-| ------------- | ------------ | ----------------------- |
-| `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done             |
-| `client`      | ⬛⬛⬛⬛⬛⬛ | almost a fresh template |
+| Repository    | Progress     | Comments               |
+| ------------- | ------------ | ---------------------- |
+| `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done            |
+| `client`      | 🟩⬛⬛⬛⬛⬛ | starting board showing |
