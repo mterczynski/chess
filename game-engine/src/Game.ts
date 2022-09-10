@@ -3,7 +3,7 @@ import { AvailableMoveCalculator } from "./availableMovesCalculation";
 import { CheckCalculator } from "./availableMovesCalculation/CheckCalculator";
 import { Board } from "./Board";
 import { GameState } from "./GameState";
-import { EnPassantMove, Move, SpecialMoveType } from "./Moves";
+import { EnPassantMove, Move, PromotionMove, SpecialMoveType } from "./Moves";
 import { Piece, PieceType, Rook } from "./pieces";
 import { Player } from "./Player";
 import {
@@ -114,6 +114,18 @@ export class Game {
                 arePositionsEqual(availableMove.from, move.from) &&
                 arePositionsEqual(availableMove.to, move.to)
         );
+
+        if ((availableMove as any)?.type === SpecialMoveType.PROMOTION) {
+            if ((move as any).type !== SpecialMoveType.PROMOTION) {
+                throw new Error(
+                    `Invalid move type (expected=${SpecialMoveType.PROMOTION})`
+                );
+            }
+
+            if (!(move as PromotionMove).promoteTo) {
+                throw new Error(`Invalid move: (missing 'promoteTo')`);
+            }
+        }
 
         return availableMove || null;
     }

@@ -1,11 +1,12 @@
 import { Game } from "./Game";
 import { GameState } from "./GameState";
 import { mapIndexToChessFile } from "./utils";
-import { Move } from "./Moves";
+import { Move, SpecialMoveType } from "./Moves";
 import { Player } from "./Player";
 import { ChessFile } from "./positions";
 import { playFoolsMate } from "../test-utils/playFoolsMate";
 import { PieceType } from "./pieces";
+import { createGameWithMoveBeforeWhitePawnPromotion } from "./utils/test/createGameWithMoveBeforeWhitePawnPromotion";
 
 const makeAnyMove = (game: Game) => {
     game.move(game.getAvailableMovesForPlayer()[0]);
@@ -131,15 +132,28 @@ describe("Game", () => {
 
         describe("promotion validation", () => {
             it('throws an error if promotion move is passed without type="PROMOTION"', () => {
-                throw "todo";
+                const game = createGameWithMoveBeforeWhitePawnPromotion();
+
+                expect(() => {
+                    game.move({
+                        from: { file: ChessFile.B, rank: 7 },
+                        to: { file: ChessFile.A, rank: 8 },
+                    });
+                }).toThrow(
+                    `Invalid move type (expected=${SpecialMoveType.PROMOTION})`
+                );
             });
 
             it("throws an error if promotion move is passed without `promoteTo`", () => {
-                throw "todo";
-            });
+                const game = createGameWithMoveBeforeWhitePawnPromotion();
 
-            it("throws an error if promotion move is passed with king in `promoteTo`", () => {
-                throw "todo";
+                expect(() => {
+                    game.move({
+                        from: { file: ChessFile.B, rank: 7 },
+                        to: { file: ChessFile.A, rank: 8 },
+                        type: SpecialMoveType.PROMOTION,
+                    });
+                }).toThrow("Invalid move: (missing 'promoteTo')");
             });
         });
     });
