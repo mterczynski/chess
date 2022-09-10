@@ -18,6 +18,6 @@ describe("Performance", () => {
             ["hour", gamesPlayedInSecond * 60 * 60],
         ]);
 
-        expect(gamesPlayedInSecond).toBeGreaterThan(20);
+        expect(gamesPlayedInSecond).toBeGreaterThan(10);
     });
 });
