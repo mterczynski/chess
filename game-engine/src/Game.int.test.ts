@@ -128,6 +128,20 @@ describe("Game", () => {
                 }).toThrow("Invalid move");
             });
         });
+
+        describe("promotion validation", () => {
+            it('throws an error if promotion move is passed without type="PROMOTION"', () => {
+                throw "todo";
+            });
+
+            it("throws an error if promotion move is passed without `promoteTo`", () => {
+                throw "todo";
+            });
+
+            it("throws an error if promotion move is passed with king in `promoteTo`", () => {
+                throw "todo";
+            });
+        });
     });
 
     describe("getBoard", () => {
