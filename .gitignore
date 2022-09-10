@@ -2,4 +2,4 @@
 /coverage
 /.idea
 /build
-./deploy.sh
+deploy.sh
