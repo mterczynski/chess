@@ -24,7 +24,7 @@ npm i
 | Repository    | Progress     | Comments                                                         |
 | ------------- | ------------ | ---------------------------------------------------------------- |
 | `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done                                                      |
-| `client`      | 🟩🟩⬛⬛⬛⬛ | movable pieces, en passant, castling, checks, checkmates working |
+| `client`      | 🟩🟩🟩⬛⬛⬛ | movable pieces, en passant, castling, checks, checkmates working, promotions |
 
 ## Preview
 
