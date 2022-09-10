@@ -21,7 +21,7 @@ npm i
 
 ## 🚧 Work progress
 
-| Repository    | Progress     | Comments               |
-| ------------- | ------------ | ---------------------- |
-| `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done            |
-| `client`      | 🟩⬛⬛⬛⬛⬛ | starting board showing |
+| Repository    | Progress     | Comments                                                         |
+| ------------- | ------------ | ---------------------------------------------------------------- |
+| `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done                                                      |
+| `client`      | 🟩🟩⬛⬛⬛⬛ | movable pieces, en passant, castling, checks, checkmates working |
