@@ -1,5 +1,6 @@
 import { Board, Game, GameState, Move, Player } from "game-engine";
 import React, { useCallback, useRef, useState } from "react";
+import { playerSide } from "./board/playerSide";
 
 export const GameContext = React.createContext<{
     move: (move: Move) => void;
@@ -22,6 +23,27 @@ export const GameContextProvider = ({
         setCurrentPlayer(game.current.getCurrentPlayer());
         setState(game.current.getState());
         setBoard(game.current.getBoard());
+
+        const isDraw = [
+            GameState.DRAW_BY_50_MOVE_RULE,
+            GameState.DRAW_BY_75_MOVE_RULE,
+            GameState.DRAW_BY_AGREEMENT,
+            GameState.DRAW_BY_INSUFFICIENT_MATERIAL,
+            GameState.DRAW_BY_REPETITION,
+            GameState.DRAW_BY_STALEMATE,
+        ].includes(game.current.getState());
+
+        if (playerSide === Player.WHITE) {
+            if (game.current.getState() === GameState.WHITE_WON) {
+                alert("You won");
+            } else if (game.current.getState() === GameState.BLACK_WON) {
+                alert("You lost");
+            } else if (isDraw) {
+                alert("Game drawn"); // TODO - add more descriptive messages that mention draw reason
+            }
+        } else {
+            // TODO
+        }
     }, []);
 
     const [availableMovesForPlayer, setAvailableMovesForPlayer] = useState(
