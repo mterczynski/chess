@@ -1,8 +1,11 @@
 import { ChessFile } from ".";
 
-export function addToFile(file: ChessFile, filesToAdd: number): ChessFile | null {
+export function addToFile(
+    file: ChessFile,
+    filesToAdd: number
+): ChessFile | null {
     if (!Number.isInteger(filesToAdd)) {
-        throw new Error('filesToAdd must be an integer');
+        throw new Error("filesToAdd must be an integer");
     }
 
     const newFile = String.fromCharCode(file.charCodeAt(0) + filesToAdd);
@@ -10,6 +13,6 @@ export function addToFile(file: ChessFile, filesToAdd: number): ChessFile | null
     if (Object.values<string>(ChessFile).includes(newFile)) {
         return newFile as ChessFile;
     } else {
-        return null;
+        return null; // TODO - consider if throw error instead makes more sense
     }
 }

@@ -5,6 +5,11 @@ import { Move } from "./Moves";
 import { Player } from "./Player";
 import { ChessFile } from "./positions";
 import { playFoolsMate } from "../test-utils/playFoolsMate";
+import { PieceType } from "./pieces";
+
+const makeAnyMove = (game: Game) => {
+    game.move(game.getAvailableMovesForPlayer()[0]);
+};
 
 describe("Game", () => {
     let game: Game;
@@ -193,6 +198,89 @@ describe("Game", () => {
 
             expect(result).toEqual(expect.arrayContaining(expectedMoves));
             expect(result.length).toEqual(expectedMoves.length);
+        });
+    });
+
+    describe("castling", () => {
+        test("short castling (white side)", () => {
+            const game = new Game();
+
+            game.move({
+                from: { file: ChessFile.G, rank: 1 },
+                to: { file: ChessFile.H, rank: 3 },
+            });
+            makeAnyMove(game);
+            game.move({
+                from: { file: ChessFile.G, rank: 2 },
+                to: { file: ChessFile.G, rank: 3 },
+            });
+            makeAnyMove(game);
+            game.move({
+                from: { file: ChessFile.F, rank: 1 },
+                to: { file: ChessFile.G, rank: 2 },
+            });
+            makeAnyMove(game);
+            game.move({
+                from: { file: ChessFile.E, rank: 1 },
+                to: { file: ChessFile.G, rank: 1 },
+            });
+
+            expect(game.getBoard()[ChessFile.F][1]?.type).toEqual(
+                PieceType.ROOK
+            );
+            expect(game.getBoard()[ChessFile.G][1]?.type).toEqual(
+                PieceType.KING
+            );
+            expect(game.getBoard()[ChessFile.H][1]).toBe(null);
+        });
+
+        test("long castling (white side)", () => {
+            const moveBlackKnightForward = () => {
+                game.move({
+                    from: { file: ChessFile.G, rank: 8 },
+                    to: { file: ChessFile.H, rank: 6 },
+                });
+            };
+            const moveBlackKnightBackward = () => {
+                game.move({
+                    from: { file: ChessFile.H, rank: 6 },
+                    to: { file: ChessFile.G, rank: 8 },
+                });
+            };
+            const game = new Game();
+
+            game.move({
+                from: { file: ChessFile.D, rank: 2 },
+                to: { file: ChessFile.D, rank: 4 },
+            });
+            moveBlackKnightForward();
+            game.move({
+                from: { file: ChessFile.B, rank: 1 },
+                to: { file: ChessFile.C, rank: 3 },
+            });
+            moveBlackKnightBackward();
+            game.move({
+                from: { file: ChessFile.C, rank: 1 },
+                to: { file: ChessFile.E, rank: 3 },
+            });
+            moveBlackKnightForward();
+            game.move({
+                from: { file: ChessFile.D, rank: 1 },
+                to: { file: ChessFile.D, rank: 3 },
+            });
+            moveBlackKnightBackward();
+            game.move({
+                from: { file: ChessFile.E, rank: 1 },
+                to: { file: ChessFile.C, rank: 1 },
+            });
+
+            expect(game.getBoard()[ChessFile.A][1]).toBe(null);
+            expect(game.getBoard()[ChessFile.C][1]?.type).toEqual(
+                PieceType.KING
+            );
+            expect(game.getBoard()[ChessFile.D][1]?.type).toEqual(
+                PieceType.ROOK
+            );
         });
     });
 

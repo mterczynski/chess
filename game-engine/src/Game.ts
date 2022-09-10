@@ -6,9 +6,14 @@ import { createNewBoard } from "./utils";
 import { GameState } from "./GameState";
 import { isCastleablePiece, negatePlayer } from "./utils";
 import { Move } from "./Moves";
-import { Piece } from "./pieces";
+import { King, Piece, PieceType, Rook } from "./pieces";
 import { Player } from "./Player";
-import { arePositionsEqual } from "./positions";
+import {
+    addToFile,
+    arePositionsEqual,
+    ChessFile,
+    getFileDifference,
+} from "./positions";
 
 export class Game {
     static readonly boardSize = 8;
@@ -20,8 +25,10 @@ export class Game {
 
     constructor(
         private readonly checkCalculator = new CheckCalculator(),
-        private readonly availableMoveCalculator: AvailableMoveCalculator = new AvailableMoveCalculator(checkCalculator),
-    ) { }
+        private readonly availableMoveCalculator: AvailableMoveCalculator = new AvailableMoveCalculator(
+            checkCalculator
+        )
+    ) {}
 
     disableMoveValidityChecking(): void {
         this.isMoveValidatorEnabled = false;
@@ -38,15 +45,19 @@ export class Game {
 
     move(move: Move): void {
         if (this.isGameOver()) {
-            throw new Error('Game has already finished, no more moves can be made');
+            throw new Error(
+                "Game has already finished, no more moves can be made"
+            );
         }
 
         if (this.isMoveValidatorEnabled && !this.isValidMove(move)) {
-            throw new Error('Invalid move');
+            throw new Error("Invalid move");
         }
 
         this.applyMove(move);
         this.state = this.getNewGameStateAfterMove();
+
+        const f1 = this.board[ChessFile.F][1];
 
         if (this.state === GameState.IN_PROGRESS) {
             this.changePlayer();
@@ -54,7 +65,11 @@ export class Game {
     }
 
     getAvailableMovesForPlayer(): Move[] {
-        return this.availableMoveCalculator.getAvailableMovesForPlayer(this.board, this.currentPlayer, this.getLastMove());
+        return this.availableMoveCalculator.getAvailableMovesForPlayer(
+            this.board,
+            this.currentPlayer,
+            this.getLastMove()
+        );
     }
 
     getCurrentPlayer(): Player | null {
@@ -69,7 +84,7 @@ export class Game {
         const clone = new Game();
         clone.isMoveValidatorEnabled = this.isMoveValidatorEnabled;
         clone.state = this.state;
-        clone.currentPlayer = this.currentPlayer
+        clone.currentPlayer = this.currentPlayer;
         clone.board = _.cloneDeep(this.board);
         clone.moves = _.cloneDeep(this.moves);
 
@@ -81,24 +96,56 @@ export class Game {
     }
 
     private changePlayer(): void {
-        this.currentPlayer = this.currentPlayer === Player.WHITE ?
-            Player.BLACK :
-            Player.WHITE;
+        this.currentPlayer =
+            this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE;
     }
 
     private isGameOver(): boolean {
-        const draws = [GameState.DRAW_BY_50_MOVE_RULE, GameState.DRAW_BY_75_MOVE_RULE, GameState.DRAW_BY_AGREEMENT,
-        GameState.DRAW_BY_INSUFFICIENT_MATERIAL, GameState.DRAW_BY_REPETITION, GameState.DRAW_BY_STALEMATE];
+        const draws = [
+            GameState.DRAW_BY_50_MOVE_RULE,
+            GameState.DRAW_BY_75_MOVE_RULE,
+            GameState.DRAW_BY_AGREEMENT,
+            GameState.DRAW_BY_INSUFFICIENT_MATERIAL,
+            GameState.DRAW_BY_REPETITION,
+            GameState.DRAW_BY_STALEMATE,
+        ];
 
-        return [GameState.WHITE_WON, GameState.BLACK_WON, ...draws].includes(this.state);
+        return [GameState.WHITE_WON, GameState.BLACK_WON, ...draws].includes(
+            this.state
+        );
     }
 
     private isValidMove(move: Move): boolean {
         const availableMoves = this.getAvailableMovesForPlayer();
-        return availableMoves.some(availableMove =>
-            arePositionsEqual(availableMove.from, move.from) &&
-            arePositionsEqual(availableMove.to, move.to)
+        return availableMoves.some(
+            (availableMove) =>
+                arePositionsEqual(availableMove.from, move.from) &&
+                arePositionsEqual(availableMove.to, move.to)
         );
+    }
+
+    private castleRook(kingMove: Move) {
+        const rank = kingMove.from.rank;
+        const isKingMoveToTheRight =
+            getFileDifference(kingMove.to.file, kingMove.from.file) < 0;
+        const rookFile = isKingMoveToTheRight ? ChessFile.H : ChessFile.A;
+
+        const rook = this.board[rookFile][rank] as Rook;
+        const newRookFile = addToFile(
+            kingMove.to.file,
+            isKingMoveToTheRight ? -1 : 1
+        ) as ChessFile;
+
+        this.board[newRookFile][rank] = rook;
+        this.board[rookFile][rank] = null;
+    }
+
+    private checkForCastle(move: Move, piece: Piece) {
+        const isKing = piece.type === PieceType.KING;
+        const filesToMove = Math.abs(
+            getFileDifference(move.from.file, move.to.file)
+        );
+        return isKing && filesToMove === 2;
     }
 
     private applyMove(move: Move): void {
@@ -108,6 +155,10 @@ export class Game {
 
         if (isCastleablePiece(piece)) {
             piece.hasMoved = true;
+
+            if (this.checkForCastle(move, piece)) {
+                this.castleRook(move);
+            }
         }
 
         this.moves.push(move);
@@ -121,19 +172,34 @@ export class Game {
         }
 
         const enemy = negatePlayer(this.currentPlayer);
-        const enemyMoves = this.availableMoveCalculator.getAvailableMovesForPlayer(this.board, enemy, this.getLastMove());
+        const enemyMoves =
+            this.availableMoveCalculator.getAvailableMovesForPlayer(
+                this.board,
+                enemy,
+                this.getLastMove()
+            );
 
         if (enemyMoves.length === 0) {
-            const availableCurrentPlayerMoves = this.availableMoveCalculator.getAvailableMovesForPlayer(this.board, this.currentPlayer, this.getLastMove());
+            const availableCurrentPlayerMoves =
+                this.availableMoveCalculator.getAvailableMovesForPlayer(
+                    this.board,
+                    this.currentPlayer,
+                    this.getLastMove()
+                );
 
-            const checkingPiecesOfCurrentPlayer = this.checkCalculator.getCheckingEnemyPieces(enemy, this.board, availableCurrentPlayerMoves);
+            const checkingPiecesOfCurrentPlayer =
+                this.checkCalculator.getCheckingEnemyPieces(
+                    enemy,
+                    this.board,
+                    availableCurrentPlayerMoves
+                );
 
             if (checkingPiecesOfCurrentPlayer.length === 0) {
                 return GameState.DRAW_BY_STALEMATE;
             } else {
-                return this.currentPlayer === Player.WHITE ?
-                    GameState.WHITE_WON :
-                    GameState.BLACK_WON;
+                return this.currentPlayer === Player.WHITE
+                    ? GameState.WHITE_WON
+                    : GameState.BLACK_WON;
             }
         }
 

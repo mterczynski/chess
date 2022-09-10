@@ -62,6 +62,7 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
         );
 
         // TODO - test castling
+        // TODO - allow promotions
         if (avaiableMoveToSelectedTile) {
             gameContext.move(avaiableMoveToSelectedTile);
         } else if (isOwnPieceSelected) {
