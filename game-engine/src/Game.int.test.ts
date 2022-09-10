@@ -156,6 +156,40 @@ describe("Game", () => {
                 }).toThrow("Invalid move: (missing 'promoteTo')");
             });
         });
+
+        describe("promotion", () => {
+            it("works for white", () => {
+                const game = createGameWithMoveBeforeWhitePawnPromotion();
+
+                game.move({
+                    from: { file: ChessFile.B, rank: 7 },
+                    to: { file: ChessFile.A, rank: 8 },
+                    type: SpecialMoveType.PROMOTION,
+                    promoteTo: PieceType.KNIGHT,
+                });
+
+                expect(game.getBoard()[ChessFile.A][8]).toEqual({
+                    pieceType: PieceType.KNIGHT,
+                    player: Player.WHITE,
+                });
+            });
+
+            it("works for black", () => {
+                const game = createGameWithMoveBeforeWhitePawnPromotion();
+
+                game.move({
+                    from: { file: ChessFile.B, rank: 7 },
+                    to: { file: ChessFile.A, rank: 8 },
+                    type: SpecialMoveType.PROMOTION,
+                    promoteTo: PieceType.KNIGHT,
+                });
+
+                expect(game.getBoard()[ChessFile.A][8]).toEqual({
+                    pieceType: PieceType.KNIGHT,
+                    player: Player.WHITE,
+                });
+            });
+        });
     });
 
     describe("getBoard", () => {
