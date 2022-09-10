@@ -2,11 +2,9 @@ import _ from "lodash";
 import { AvailableMoveCalculator } from "./availableMovesCalculation";
 import { CheckCalculator } from "./availableMovesCalculation/CheckCalculator";
 import { Board } from "./Board";
-import { createNewBoard } from "./utils";
 import { GameState } from "./GameState";
-import { isCastleablePiece, negatePlayer } from "./utils";
 import { EnPassantMove, Move, SpecialMoveType } from "./Moves";
-import { King, Piece, PieceType, Rook } from "./pieces";
+import { Piece, PieceType, Rook } from "./pieces";
 import { Player } from "./Player";
 import {
     addToFile,
@@ -14,6 +12,7 @@ import {
     ChessFile,
     getFileDifference,
 } from "./positions";
+import { createNewBoard, isCastleablePiece, negatePlayer } from "./utils";
 
 export class Game {
     static readonly boardSize = 8;
