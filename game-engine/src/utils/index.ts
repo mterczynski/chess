@@ -6,5 +6,6 @@ export * from "./isCastleablePiece";
 export * from "./isCastleablePieceType";
 export * from "./isCastlingMove";
 export * from "../positions/mapIndexToChessFile";
+export * from "../positions/mapFileToFileIndex";
 export * from "../positions/mapRankIndexToRank";
 export * from "./negatePlayer";

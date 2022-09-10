@@ -1,5 +1,9 @@
 import { Move } from "game-engine";
-import { mapIndexToChessFile, mapRankIndexToRank } from "game-engine/positions";
+import {
+    mapIndexToChessFile,
+    mapRankIndexToRank,
+    Position,
+} from "game-engine/positions";
 import _ from "lodash";
 import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from "../GameContext";
@@ -17,6 +21,10 @@ export const BoardContext = React.createContext<{
     >;
     availableMoves: Move[];
     setAvailableMoves: React.Dispatch<React.SetStateAction<Move[]>>;
+    promotionMenuPosition: Position | null;
+    setPromotionMenuPosition: React.Dispatch<
+        React.SetStateAction<Position | null>
+    >;
 }>({} as any);
 
 export const BoardContextProvider = ({
@@ -29,6 +37,8 @@ export const BoardContextProvider = ({
         null
     );
     const [availableMoves, setAvailableMoves] = useState<Move[]>([]);
+    const [promotionMenuPosition, setPromotionMenuPosition] =
+        useState<Position | null>(null); // stores null or promoting position
 
     // update available moves after selecting a piece
     useEffect(() => {
@@ -48,7 +58,7 @@ export const BoardContextProvider = ({
         setAvailableMoves(availableSelectedPieceMoves);
     }, [selectedPiece, gameContext]);
 
-    // make a random enemy move after player move
+    // make a random enemy move 500ms after player move
     useEffect(() => {
         if (
             gameContext.currentPlayer !== null &&
@@ -71,6 +81,8 @@ export const BoardContextProvider = ({
                 setSelectedPiece,
                 availableMoves,
                 setAvailableMoves,
+                promotionMenuPosition,
+                setPromotionMenuPosition,
             }}
         >
             {children}

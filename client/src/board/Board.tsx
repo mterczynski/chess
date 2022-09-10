@@ -1,8 +1,8 @@
-import { Board as BoardType } from "game-engine";
 import { useContext } from "react";
 import styled from "styled-components";
 import { GameContext } from "../GameContext";
 import { File } from "./File";
+import { PromotionMenu } from "./PromotionMenu";
 
 const BoardContainer = styled.div`
     display: flex;
@@ -21,6 +21,7 @@ export const Board = () => {
             {files.map((file, fileIndex) => (
                 <File file={file} fileIndex={fileIndex} key={fileIndex}></File>
             ))}
+            <PromotionMenu />
         </BoardContainer>
     );
 };
