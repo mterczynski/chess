@@ -23,6 +23,8 @@ export const File = ({ file, fileIndex }: FileProps) => {
             {file.slice(1).map((tile, tileIndex) => {
                 return (
                     <Tile
+                        fileIndex={fileIndex}
+                        tileIndex={tileIndex}
                         key={tileIndex}
                         tileColor={
                             (fileIndex + tileIndex) % 2 ? "darkgreen" : "white"
