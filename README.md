@@ -28,4 +28,4 @@ npm i
 
 ## Preview
 
-<img src="./preview.png" alt="" width="400" height="400"/>
+<img src="./preview.jpg" alt="" width="400" height="400"/>
