@@ -61,7 +61,6 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
                 })
         );
 
-        // TODO - allow promotions
         if (availableMoveToSelectedTile) {
             if (
                 (availableMoveToSelectedTile as any).type ===

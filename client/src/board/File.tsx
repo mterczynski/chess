@@ -1,5 +1,6 @@
 import { Piece } from "game-engine";
 import styled from "styled-components";
+import { settings } from "../settings";
 import { borderStyle } from "./border-style";
 import { Tile } from "./Tile";
 
@@ -27,7 +28,9 @@ export const File = ({ file, fileIndex }: FileProps) => {
                         tileIndex={tileIndex}
                         key={tileIndex}
                         tileColor={
-                            (fileIndex + tileIndex) % 2 ? "darkgreen" : "white"
+                            (fileIndex + tileIndex) % 2
+                                ? settings.tileColors.dark
+                                : settings.tileColors.light
                         }
                         piece={tile}
                     ></Tile>
