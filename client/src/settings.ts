@@ -1,7 +1,7 @@
 export const settings = {
     colors: {
         tile: {
-            dark: "darkgreen",
+            dark: "#3d73ff",
             light: "white",
         },
     },
