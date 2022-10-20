@@ -29,8 +29,8 @@ export const File = ({ file, fileIndex }: FileProps) => {
                         key={tileIndex}
                         tileColor={
                             (fileIndex + tileIndex) % 2
-                                ? settings.tileColors.dark
-                                : settings.tileColors.light
+                                ? settings.colors.tile.dark
+                                : settings.colors.tile.light
                         }
                         piece={tile}
                     ></Tile>
