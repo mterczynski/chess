@@ -21,11 +21,11 @@ npm i
 
 ## 🚧 Work progress
 
-| Repository    | Progress     | Comments                                                         |
-| ------------- | ------------ | ---------------------------------------------------------------- |
-| `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done                                                      |
+| Repository    | Progress     | Comments                                                                     |
+| ------------- | ------------ | ---------------------------------------------------------------------------- |
+| `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done                                                                  |
 | `client`      | 🟩🟩🟩⬛⬛⬛ | movable pieces, en passant, castling, checks, checkmates working, promotions |
 
 ## Preview
 
-<img src="./preview.PNG" alt="" width="400" height="400"/>
+<img src="./preview.png" alt="" width="400" height="400"/>
