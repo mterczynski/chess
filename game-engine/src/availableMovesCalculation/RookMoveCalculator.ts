@@ -3,9 +3,16 @@ import { Move } from "../Moves";
 import { Rook } from "../pieces";
 import { Position } from "../positions";
 import { LineMoveCalculator } from "./LineMoveCalculator";
+import { PieceMoveCalculator } from "./PieceMoveCalculator";
 
-export class RookMoveCalculator {
-    getAvailableMovesForPieceIgnoringKingSafety(rook: Rook & { position: Position }, board: Board): Move[] {
-        return new LineMoveCalculator().getAvailableMovesOnLineIgnoringKingSafety(rook, board);
+export class RookMoveCalculator implements PieceMoveCalculator {
+    getAvailableMovesForPieceIgnoringKingSafety(
+        rook: Rook & { position: Position },
+        board: Board
+    ): Move[] {
+        return new LineMoveCalculator().getAvailableMovesOnLineIgnoringKingSafety(
+            rook,
+            board
+        );
     }
 }

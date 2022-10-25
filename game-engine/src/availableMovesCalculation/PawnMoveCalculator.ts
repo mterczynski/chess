@@ -4,9 +4,9 @@ import { Move, SpecialMoveType } from "../Moves";
 import { Pawn, Piece, PieceType } from "../pieces";
 import { Player } from "../Player";
 import { addToFile, addToRank, ChessFile, Position, Rank } from "../positions";
-import { MoveCalculator } from "./MoveCalculator";
+import { PieceMoveCalculator } from "./PieceMoveCalculator";
 
-export class PawnMoveCalculator implements MoveCalculator {
+export class PawnMoveCalculator implements PieceMoveCalculator {
     /** lastMove can be null only before white has made the first move */
     getAvailableMovesForPieceIgnoringKingSafety(
         pawn: Pawn & { position: Position },
