@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { borderStyle } from "./border-style";
 import { useCallback, useContext } from "react";
 import { BoardContext } from "./BoardContext";
-import { GameContext } from "../GameContext";
+import { GameEngineContext } from "../GameEngineContext";
 import { playerSide } from "./playerSide";
 import {
     arePositionsEqual,
@@ -36,7 +36,7 @@ interface TileProps {
 
 export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
     const boardContext = useContext(BoardContext);
-    const gameContext = useContext(GameContext);
+    const gameEngineContext = useContext(GameEngineContext);
 
     const isAvailableMoveDestinationPosition = boardContext.availableMoves.find(
         (move) =>
@@ -47,7 +47,7 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
     );
 
     const onClick = useCallback(() => {
-        if (gameContext.currentPlayer !== playerSide) {
+        if (gameEngineContext.currentPlayer !== playerSide) {
             return;
         }
 
@@ -70,12 +70,12 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
                     availableMoveToSelectedTile.to
                 );
             } else {
-                gameContext.move(availableMoveToSelectedTile);
+                gameEngineContext.move(availableMoveToSelectedTile);
             }
         } else if (isOwnPieceSelected) {
             boardContext.setSelectedPiece({ fileIndex, tileIndex });
         }
-    }, [boardContext, fileIndex, gameContext, piece, tileIndex]);
+    }, [boardContext, fileIndex, gameEngineContext, piece, tileIndex]);
 
     return (
         <TileBackground color={tileColor} onClick={onClick}>

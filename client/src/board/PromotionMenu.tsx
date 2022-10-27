@@ -7,7 +7,7 @@ import {
 } from "game-engine/positions";
 import { useContext } from "react";
 import styled from "styled-components";
-import { GameContext } from "../GameContext";
+import { GameEngineContext } from "../GameEngineContext";
 import { tileSizeInPx } from "../tileSizeInPx";
 import { BoardContext } from "./BoardContext";
 import { borderStyle } from "./border-style";
@@ -39,10 +39,10 @@ const PieceSquare = styled.div`
 
 export const PromotionMenu = () => {
     const boardContext = useContext(BoardContext);
-    const gameContext = useContext(GameContext);
+    const gameEngineContext = useContext(GameEngineContext);
 
     const onClick = (pieceType: PromotablePieceType) => {
-        gameContext.move({
+        gameEngineContext.move({
             from: {
                 file: mapIndexToChessFile(
                     boardContext.selectedPiece!.fileIndex

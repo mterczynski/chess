@@ -6,7 +6,7 @@ import {
 } from "game-engine/positions";
 import _ from "lodash";
 import React, { useContext, useEffect, useState } from "react";
-import { GameContext } from "../GameContext";
+import { GameEngineContext } from "../GameEngineContext";
 import { playerSide } from "./playerSide";
 
 interface SelectedPiece {
@@ -14,6 +14,7 @@ interface SelectedPiece {
     tileIndex: number;
 }
 
+/** Context responsible for handling board specific events & data */
 export const BoardContext = React.createContext<{
     selectedPiece: SelectedPiece | null;
     setSelectedPiece: React.Dispatch<
@@ -32,7 +33,7 @@ export const BoardContextProvider = ({
 }: {
     children: JSX.Element;
 }) => {
-    const gameContext = useContext(GameContext);
+    const gameEngineContext = useContext(GameEngineContext);
     const [selectedPiece, setSelectedPiece] = useState<SelectedPiece | null>(
         null
     );
@@ -48,7 +49,7 @@ export const BoardContextProvider = ({
         }
 
         const availableSelectedPieceMoves =
-            gameContext.availableMovesForPlayer.filter(
+            gameEngineContext.availableMovesForPlayer.filter(
                 (move) =>
                     move.from.file ===
                         mapIndexToChessFile(selectedPiece.fileIndex) &&
@@ -56,23 +57,23 @@ export const BoardContextProvider = ({
                         mapRankIndexToRank(selectedPiece.tileIndex)
             );
         setAvailableMoves(availableSelectedPieceMoves);
-    }, [selectedPiece, gameContext]);
+    }, [selectedPiece, gameEngineContext]);
 
     // make a random enemy move 500ms after player move
     useEffect(() => {
         if (
-            gameContext.currentPlayer !== null &&
-            gameContext.currentPlayer !== playerSide
+            gameEngineContext.currentPlayer !== null &&
+            gameEngineContext.currentPlayer !== playerSide
         ) {
             setTimeout(() => {
                 const randomMove = _.sample(
-                    gameContext.availableMovesForPlayer
+                    gameEngineContext.availableMovesForPlayer
                 ) as Move;
-                gameContext.move(randomMove);
+                gameEngineContext.move(randomMove);
             }, 500);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [gameContext.currentPlayer]);
+    }, [gameEngineContext.currentPlayer]);
 
     return (
         <BoardContext.Provider

@@ -1,16 +1,19 @@
 import "./App.css";
-import { Board } from "./board/Board";
 import { BoardContextProvider } from "./board/BoardContext";
-import { GameContextProvider } from "./GameContext";
+import { GameClientContextProvider } from "./GameClientContext";
+import { GameEngineContextProvider } from "./GameEngineContext";
+import { GameScreenSelector } from "./GameScreenSelector";
 
 function App() {
     return (
         <div className="App">
-            <GameContextProvider>
+            <GameEngineContextProvider>
                 <BoardContextProvider>
-                    <Board></Board>
+                    <GameClientContextProvider>
+                        <GameScreenSelector />
+                    </GameClientContextProvider>
                 </BoardContextProvider>
-            </GameContextProvider>
+            </GameEngineContextProvider>
         </div>
     );
 }

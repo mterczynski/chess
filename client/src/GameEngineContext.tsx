@@ -3,7 +3,8 @@ import React, { useCallback, useRef, useState } from "react";
 import { playerSide } from "./board/playerSide";
 import { handleGameEnd } from "./handle-game-end";
 
-export const GameContext = React.createContext<{
+/** Context responsible for communicating with game-engine and exposing Game instance data */
+export const GameEngineContext = React.createContext<{
     move: (move: Move) => void;
     availableMovesForPlayer: Move[];
     currentPlayer: Player | null;
@@ -11,7 +12,7 @@ export const GameContext = React.createContext<{
     board: Board;
 }>(null as any);
 
-export const GameContextProvider = ({
+export const GameEngineContextProvider = ({
     children,
 }: {
     children: JSX.Element;
@@ -40,7 +41,7 @@ export const GameContextProvider = ({
     const [board, setBoard] = useState(game.current.getBoard());
 
     return (
-        <GameContext.Provider
+        <GameEngineContext.Provider
             value={{
                 move,
                 availableMovesForPlayer,
@@ -50,6 +51,6 @@ export const GameContextProvider = ({
             }}
         >
             {children}
-        </GameContext.Provider>
+        </GameEngineContext.Provider>
     );
 };

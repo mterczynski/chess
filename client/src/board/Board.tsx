@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { GameContext } from "../GameContext";
+import { GameEngineContext } from "../GameEngineContext";
 import { File } from "./File";
 import { PromotionMenu } from "./PromotionMenu";
 
@@ -13,8 +13,8 @@ const BoardContainer = styled.div`
 `;
 
 export const Board = () => {
-    const gameContext = useContext(GameContext);
-    const files = Object.values(gameContext.board);
+    const gameEngineContext = useContext(GameEngineContext);
+    const files = Object.values(gameEngineContext.board);
 
     return (
         <BoardContainer>
