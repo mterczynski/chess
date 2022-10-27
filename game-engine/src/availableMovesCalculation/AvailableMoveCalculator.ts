@@ -94,6 +94,8 @@ export class AvailableMoveCalculator {
             return this.kingMoveCalculator.getAvailableMovesForPieceIgnoringKingSafety(pieceWithPostion, board);
         }
 
+        console.error('unknown piece type')
+
         return [];
     }
 
