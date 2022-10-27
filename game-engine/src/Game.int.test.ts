@@ -7,6 +7,10 @@ import { ChessFile } from "./positions";
 import { playFoolsMate } from "../test-utils/playFoolsMate";
 import { PieceType } from "./pieces";
 import { createGameWithMoveBeforeWhitePawnPromotion } from "./utils/test/createGameWithMoveBeforeWhitePawnPromotion";
+import {
+    moveLeftWhiteKnightBackward,
+    moveLeftWhiteKnightForward,
+} from "./utils/test/moveLeftWhiteKnight";
 
 const makeAnyMove = (game: Game) => {
     game.move(game.getAvailableMovesForPlayer()[0]);
@@ -379,41 +383,29 @@ describe("Game", () => {
         });
 
         test("long castling (black side)", () => {
-            const moveWhiteKnightForward = () => {
-                game.move({
-                    from: { file: ChessFile.B, rank: 1 },
-                    to: { file: ChessFile.A, rank: 3 },
-                });
-            };
-            const moveWhiteKnightBackward = () => {
-                game.move({
-                    from: { file: ChessFile.A, rank: 3 },
-                    to: { file: ChessFile.B, rank: 1 },
-                });
-            };
             const game = new Game();
 
-            moveWhiteKnightForward();
+            moveLeftWhiteKnightForward(game);
             game.move({
                 from: { file: ChessFile.D, rank: 7 },
                 to: { file: ChessFile.D, rank: 6 },
             });
-            moveWhiteKnightBackward();
+            moveLeftWhiteKnightBackward(game);
             game.move({
                 from: { file: ChessFile.C, rank: 8 },
                 to: { file: ChessFile.E, rank: 6 },
             });
-            moveWhiteKnightForward();
+            moveLeftWhiteKnightForward(game);
             game.move({
                 from: { file: ChessFile.D, rank: 8 },
                 to: { file: ChessFile.D, rank: 7 },
             });
-            moveWhiteKnightBackward();
+            moveLeftWhiteKnightBackward(game);
             game.move({
                 from: { file: ChessFile.B, rank: 8 },
                 to: { file: ChessFile.A, rank: 6 },
             });
-            moveWhiteKnightForward();
+            moveLeftWhiteKnightForward(game);
             game.move({
                 from: { file: ChessFile.E, rank: 8 },
                 to: { file: ChessFile.C, rank: 8 },
