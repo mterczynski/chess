@@ -3,9 +3,8 @@ import { Piece as PieceComponent } from "./Piece";
 import styled from "styled-components";
 import { borderStyle } from "./border-style";
 import { useCallback, useContext } from "react";
-import { BoardContext } from "./BoardContext";
+import { GameClientContext } from "../GameClientContext";
 import { GameEngineContext } from "../GameEngineContext";
-import { playerSide } from "./playerSide";
 import {
     arePositionsEqual,
     mapIndexToChessFile,
@@ -35,47 +34,51 @@ interface TileProps {
 }
 
 export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
-    const boardContext = useContext(BoardContext);
+    const gameClientContext = useContext(GameClientContext);
     const gameEngineContext = useContext(GameEngineContext);
 
-    const isAvailableMoveDestinationPosition = boardContext.availableMoves.find(
-        (move) =>
+    const isAvailableMoveDestinationPosition =
+        gameClientContext.availableMoves.find((move) =>
             arePositionsEqual(move.to, {
                 file: mapIndexToChessFile(fileIndex),
                 rank: mapRankIndexToRank(tileIndex),
             })
-    );
+        );
 
     const onClick = useCallback(() => {
-        if (gameEngineContext.currentPlayer !== playerSide) {
+        if (
+            gameEngineContext.currentPlayer !==
+            gameClientContext.playerSelection
+        ) {
             return;
         }
 
         const isEmptyTile = piece === null;
-        const isOwnPieceSelected = !isEmptyTile && piece.player === playerSide;
-        const availableMoveToSelectedTile = boardContext.availableMoves.find(
-            (move) =>
+        const isOwnPieceSelected =
+            !isEmptyTile && piece.player === gameClientContext.playerSelection;
+        const availableMoveToSelectedTile =
+            gameClientContext.availableMoves.find((move) =>
                 arePositionsEqual(move.to, {
                     file: mapIndexToChessFile(fileIndex),
                     rank: mapRankIndexToRank(tileIndex),
                 })
-        );
+            );
 
         if (availableMoveToSelectedTile) {
             if (
                 (availableMoveToSelectedTile as any).type ===
                 SpecialMoveType.PROMOTION
             ) {
-                boardContext.setPromotionMenuPosition(
+                gameClientContext.setPromotionMenuPosition(
                     availableMoveToSelectedTile.to
                 );
             } else {
                 gameEngineContext.move(availableMoveToSelectedTile);
             }
         } else if (isOwnPieceSelected) {
-            boardContext.setSelectedPiece({ fileIndex, tileIndex });
+            gameClientContext.setSelectedPiece({ fileIndex, tileIndex });
         }
-    }, [boardContext, fileIndex, gameEngineContext, piece, tileIndex]);
+    }, [gameClientContext, fileIndex, gameEngineContext, piece, tileIndex]);
 
     return (
         <TileBackground color={tileColor} onClick={onClick}>

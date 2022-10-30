@@ -35,21 +35,16 @@ export const PlayerSelectionScreen = () => {
 
             <div>
                 <Button
-                    onClick={() =>
-                        gameClientContext.setPlayerSelection(Player.WHITE)
-                    }
+                    onClick={() => gameClientContext.selectPlayer(Player.WHITE)}
                 >
                     White
                 </Button>
                 <Button
-                    disabled
-                    onClick={() =>
-                        gameClientContext.setPlayerSelection(Player.BLACK)
-                    }
+                    onClick={() => gameClientContext.selectPlayer(Player.BLACK)}
                     background="#222"
                     color="white"
                 >
-                    Black (unavailable 🚧)
+                    Black
                 </Button>
             </div>
         </Container>

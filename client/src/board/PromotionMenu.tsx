@@ -7,12 +7,11 @@ import {
 } from "game-engine/positions";
 import { useContext } from "react";
 import styled from "styled-components";
-import { GameEngineContext } from "../GameEngineContext";
 import { tileSizeInPx } from "../tileSizeInPx";
-import { BoardContext } from "./BoardContext";
+import { GameClientContext } from "../GameClientContext";
 import { borderStyle } from "./border-style";
 import { Piece } from "./Piece";
-import { playerSide } from "./playerSide";
+import { GameEngineContext } from "../GameEngineContext";
 
 const PromotionMenuContainer = styled.div<{ position: Position }>`
     position: absolute;
@@ -38,54 +37,56 @@ const PieceSquare = styled.div`
 `;
 
 export const PromotionMenu = () => {
-    const boardContext = useContext(BoardContext);
     const gameEngineContext = useContext(GameEngineContext);
+    const gameClientContext = useContext(GameClientContext);
 
     const onClick = (pieceType: PromotablePieceType) => {
         gameEngineContext.move({
             from: {
                 file: mapIndexToChessFile(
-                    boardContext.selectedPiece!.fileIndex
+                    gameClientContext.selectedPiece!.fileIndex
                 ),
-                rank: mapRankIndexToRank(boardContext.selectedPiece!.tileIndex),
+                rank: mapRankIndexToRank(
+                    gameClientContext.selectedPiece!.tileIndex
+                ),
             },
-            to: boardContext.promotionMenuPosition!,
+            to: gameClientContext.promotionMenuPosition!,
             type: SpecialMoveType.PROMOTION,
             promoteTo: pieceType,
         });
 
-        boardContext.setPromotionMenuPosition(null);
+        gameClientContext.setPromotionMenuPosition(null);
     };
 
-    if (boardContext.promotionMenuPosition) {
+    if (gameClientContext.promotionMenuPosition) {
         return (
             <PromotionMenuContainer
-                position={boardContext.promotionMenuPosition}
+                position={gameClientContext.promotionMenuPosition}
             >
                 <PieceSquare onClick={() => onClick(PieceType.KNIGHT)}>
                     <Piece
-                        color={playerSide}
+                        color={gameClientContext.playerSelection!}
                         pieceType={PieceType.KNIGHT}
                     ></Piece>
                 </PieceSquare>
 
                 <PieceSquare onClick={() => onClick(PieceType.BISHOP)}>
                     <Piece
-                        color={playerSide}
+                        color={gameClientContext.playerSelection!}
                         pieceType={PieceType.BISHOP}
                     ></Piece>
                 </PieceSquare>
 
                 <PieceSquare onClick={() => onClick(PieceType.ROOK)}>
                     <Piece
-                        color={playerSide}
+                        color={gameClientContext.playerSelection!}
                         pieceType={PieceType.ROOK}
                     ></Piece>
                 </PieceSquare>
 
                 <PieceSquare onClick={() => onClick(PieceType.QUEEN)}>
                     <Piece
-                        color={playerSide}
+                        color={gameClientContext.playerSelection!}
                         pieceType={PieceType.QUEEN}
                     ></Piece>
                 </PieceSquare>

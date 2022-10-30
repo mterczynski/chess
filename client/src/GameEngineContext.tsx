@@ -1,7 +1,5 @@
 import { Board, Game, GameState, Move, Player } from "game-engine";
 import React, { useCallback, useRef, useState } from "react";
-import { playerSide } from "./board/playerSide";
-import { handleGameEnd } from "./handle-game-end";
 
 /** Context responsible for communicating with game-engine and exposing Game instance data */
 export const GameEngineContext = React.createContext<{
@@ -21,19 +19,16 @@ export const GameEngineContextProvider = ({
 
     const move = useCallback((move: Move) => {
         game.current.move(move);
-        setAvailableMovesForPlayer(game.current.getAvailableMovesForPlayer());
         setCurrentPlayer(game.current.getCurrentPlayer());
+        setAvailableMovesForPlayer(game.current.getAvailableMovesForPlayer());
         setState(game.current.getState());
         setBoard(game.current.getBoard());
-        // setTimeout is used to ensure that the last move is shown before showing an alert
-        setTimeout(() => {
-            handleGameEnd(game.current, playerSide);
-        });
     }, []);
 
-    const [availableMovesForPlayer, setAvailableMovesForPlayer] = useState(
-        game.current.getAvailableMovesForPlayer()
-    );
+    var initial = game.current.getAvailableMovesForPlayer();
+
+    const [availableMovesForPlayer, setAvailableMovesForPlayer] =
+        useState(initial);
     const [currentPlayer, setCurrentPlayer] = useState(
         game.current.getCurrentPlayer()
     );
