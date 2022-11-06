@@ -114,7 +114,7 @@ export class PawnMoveCalculator implements PieceMoveCalculator {
             }
 
             const promotingRank =
-                pawn.player === Player.WHITE ? Game.boardSize : 0;
+                pawn.player === Player.WHITE ? Game.boardSize : 1;
             const isPromotionAvailable = nextRank === promotingRank;
 
             if (isPromotionAvailable) {
