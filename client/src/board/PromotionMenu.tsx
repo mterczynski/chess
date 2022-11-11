@@ -8,7 +8,6 @@ import {
 import { useContext } from "react";
 import styled from "styled-components";
 import { GameClientContext } from "../GameClientContext";
-import { borderStyle } from "./border-style";
 import { Piece } from "./Piece";
 import { GameEngineContext } from "../GameEngineContext";
 import { settings } from "../settings";
@@ -26,13 +25,13 @@ const PieceSquare = styled.div`
     width: ${settings.tileSizeInPx}px;
     height: ${settings.tileSizeInPx}px;
     background: #ffffff;
-    border-bottom: ${borderStyle};
-    border-left: ${borderStyle};
+    border-bottom: ${settings.borderStyle};
+    border-left: ${settings.borderStyle};
     background: #d0bf04c1;
     cursor: pointer;
 
     :first-child {
-        border-top: ${borderStyle};
+        border-top: ${settings.borderStyle};
     }
 `;
 

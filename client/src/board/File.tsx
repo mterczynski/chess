@@ -1,7 +1,6 @@
 import { Piece } from "game-engine";
 import styled from "styled-components";
 import { settings } from "../settings";
-import { borderStyle } from "./border-style";
 import { Tile } from "./Tile";
 
 const FileContainer = styled.div`
@@ -9,7 +8,7 @@ const FileContainer = styled.div`
     flex-direction: column-reverse;
 
     :first-child {
-        border-left: ${borderStyle};
+        border-left: ${settings.borderStyle};
     }
 `;
 

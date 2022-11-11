@@ -1,7 +1,6 @@
 import { Piece, SpecialMoveType } from "game-engine";
 import { Piece as PieceComponent } from "./Piece";
 import styled from "styled-components";
-import { borderStyle } from "./border-style";
 import { useCallback, useContext } from "react";
 import { GameClientContext } from "../GameClientContext";
 import { GameEngineContext } from "../GameEngineContext";
@@ -16,13 +15,13 @@ import { settings } from "../settings";
 const TileBackground = styled.div<{ color: string }>`
     position: relative;
     background: ${({ color }) => color};
-    border-top: ${borderStyle};
-    border-right: ${borderStyle};
+    border-top: ${settings.borderStyle};
+    border-right: ${settings.borderStyle};
     width: ${settings.tileSizeInPx}px;
     height: ${settings.tileSizeInPx}px;
 
     :first-child {
-        border-bottom: ${borderStyle};
+        border-bottom: ${settings.borderStyle};
     }
 `;
 
