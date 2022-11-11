@@ -5,4 +5,5 @@ export const settings = {
             light: "white",
         },
     },
+    tileSizeInPx: 70
 };

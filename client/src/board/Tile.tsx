@@ -11,15 +11,15 @@ import {
     mapRankIndexToRank,
 } from "game-engine/positions";
 import { AvailableMoveDestination } from "./AvailableMoveDestination";
-import { tileSizeInPx } from "../tileSizeInPx";
+import { settings } from "../settings";
 
 const TileBackground = styled.div<{ color: string }>`
     position: relative;
     background: ${({ color }) => color};
     border-top: ${borderStyle};
     border-right: ${borderStyle};
-    width: ${tileSizeInPx}px;
-    height: ${tileSizeInPx}px;
+    width: ${settings.tileSizeInPx}px;
+    height: ${settings.tileSizeInPx}px;
 
     :first-child {
         border-bottom: ${borderStyle};

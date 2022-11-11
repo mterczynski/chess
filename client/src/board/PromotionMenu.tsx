@@ -7,24 +7,24 @@ import {
 } from "game-engine/positions";
 import { useContext } from "react";
 import styled from "styled-components";
-import { tileSizeInPx } from "../tileSizeInPx";
 import { GameClientContext } from "../GameClientContext";
 import { borderStyle } from "./border-style";
 import { Piece } from "./Piece";
 import { GameEngineContext } from "../GameEngineContext";
+import { settings } from "../settings";
 
 const PromotionMenuContainer = styled.div<{ position: Position }>`
     position: absolute;
     left: ${({ position }) =>
-        mapFileToFileIndex(position.file) * (tileSizeInPx + 2)}px;
+        mapFileToFileIndex(position.file) * (settings.tileSizeInPx + 2)}px;
     display: flex;
     flex-direction: column;
 `;
 
 const PieceSquare = styled.div`
     position: relative;
-    width: ${tileSizeInPx}px;
-    height: ${tileSizeInPx}px;
+    width: ${settings.tileSizeInPx}px;
+    height: ${settings.tileSizeInPx}px;
     background: #ffffff;
     border-bottom: ${borderStyle};
     border-left: ${borderStyle};
