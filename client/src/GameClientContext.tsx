@@ -7,6 +7,10 @@ import {
 import _ from "lodash";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { GameEngineContext } from "./GameEngineContext";
+import {
+    GameMode,
+    LobbyDecision,
+} from "./selection-screens/SelectorScreenEnums";
 import { handleGameEnd } from "./handle-game-end";
 
 interface SelectedPiece {
@@ -20,14 +24,23 @@ export const GameClientContext = React.createContext<{
     setSelectedPiece: React.Dispatch<
         React.SetStateAction<SelectedPiece | null>
     >;
+
     availableMoves: Move[];
     setAvailableMoves: React.Dispatch<React.SetStateAction<Move[]>>;
+
     promotionMenuPosition: Position | null;
     setPromotionMenuPosition: React.Dispatch<
         React.SetStateAction<Position | null>
     >;
+
     selectPlayer: (player: Player) => void;
     playerSelection: Player | null;
+
+    gameMode: GameMode | null;
+    selectGameMode: (gameMode: GameMode) => void;
+
+    lobbyDecision: LobbyDecision | null;
+    selectLobbyDecision: (lobbyDecision: LobbyDecision) => void;
 }>({} as any);
 
 export const GameClientContextProvider = ({
@@ -35,10 +48,16 @@ export const GameClientContextProvider = ({
 }: {
     children: JSX.Element;
 }) => {
+    // Selector screens:
+    const [playerSelection, setPlayerSelection] = useState<Player | null>(null);
+    const [gameMode, selectGameMode] = useState<GameMode | null>(null);
+    const [lobbyDecision, selectLobbyDecision] = useState<LobbyDecision | null>(
+        null
+    );
+
     const [selectedPiece, setSelectedPiece] = useState<SelectedPiece | null>(
         null
     );
-    const [playerSelection, setPlayerSelection] = useState<Player | null>(null);
     const [availableMoves, setAvailableMoves] = useState<Move[]>([]);
     const [promotionMenuPosition, setPromotionMenuPosition] =
         useState<Position | null>(null); // stores null or promoting position
@@ -100,12 +119,21 @@ export const GameClientContextProvider = ({
             value={{
                 selectedPiece,
                 setSelectedPiece,
+
                 availableMoves,
                 setAvailableMoves,
+
                 promotionMenuPosition,
                 setPromotionMenuPosition,
+
                 playerSelection,
                 selectPlayer,
+
+                gameMode,
+                selectGameMode,
+
+                lobbyDecision,
+                selectLobbyDecision,
             }}
         >
             {children}
