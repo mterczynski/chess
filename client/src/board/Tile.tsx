@@ -1,14 +1,9 @@
-import { Piece, SpecialMoveType } from "game-engine";
+import { arePositionsEqual, mapIndexToChessFile, mapRankIndexToRank, Piece, SpecialMoveType } from "game-engine";
 import { Piece as PieceComponent } from "./Piece";
 import styled from "styled-components";
 import { useCallback, useContext } from "react";
 import { GameClientContext } from "../GameClientContext";
 import { GameEngineContext } from "../GameEngineContext";
-import {
-    arePositionsEqual,
-    mapIndexToChessFile,
-    mapRankIndexToRank,
-} from "game-engine/positions";
 import { AvailableMoveDestination } from "./AvailableMoveDestination";
 import { settings } from "../settings";
 

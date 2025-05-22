@@ -1,8 +1,12 @@
-import { ChessFile } from "./index";
+import { ChessFile } from "./ChessFile";
 import { addToFile } from "./addToFile";
 
 /** @param `inclusive` - informs whether from and to should be included in returned file range */
-export const getFileRange = (from: ChessFile, to: ChessFile, { inclusive = true } = {}): ChessFile[] => {
+export const getFileRange = (
+    from: ChessFile,
+    to: ChessFile,
+    { inclusive = true } = {}
+): ChessFile[] => {
     if (from === to) {
         if (inclusive) {
             return [from];
@@ -26,9 +30,9 @@ export const getFileRange = (from: ChessFile, to: ChessFile, { inclusive = true 
 
     if (!inclusive) {
         return files
-            .filter(file => file !== from)
-            .filter(file => file !== to);
+            .filter((file) => file !== from)
+            .filter((file) => file !== to);
     }
 
     return files;
-}
+};

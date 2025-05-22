@@ -1,10 +1,8 @@
-import { PieceType, PromotablePieceType, SpecialMoveType } from "game-engine";
-import {
-    mapFileToFileIndex,
+import { PieceType, PromotablePieceType, SpecialMoveType, mapFileToFileIndex,
     mapIndexToChessFile,
     mapRankIndexToRank,
-    Position,
-} from "game-engine/positions";
+    Position
+} from "game-engine";
 import { useContext } from "react";
 import styled from "styled-components";
 import { GameClientContext } from "../GameClientContext";
