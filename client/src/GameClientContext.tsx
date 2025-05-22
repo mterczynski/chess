@@ -3,7 +3,7 @@ import { GameState, Move, Player, mapIndexToChessFile,
     Position
 } from "game-engine";
 import _ from "lodash";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { GameEngineContext } from "./GameEngineContext";
 import { handleGameEnd } from "./handle-game-end";
 
@@ -26,6 +26,7 @@ export const GameClientContext = React.createContext<{
     >;
     selectPlayer: (player: Player | null) => void;
     playerSelection: Player | null;
+    playerTurnTimeoutRef: React.MutableRefObject<any>;
 }>({} as any);
 
 export const GameClientContextProvider = ({
@@ -48,6 +49,8 @@ export const GameClientContextProvider = ({
         currentPlayer,
     } = useContext(GameEngineContext);
 
+    const playerTurnTimeoutRef = useRef<any>(null);
+
     const makeRandomMove = useCallback(() => {
         const randomMove = _.sample(availableMovesForPlayer) as Move;
 
@@ -64,7 +67,10 @@ export const GameClientContextProvider = ({
             currentPlayer !== playerSelection &&
             (state === GameState.UNSTARTED || state === GameState.IN_PROGRESS)
         ) {
-            setTimeout(() => {
+            if (playerTurnTimeoutRef.current) {
+                clearTimeout(playerTurnTimeoutRef.current);
+            }
+            playerTurnTimeoutRef.current = setTimeout(() => {
                 makeRandomMove();
             }, 650);
         }
@@ -102,8 +108,9 @@ export const GameClientContextProvider = ({
                 setAvailableMoves,
                 promotionMenuPosition,
                 setPromotionMenuPosition,
-                playerSelection,
                 selectPlayer,
+                playerSelection,
+                playerTurnTimeoutRef,
             }}
         >
             {children}

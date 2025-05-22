@@ -38,7 +38,7 @@ const RestartButton = styled.button`
 
 export const InfoBar = () => {
     const { currentPlayer, state, restartGame } = useContext(GameEngineContext);
-    const { setSelectedPiece, setAvailableMoves, setPromotionMenuPosition, selectPlayer } = useContext(GameClientContext);
+    const { setSelectedPiece, setAvailableMoves, setPromotionMenuPosition, selectPlayer, playerTurnTimeoutRef } = useContext(GameClientContext);
 
     let infoText = null;
     if (state === GameState.IN_PROGRESS || state === GameState.UNSTARTED) {
@@ -72,6 +72,10 @@ export const InfoBar = () => {
         setSelectedPiece(null);
         setAvailableMoves([]);
         setPromotionMenuPosition(null);
+        if (playerTurnTimeoutRef && playerTurnTimeoutRef.current) {
+            clearTimeout(playerTurnTimeoutRef.current);
+            playerTurnTimeoutRef.current = null;
+        }
     };
 
     return (
