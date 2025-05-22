@@ -9,6 +9,7 @@ import { Player } from "game-engine";
 
 const BoardContainer = styled.div<{ useBlackPerspective?: boolean }>`
     display: flex;
+    flex-direction: column;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -17,10 +18,17 @@ const BoardContainer = styled.div<{ useBlackPerspective?: boolean }>`
     rotate: ${({ useBlackPerspective }) =>
         useBlackPerspective ? "180deg" : "0deg"};
     width: 100%;
-    height: 100%;
+    max-width: 560px;
+    height: auto;
+    max-height: 100vh;
+`;
+
+const BoardRow = styled.div`
+    display: flex;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     max-width: 560px;
     max-height: 560px;
-    /* Ensure child columns (files) have right border except last */
     & > div {
         border-right: 2px solid black;
     }
@@ -35,13 +43,13 @@ export const Board = () => {
     const files = Object.values(gameEngineContext.board);
 
     return (
-        <>
+        <BoardContainer
+            useBlackPerspective={
+                gameClientContext.playerSelection === Player.BLACK
+            }
+        >
             <InfoBar />
-            <BoardContainer
-                useBlackPerspective={
-                    gameClientContext.playerSelection === Player.BLACK
-                }
-            >
+            <BoardRow>
                 {files.map((file, fileIndex) => (
                     <File
                         file={file}
@@ -49,8 +57,8 @@ export const Board = () => {
                         key={fileIndex}
                     ></File>
                 ))}
-                <PromotionMenu />
-            </BoardContainer>
-        </>
+            </BoardRow>
+            <PromotionMenu />
+        </BoardContainer>
     );
 };

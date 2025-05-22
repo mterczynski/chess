@@ -4,22 +4,30 @@ import { GameEngineContext } from "../GameEngineContext";
 import { GameClientContext } from "../GameClientContext";
 import { Player, GameState } from "game-engine";
 
+const InfoBarWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* Add gap between InfoBar and board */
+    gap: 15px;
+`;
+
 const InfoBarContainer = styled.div`
     width: 100%;
-    max-width: 560px;
-    margin: 0 auto 10px auto;
-    padding: 0.7em 0;
-    text-align: center;
     font-size: 1.2rem;
     font-weight: 600;
     color: #fff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     letter-spacing: 0.5px;
-    top: 30px;
+    text-align: center;
+    background: transparent;
+    margin: 0;
+    padding: 0.7em 0;
+    margin-bottom: 15px;
 `;
 
 const RestartButton = styled.button`
-  margin-top: 10px;
+  margin-top: 0;
   padding: 0.5em 1.2em;
   font-size: 1rem;
   font-weight: 500;
@@ -30,6 +38,8 @@ const RestartButton = styled.button`
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: background 0.2s, border 0.2s;
+  width: auto;
+  align-self: center;
   &:hover {
     background: #2d8cff;
     border: 2px solid #2d8cff;
@@ -57,10 +67,6 @@ export const InfoBar = () => {
         state === GameState.DRAW_BY_STALEMATE ||
         state === GameState.DRAW_BY_INSUFFICIENT_MATERIAL ||
         state === GameState.DRAW_BY_REPETITION ||
-        state === GameState.DRAW_BY_50_MOVE_RULE ||
-        state === GameState.DRAW_BY_75_MOVE_RULE ||
-        state === GameState.DRAW_BY_AGREEMENT
-    ) {
         infoText = "Draw!";
     } else {
         infoText = "Game Over";
@@ -79,11 +85,9 @@ export const InfoBar = () => {
     };
 
     return (
-      <>
+      <InfoBarWrapper>
         <InfoBarContainer>{infoText}</InfoBarContainer>
-        <div style={{ width: '100%', maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
-          <RestartButton onClick={handleRestart}>Restart Game</RestartButton>
-        </div>
-      </>
+        <RestartButton onClick={handleRestart}>Restart Game</RestartButton>
+      </InfoBarWrapper>
     );
 };
