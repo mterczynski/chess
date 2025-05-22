@@ -3,6 +3,7 @@ import { Player } from "../Player";
 import { ChessFile, Position, Rank } from "../positions";
 import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { KnightMoveCalculator } from "./KnightMoveCalculator";
+import { Move, MoveType } from "../Moves";
 
 describe('KnightMoveCalculator', () => {
     let calculator: KnightMoveCalculator;
@@ -30,9 +31,9 @@ describe('KnightMoveCalculator', () => {
                 const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(knight, board);
 
                 expect(result).toEqual(expect.arrayContaining([
-                    { from: knight.position, to: { file: ChessFile.A, rank: 5 } },
-                    { from: knight.position, to: { file: ChessFile.C, rank: 5 } },
-                    { from: knight.position, to: { file: ChessFile.D, rank: 8 } },
+                    { from: knight.position, to: { file: ChessFile.A, rank: 5 }, isAttacking: false, type: MoveType.STANDARD } as Move,
+                    { from: knight.position, to: { file: ChessFile.C, rank: 5 }, isAttacking: false, type: MoveType.STANDARD } as Move,
+                    { from: knight.position, to: { file: ChessFile.D, rank: 8 }, isAttacking: true, type: MoveType.STANDARD },
                 ]));
                 expect(result.length).toEqual(3);
             });
@@ -54,9 +55,9 @@ describe('KnightMoveCalculator', () => {
                 const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(knight, board);
 
                 expect(result).toEqual(expect.arrayContaining([
-                    { from: knight.position, to: { file: ChessFile.A, rank: 5 } },
-                    { from: knight.position, to: { file: ChessFile.C, rank: 5 } },
-                    { from: knight.position, to: { file: ChessFile.D, rank: 8 } },
+                    { from: knight.position, to: { file: ChessFile.A, rank: 5 }, isAttacking: false, type: MoveType.STANDARD } as Move,
+                    { from: knight.position, to: { file: ChessFile.C, rank: 5 }, isAttacking: false, type: MoveType.STANDARD } as Move,
+                    { from: knight.position, to: { file: ChessFile.D, rank: 8 }, isAttacking: true, type: MoveType.STANDARD } as Move,
                 ]));
                 expect(result.length).toEqual(3);
             });

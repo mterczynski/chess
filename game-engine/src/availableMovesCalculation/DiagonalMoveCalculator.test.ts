@@ -1,4 +1,4 @@
-import { Move } from "../Moves";
+import { Move, MoveType } from "../Moves";
 import { Bishop, PieceType } from "../pieces";
 import { Player } from "../Player";
 import { ChessFile, Position, Rank } from "../positions";
@@ -36,17 +36,17 @@ describe('DiagonalMoveCalculator', () => {
 
                 const expectedMoves: Move[] = [
                     // top left diagonal
-                    { from: bishop.position, to: { file: ChessFile.C, rank: 5 } },
+                    { from: bishop.position, to: { file: ChessFile.C, rank: 5 }, isAttacking: false, type: MoveType.STANDARD },
                     // top right diagonal
-                    { from: bishop.position, to: { file: ChessFile.E, rank: 5 } },
-                    { from: bishop.position, to: { file: ChessFile.F, rank: 6 } },
-                    { from: bishop.position, to: { file: ChessFile.G, rank: 7 } },
-                    { from: bishop.position, to: { file: ChessFile.H, rank: 8 } },
-                    // bottom left diagonal
-                    { from: bishop.position, to: { file: ChessFile.C, rank: 3 } },
+                    { from: bishop.position, to: { file: ChessFile.E, rank: 5 }, isAttacking: false, type: MoveType.STANDARD },
+                    { from: bishop.position, to: { file: ChessFile.F, rank: 6 }, isAttacking: false, type: MoveType.STANDARD },
+                    { from: bishop.position, to: { file: ChessFile.G, rank: 7 }, isAttacking: false, type: MoveType.STANDARD },
+                    { from: bishop.position, to: { file: ChessFile.H, rank: 8 }, isAttacking: false, type: MoveType.STANDARD },
+                    // bottom left diagonal (attacking)
+                    { from: bishop.position, to: { file: ChessFile.C, rank: 3 }, isAttacking: true, type: MoveType.STANDARD },
                     // bottom right diagonal
-                    { from: bishop.position, to: { file: ChessFile.E, rank: 3 } },
-                    { from: bishop.position, to: { file: ChessFile.F, rank: 2 } },
+                    { from: bishop.position, to: { file: ChessFile.E, rank: 3 }, isAttacking: false, type: MoveType.STANDARD },
+                    { from: bishop.position, to: { file: ChessFile.F, rank: 2 }, isAttacking: true, type: MoveType.STANDARD },
                 ]
 
                 expect(result).toEqual(expect.arrayContaining(expectedMoves));

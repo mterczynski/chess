@@ -40,8 +40,8 @@ describe("KingMoveCalculator", () => {
             board[ChessFile.A][7] = whitePawn;
 
             const expectedMoves: Move[] = [
-                { from: king.position, to: { file: ChessFile.A, rank: 7 } },
-                { from: king.position, to: { file: ChessFile.B, rank: 7 } },
+                { from: king.position, to: { file: ChessFile.A, rank: 7 }, isAttacking: true, type: MoveType.STANDARD },
+                { from: king.position, to: { file: ChessFile.B, rank: 7 }, isAttacking: false, type: MoveType.STANDARD },
             ];
 
             const result =
@@ -83,17 +83,19 @@ describe("KingMoveCalculator", () => {
                     from: king.position,
                     to: { file: ChessFile.G, rank: 1 },
                     type: MoveType.CASTLING,
+                    isAttacking: false
                 },
                 {
                     from: king.position,
                     to: { file: ChessFile.C, rank: 1 },
                     type: MoveType.CASTLING,
+                    isAttacking: false
                 },
-                { from: king.position, to: { file: ChessFile.D, rank: 1 } },
-                { from: king.position, to: { file: ChessFile.D, rank: 2 } },
-                { from: king.position, to: { file: ChessFile.E, rank: 2 } },
-                { from: king.position, to: { file: ChessFile.F, rank: 1 } },
-                { from: king.position, to: { file: ChessFile.F, rank: 2 } },
+                { from: king.position, to: { file: ChessFile.D, rank: 1 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: king.position, to: { file: ChessFile.D, rank: 2 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: king.position, to: { file: ChessFile.E, rank: 2 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: king.position, to: { file: ChessFile.F, rank: 1 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: king.position, to: { file: ChessFile.F, rank: 2 }, isAttacking: false, type: MoveType.STANDARD },
             ];
 
             const result =

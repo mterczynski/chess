@@ -3,7 +3,7 @@ import { ChessFile, Position } from "../positions";
 import { PieceType, Rook } from "../pieces";
 import { Player } from "../Player";
 import { LineMoveCalculator } from "./LineMoveCalculator";
-import { Move } from "../Moves";
+import { Move, MoveType } from "../Moves";
 
 describe('LineMoveCalculator', () => {
     let calculator: LineMoveCalculator;
@@ -32,19 +32,19 @@ describe('LineMoveCalculator', () => {
 
             const expectedMoves: Move[] = [
                 // left
-                { from: rook.position, to: { file: ChessFile.C, rank: 4 } },
-                { from: rook.position, to: { file: ChessFile.B, rank: 4 } },
-                { from: rook.position, to: { file: ChessFile.A, rank: 4 } },
+                { from: rook.position, to: { file: ChessFile.C, rank: 4 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: rook.position, to: { file: ChessFile.B, rank: 4 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: rook.position, to: { file: ChessFile.A, rank: 4 }, isAttacking: false, type: MoveType.STANDARD },
                 // right
-                { from: rook.position, to: { file: ChessFile.E, rank: 4 } },
-                { from: rook.position, to: { file: ChessFile.F, rank: 4 } },
-                { from: rook.position, to: { file: ChessFile.G, rank: 4 } },
+                { from: rook.position, to: { file: ChessFile.E, rank: 4 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: rook.position, to: { file: ChessFile.F, rank: 4 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: rook.position, to: { file: ChessFile.G, rank: 4 }, isAttacking: true, type: MoveType.STANDARD },
                 // top
-                { from: rook.position, to: { file: ChessFile.D, rank: 5 } },
+                { from: rook.position, to: { file: ChessFile.D, rank: 5 }, isAttacking: false, type: MoveType.STANDARD },
                 // bottom
-                { from: rook.position, to: { file: ChessFile.D, rank: 3 } },
-                { from: rook.position, to: { file: ChessFile.D, rank: 2 } },
-                { from: rook.position, to: { file: ChessFile.D, rank: 1 } },
+                { from: rook.position, to: { file: ChessFile.D, rank: 3 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: rook.position, to: { file: ChessFile.D, rank: 2 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: rook.position, to: { file: ChessFile.D, rank: 1 }, isAttacking: false, type: MoveType.STANDARD },
             ];
 
             const result = calculator.getAvailableMovesOnLineIgnoringKingSafety(rook, board);

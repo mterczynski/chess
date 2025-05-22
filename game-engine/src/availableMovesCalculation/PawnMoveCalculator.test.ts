@@ -24,6 +24,8 @@ describe("PawnMoveCalculator", () => {
                 const lastMove: Move = {
                     from: { file: ChessFile.H, rank: 2 },
                     to: { file: ChessFile.H, rank: 3 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 };
                 board[ChessFile.H][2] = null;
                 board[ChessFile.H][3] = createPawn(Player.WHITE);
@@ -42,6 +44,8 @@ describe("PawnMoveCalculator", () => {
                             file: ChessFile.E,
                             rank: 6,
                         },
+                        isAttacking: false,
+                        type: MoveType.STANDARD,
                     },
                     {
                         from: pawnPosition,
@@ -49,6 +53,8 @@ describe("PawnMoveCalculator", () => {
                             file: ChessFile.E,
                             rank: 5,
                         },
+                        isAttacking: false,
+                        type: MoveType.STANDARD,
                     },
                 ];
 
@@ -80,6 +86,8 @@ describe("PawnMoveCalculator", () => {
                             file: ChessFile.E,
                             rank: 3,
                         },
+                        isAttacking: false,
+                        type: MoveType.STANDARD,
                     },
                     {
                         from: pawnPosition,
@@ -87,6 +95,8 @@ describe("PawnMoveCalculator", () => {
                             file: ChessFile.E,
                             rank: 4,
                         },
+                        isAttacking: false,
+                        type: MoveType.STANDARD,
                     },
                 ];
 
@@ -118,6 +128,8 @@ describe("PawnMoveCalculator", () => {
                 const lastMove: Move = {
                     from: { file: ChessFile.B, rank: 4 },
                     to: { file: ChessFile.A, rank: 6 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 };
                 const expectedAttackingMoves: Move[] = [
                     {
@@ -126,6 +138,8 @@ describe("PawnMoveCalculator", () => {
                             file: ChessFile.A,
                             rank: 6,
                         },
+                        isAttacking: true,
+                        type: MoveType.STANDARD,
                     },
                     {
                         from: pawnPosition,
@@ -133,6 +147,8 @@ describe("PawnMoveCalculator", () => {
                             file: ChessFile.C,
                             rank: 6,
                         },
+                        isAttacking: true,
+                        type: MoveType.STANDARD,
                     },
                 ];
 
@@ -164,6 +180,8 @@ describe("PawnMoveCalculator", () => {
                 const lastMove: Move = {
                     from: { file: ChessFile.B, rank: 5 },
                     to: { file: ChessFile.A, rank: 3 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 };
                 const expectedAttackingMoves: Move[] = [
                     {
@@ -172,6 +190,8 @@ describe("PawnMoveCalculator", () => {
                             file: ChessFile.A,
                             rank: 3,
                         },
+                        isAttacking: true,
+                        type: MoveType.STANDARD,
                     },
                     {
                         from: pawnPosition,
@@ -179,6 +199,8 @@ describe("PawnMoveCalculator", () => {
                             file: ChessFile.C,
                             rank: 3,
                         },
+                        isAttacking: true,
+                        type: MoveType.STANDARD,
                     },
                 ];
 
@@ -217,6 +239,7 @@ describe("PawnMoveCalculator", () => {
                         rank: 3,
                     },
                     type: MoveType.EN_PASSANT,
+                    isAttacking: true,
                 };
                 const lastMove: Move = {
                     from: {
@@ -227,6 +250,8 @@ describe("PawnMoveCalculator", () => {
                         file: ChessFile.C,
                         rank: 4,
                     },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 };
                 const result =
                     calculator.getAvailableMovesForPieceIgnoringKingSafety(
@@ -259,6 +284,7 @@ describe("PawnMoveCalculator", () => {
                         rank: 6,
                     },
                     type: MoveType.EN_PASSANT,
+                    isAttacking: true,
                 };
                 const lastMove: Move = {
                     from: {
@@ -269,6 +295,8 @@ describe("PawnMoveCalculator", () => {
                         file: ChessFile.A,
                         rank: 5,
                     },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 };
                 const result =
                     calculator.getAvailableMovesForPieceIgnoringKingSafety(
@@ -297,6 +325,7 @@ describe("PawnMoveCalculator", () => {
                         rank: 1,
                     },
                     type: MoveType.PROMOTION,
+                    isAttacking: false,
                 };
 
                 const pawn: Pawn & { position: Position } = {
@@ -351,6 +380,7 @@ describe("PawnMoveCalculator", () => {
                         rank: 8,
                     },
                     type: MoveType.PROMOTION,
+                    isAttacking: false,
                 };
 
                 const pawn: Pawn & { position: Position } = {
@@ -394,12 +424,12 @@ describe("PawnMoveCalculator", () => {
 
         it("includes possible attacking promotion moves", () => {
             const game = createGameWithMoveBeforeWhitePawnPromotion();
-            const expectedPromotionMoveBase: Omit<PromotionMove, "promoteTo"> =
-                {
-                    from: { file: ChessFile.B, rank: 7 },
-                    to: { file: ChessFile.A, rank: 8 },
-                    type: MoveType.PROMOTION,
-                };
+            const expectedPromotionMoveBase: Omit<PromotionMove, "promoteTo"> = {
+                from: { file: ChessFile.B, rank: 7 },
+                to: { file: ChessFile.A, rank: 8 },
+                type: MoveType.PROMOTION,
+                isAttacking: true,
+            };
 
             expect(
                 game
@@ -439,6 +469,8 @@ describe("PawnMoveCalculator", () => {
                     file: ChessFile.B,
                     rank: 4,
                 },
+                isAttacking: false,
+                type: MoveType.STANDARD,
             });
             game.move({
                 from: {
@@ -449,6 +481,8 @@ describe("PawnMoveCalculator", () => {
                     file: ChessFile.A,
                     rank: 5,
                 },
+                isAttacking: false,
+                type: MoveType.STANDARD,
             });
             game.move({
                 from: {
@@ -459,12 +493,14 @@ describe("PawnMoveCalculator", () => {
                     file: ChessFile.B,
                     rank: 5,
                 },
+                isAttacking: false,
+                type: MoveType.STANDARD,
             });
 
             expect(
                 game
                     .getAvailableMovesForPlayer()
-                    .filter((move) => (move as any).type).length
+                    .filter((move) => (move as any).type === MoveType.EN_PASSANT).length
             ).toEqual(0);
         });
     });

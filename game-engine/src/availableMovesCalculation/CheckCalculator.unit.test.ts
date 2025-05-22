@@ -1,4 +1,4 @@
-import { Move } from "../Moves";
+import { Move, MoveType } from "../Moves";
 import { PieceType, PieceWithPosition } from "../pieces";
 import { createBishop, createKing, createKnight, createPawn, createQueen, createRook } from "../pieces/PieceFactory";
 import { Player } from "../Player";
@@ -30,17 +30,17 @@ describe('CheckCalculator', () => {
         // not all moves are included
         const availableEnemyMovesIgnoringKingSafety: Move[] = [
             // all king-capturing/checking moves
-            { from: { file: ChessFile.H, rank: 3 }, to: whiteKingPosition },
-            { from: { file: ChessFile.E, rank: 3 }, to: whiteKingPosition },
-            { from: { file: ChessFile.D, rank: 5 }, to: whiteKingPosition },
-            { from: { file: ChessFile.G, rank: 7 }, to: whiteKingPosition },
-            { from: { file: ChessFile.B, rank: 2 }, to: whiteKingPosition },
+            { from: { file: ChessFile.H, rank: 3 }, to: whiteKingPosition, isAttacking: true, type: MoveType.STANDARD },
+            { from: { file: ChessFile.E, rank: 3 }, to: whiteKingPosition, isAttacking: true, type: MoveType.STANDARD },
+            { from: { file: ChessFile.D, rank: 5 }, to: whiteKingPosition, isAttacking: true, type: MoveType.STANDARD },
+            { from: { file: ChessFile.G, rank: 7 }, to: whiteKingPosition, isAttacking: true, type: MoveType.STANDARD },
+            { from: { file: ChessFile.B, rank: 2 }, to: whiteKingPosition, isAttacking: true, type: MoveType.STANDARD },
             // some of non-checking moves
-            { from: { file: ChessFile.H, rank: 3 }, to: { file: ChessFile.H, rank: 2 } },
-            { from: { file: ChessFile.E, rank: 3 }, to: { file: ChessFile.G, rank: 4 } },
-            { from: { file: ChessFile.D, rank: 5 }, to: { file: ChessFile.C, rank: 6 } },
-            { from: { file: ChessFile.G, rank: 7 }, to: { file: ChessFile.G, rank: 8 } },
-            { from: { file: ChessFile.B, rank: 2 }, to: { file: ChessFile.B, rank: 1 } },
+            { from: { file: ChessFile.H, rank: 3 }, to: { file: ChessFile.H, rank: 2 }, isAttacking: false, type: MoveType.STANDARD },
+            { from: { file: ChessFile.E, rank: 3 }, to: { file: ChessFile.G, rank: 4 }, isAttacking: false, type: MoveType.STANDARD },
+            { from: { file: ChessFile.D, rank: 5 }, to: { file: ChessFile.C, rank: 6 }, isAttacking: false, type: MoveType.STANDARD },
+            { from: { file: ChessFile.G, rank: 7 }, to: { file: ChessFile.G, rank: 8 }, isAttacking: false, type: MoveType.STANDARD },
+            { from: { file: ChessFile.B, rank: 2 }, to: { file: ChessFile.B, rank: 1 }, isAttacking: false, type: MoveType.STANDARD },
         ];
 
         const result = new CheckCalculator().getCheckingEnemyPieces(Player.WHITE, board, availableEnemyMovesIgnoringKingSafety);
