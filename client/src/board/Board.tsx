@@ -15,6 +15,13 @@ const BoardContainer = styled.div`
     height: 100%;
     max-width: 560px;
     max-height: 560px;
+    /* Ensure child columns (files) have right border except last */
+    & > div {
+        border-right: 2px solid black;
+    }
+    & > div:last-child {
+        border-right: none;
+    }
 `;
 
 export const Board = () => {
