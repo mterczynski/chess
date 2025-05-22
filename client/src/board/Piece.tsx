@@ -26,20 +26,20 @@ export const Piece = ({ pieceType, color }: PieceProps) => {
 
     const mapVariablesToImage = {
         [Player.WHITE]: {
-            [PieceType.PAWN]: "/assets/pieces/white_pawn.png",
-            [PieceType.KNIGHT]: "/assets/pieces/white_knight.png",
-            [PieceType.BISHOP]: "/assets/pieces/white_bishop.png",
-            [PieceType.ROOK]: "/assets/pieces/white_rook.png",
-            [PieceType.QUEEN]: "/assets/pieces/white_queen.png",
-            [PieceType.KING]: "/assets/pieces/white_king.png",
+            [PieceType.PAWN]: "./assets/pieces/white_pawn.png",
+            [PieceType.KNIGHT]: "./assets/pieces/white_knight.png",
+            [PieceType.BISHOP]: "./assets/pieces/white_bishop.png",
+            [PieceType.ROOK]: "./assets/pieces/white_rook.png",
+            [PieceType.QUEEN]: "./assets/pieces/white_queen.png",
+            [PieceType.KING]: "./assets/pieces/white_king.png",
         },
         [Player.BLACK]: {
-            [PieceType.PAWN]: "/assets/pieces/black_pawn.png",
-            [PieceType.KNIGHT]: "/assets/pieces/black_knight.png",
-            [PieceType.BISHOP]: "/assets/pieces/black_bishop.png",
-            [PieceType.ROOK]: "/assets/pieces/black_rook.png",
-            [PieceType.QUEEN]: "/assets/pieces/black_queen.png",
-            [PieceType.KING]: "/assets/pieces/black_king.png",
+            [PieceType.PAWN]: "./assets/pieces/black_pawn.png",
+            [PieceType.KNIGHT]: "./assets/pieces/black_knight.png",
+            [PieceType.BISHOP]: "./assets/pieces/black_bishop.png",
+            [PieceType.ROOK]: "./assets/pieces/black_rook.png",
+            [PieceType.QUEEN]: "./assets/pieces/black_queen.png",
+            [PieceType.KING]: "./assets/pieces/black_king.png",
         },
     };
 
