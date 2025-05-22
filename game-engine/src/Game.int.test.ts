@@ -32,6 +32,8 @@ describe("Game", () => {
             game.move({
                 from: { file: ChessFile.A, rank: 2 },
                 to: { file: ChessFile.A, rank: 4 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             expect(game.getState()).toBe(GameState.IN_PROGRESS);
         });
@@ -48,6 +50,8 @@ describe("Game", () => {
             originalGame.move({
                 from: { file: ChessFile.E, rank: 2 },
                 to: { file: ChessFile.E, rank: 4 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
 
             expect(originalGame.getCurrentPlayer()).toEqual(Player.BLACK);
@@ -60,6 +64,8 @@ describe("Game", () => {
             originalGame.move({
                 from: { file: ChessFile.E, rank: 2 },
                 to: { file: ChessFile.E, rank: 4 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
 
             const clone = originalGame.clone();
@@ -85,6 +91,8 @@ describe("Game", () => {
                     file: ChessFile.E,
                     rank: 4,
                 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             expect(game.getCurrentPlayer()).toBe(Player.BLACK);
             game.move({
@@ -96,6 +104,8 @@ describe("Game", () => {
                     file: ChessFile.E,
                     rank: 5,
                 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             expect(game.getCurrentPlayer()).toBe(Player.WHITE);
         });
@@ -114,6 +124,8 @@ describe("Game", () => {
                             file: ChessFile.A,
                             rank: 2,
                         },
+                        type: MoveType.STANDARD,
+                        isAttacking: true,
                     });
                 }).toThrow("Invalid move");
             });
@@ -129,6 +141,8 @@ describe("Game", () => {
                             file: ChessFile.A,
                             rank: 4,
                         },
+                        type: MoveType.STANDARD,
+                        isAttacking: false,
                     });
                 }).toThrow("Invalid move");
             });
@@ -142,6 +156,7 @@ describe("Game", () => {
                     game.move({
                         from: { file: ChessFile.B, rank: 7 },
                         to: { file: ChessFile.A, rank: 8 },
+                        // Intentionally missing type and isAttacking to test error
                     });
                 }).toThrow(
                     `Invalid move type (expected=${MoveType.PROMOTION})`
@@ -169,6 +184,7 @@ describe("Game", () => {
                     from: { file: ChessFile.B, rank: 7 },
                     to: { file: ChessFile.A, rank: 8 },
                     type: MoveType.PROMOTION,
+                    isAttacking: true,
                     promoteTo: PieceType.KNIGHT,
                 });
 
@@ -185,6 +201,7 @@ describe("Game", () => {
                     from: { file: ChessFile.B, rank: 7 },
                     to: { file: ChessFile.A, rank: 8 },
                     type: MoveType.PROMOTION,
+                    isAttacking: true,
                     promoteTo: PieceType.QUEEN,
                 });
 
@@ -215,6 +232,8 @@ describe("Game", () => {
                     file: ChessFile.E,
                     rank: 4,
                 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
 
             expect(board).toMatchSnapshot();
@@ -231,10 +250,14 @@ describe("Game", () => {
                         {
                             from: { file: file, rank: 2 },
                             to: { file: file, rank: 3 },
+                            isAttacking: false,
+                            type: MoveType.STANDARD,
                         },
                         {
                             from: { file: file, rank: 2 },
                             to: { file: file, rank: 4 },
+                            isAttacking: false,
+                            type: MoveType.STANDARD,
                         },
                     ];
                 });
@@ -243,18 +266,26 @@ describe("Game", () => {
                 {
                     from: { file: ChessFile.B, rank: 1 },
                     to: { file: ChessFile.A, rank: 3 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: { file: ChessFile.B, rank: 1 },
                     to: { file: ChessFile.C, rank: 3 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: { file: ChessFile.G, rank: 1 },
                     to: { file: ChessFile.F, rank: 3 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: { file: ChessFile.G, rank: 1 },
                     to: { file: ChessFile.H, rank: 3 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
             ];
 
@@ -274,21 +305,29 @@ describe("Game", () => {
             game.move({
                 from: { file: ChessFile.G, rank: 1 },
                 to: { file: ChessFile.H, rank: 3 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             makeAnyMove(game);
             game.move({
                 from: { file: ChessFile.G, rank: 2 },
                 to: { file: ChessFile.G, rank: 3 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             makeAnyMove(game);
             game.move({
                 from: { file: ChessFile.F, rank: 1 },
                 to: { file: ChessFile.G, rank: 2 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             makeAnyMove(game);
             game.move({
                 from: { file: ChessFile.E, rank: 1 },
                 to: { file: ChessFile.G, rank: 1 },
+                type: MoveType.CASTLING,
+                isAttacking: false,
             });
 
             expect(game.getBoard()[ChessFile.F][1]?.type).toEqual(
@@ -305,12 +344,16 @@ describe("Game", () => {
                 game.move({
                     from: { file: ChessFile.G, rank: 8 },
                     to: { file: ChessFile.H, rank: 6 },
+                    type: MoveType.STANDARD,
+                    isAttacking: false,
                 });
             };
             const moveBlackKnightBackward = () => {
                 game.move({
                     from: { file: ChessFile.H, rank: 6 },
                     to: { file: ChessFile.G, rank: 8 },
+                    type: MoveType.STANDARD,
+                    isAttacking: false,
                 });
             };
             const game = new Game();
@@ -318,26 +361,36 @@ describe("Game", () => {
             game.move({
                 from: { file: ChessFile.D, rank: 2 },
                 to: { file: ChessFile.D, rank: 4 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             moveBlackKnightForward();
             game.move({
                 from: { file: ChessFile.B, rank: 1 },
                 to: { file: ChessFile.C, rank: 3 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             moveBlackKnightBackward();
             game.move({
                 from: { file: ChessFile.C, rank: 1 },
                 to: { file: ChessFile.E, rank: 3 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             moveBlackKnightForward();
             game.move({
                 from: { file: ChessFile.D, rank: 1 },
                 to: { file: ChessFile.D, rank: 3 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             moveBlackKnightBackward();
             game.move({
                 from: { file: ChessFile.E, rank: 1 },
                 to: { file: ChessFile.C, rank: 1 },
+                type: MoveType.CASTLING,
+                isAttacking: false,
             });
 
             expect(game.getBoard()[ChessFile.A][1]).toBe(null);
@@ -356,21 +409,29 @@ describe("Game", () => {
             game.move({
                 from: { file: ChessFile.G, rank: 8 },
                 to: { file: ChessFile.H, rank: 6 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             makeAnyMove(game);
             game.move({
                 from: { file: ChessFile.G, rank: 7 },
                 to: { file: ChessFile.G, rank: 6 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             makeAnyMove(game);
             game.move({
                 from: { file: ChessFile.F, rank: 8 },
                 to: { file: ChessFile.G, rank: 7 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             makeAnyMove(game);
             game.move({
                 from: { file: ChessFile.E, rank: 8 },
                 to: { file: ChessFile.G, rank: 8 },
+                type: MoveType.CASTLING,
+                isAttacking: false,
             });
 
             expect(game.getBoard()[ChessFile.F][8]?.type).toEqual(
@@ -389,26 +450,36 @@ describe("Game", () => {
             game.move({
                 from: { file: ChessFile.D, rank: 7 },
                 to: { file: ChessFile.D, rank: 6 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             moveLeftWhiteKnightBackward(game);
             game.move({
                 from: { file: ChessFile.C, rank: 8 },
                 to: { file: ChessFile.E, rank: 6 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             moveLeftWhiteKnightForward(game);
             game.move({
                 from: { file: ChessFile.D, rank: 8 },
                 to: { file: ChessFile.D, rank: 7 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             moveLeftWhiteKnightBackward(game);
             game.move({
                 from: { file: ChessFile.B, rank: 8 },
                 to: { file: ChessFile.A, rank: 6 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             moveLeftWhiteKnightForward(game);
             game.move({
                 from: { file: ChessFile.E, rank: 8 },
                 to: { file: ChessFile.C, rank: 8 },
+                type: MoveType.CASTLING,
+                isAttacking: false,
             });
 
             expect(game.getBoard()[ChessFile.A][8]).toBe(null);
@@ -427,22 +498,32 @@ describe("Game", () => {
             game.move({
                 from: { file: ChessFile.E, rank: 2 },
                 to: { file: ChessFile.E, rank: 4 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             game.move({
                 from: { file: ChessFile.G, rank: 8 },
                 to: { file: ChessFile.H, rank: 6 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             game.move({
                 from: { file: ChessFile.E, rank: 4 },
                 to: { file: ChessFile.E, rank: 5 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             game.move({
                 from: { file: ChessFile.D, rank: 7 },
                 to: { file: ChessFile.D, rank: 5 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
             game.move({
                 from: { file: ChessFile.E, rank: 5 },
                 to: { file: ChessFile.D, rank: 6 },
+                type: MoveType.EN_PASSANT,
+                isAttacking: true,
             });
 
             expect(game.getBoard()[ChessFile.D][5]).toBe(null);
@@ -464,6 +545,8 @@ describe("Game", () => {
             game.move({
                 from: { file: ChessFile.A, rank: 2 },
                 to: { file: ChessFile.A, rank: 3 },
+                type: MoveType.STANDARD,
+                isAttacking: false,
             });
         }).toThrow("Game has already finished, no more moves can be made");
     });
@@ -513,26 +596,36 @@ describe("Game", () => {
     //             game.move({
     //                 from: { file: ChessFile.B, rank: 1 },
     //                 to: { file: ChessFile.A, rank: 3 },
+    //                 type: MoveType.STANDARD,
+    //                 isAttacking: false,
     //             });
     //             game.move({
     //                 from: { file: ChessFile.B, rank: 8 },
     //                 to: { file: ChessFile.A, rank: 6 },
+    //                 type: MoveType.STANDARD,
+    //                 isAttacking: false,
     //             });
-
+    //
     //             game.move({
     //                 from: { file: ChessFile.A, rank: 3 },
     //                 to: { file: ChessFile.B, rank: 1 },
+    //                 type: MoveType.STANDARD,
+    //                 isAttacking: false,
     //             });
     //             game.move({
     //                 from: { file: ChessFile.A, rank: 6 },
     //                 to: { file: ChessFile.B, rank: 8 },
+    //                 type: MoveType.STANDARD,
+    //                 isAttacking: false,
     //             });
     //         }
-
+    //
     //         expect(game.getState()).toEqual(GameState.IN_PROGRESS);
     //         game.move({
     //             from: { file: ChessFile.B, rank: 1 },
     //             to: { file: ChessFile.A, rank: 3 },
+    //             type: MoveType.STANDARD,
+    //             isAttacking: false,
     //         });
     //         expect(game.getState()).toEqual(GameState.DRAW_BY_75_MOVE_RULE);
     //     });
