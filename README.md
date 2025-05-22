@@ -24,10 +24,10 @@ npm i
 
 ## 🚧 Work progress
 
-| Repository    | Progress     | Comments                                                                                                                                             |
-| ------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done, performance can be improved                                                                                                             |
-| `client`      | 🟩🟩🟩🟩⬛⬛ | movable pieces, en passant, castling, checks, checkmates, promotions are working, both sides playable (but without perspective change on black side) |
+| Repository    | Progress     | Comments                                                                                              |
+| ------------- | ------------ | ----------------------------------------------------------------------------------------------------- |
+| `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done, performance can be improved                                                              |
+| `client`      | 🟩🟩🟩🟩🟩⬛ | movable pieces, en passant, castling, checks, checkmates, promotions are working, both sides playable (but there are responsivness issuesP) |
 
 ## Preview
 
