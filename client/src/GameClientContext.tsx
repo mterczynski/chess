@@ -1,9 +1,19 @@
-import { GameState, Move, Player, mapIndexToChessFile,
+import {
+    GameState,
+    Move,
+    Player,
+    mapIndexToChessFile,
     mapRankIndexToRank,
-    Position
+    Position,
 } from "game-engine";
 import _ from "lodash";
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { GameEngineContext } from "./GameEngineContext";
 import { handleGameEnd } from "./handle-game-end";
 

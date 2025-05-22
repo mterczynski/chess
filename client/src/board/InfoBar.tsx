@@ -19,26 +19,32 @@ const InfoBarContainer = styled.div`
 `;
 
 const RestartButton = styled.button`
-  margin-top: 10px;
-  padding: 0.5em 1.2em;
-  font-size: 1rem;
-  font-weight: 500;
-  border-radius: 8px;
-  border: 2px solid #fff;
-  background: #111;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: background 0.2s, border 0.2s;
-  &:hover {
-    background: #2d8cff;
-    border: 2px solid #2d8cff;
-  }
+    margin-top: 10px;
+    padding: 0.5em 1.2em;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: background 0.2s, border 0.2s;
+    &:hover {
+        background: #2d8cff;
+        border: 2px solid #2d8cff;
+    }
 `;
 
 export const InfoBar = () => {
     const { currentPlayer, state, restartGame } = useContext(GameEngineContext);
-    const { setSelectedPiece, setAvailableMoves, setPromotionMenuPosition, selectPlayer, playerTurnTimeoutRef } = useContext(GameClientContext);
+    const {
+        setSelectedPiece,
+        setAvailableMoves,
+        setPromotionMenuPosition,
+        selectPlayer,
+        playerTurnTimeoutRef,
+    } = useContext(GameClientContext);
 
     let infoText = null;
     if (state === GameState.IN_PROGRESS || state === GameState.UNSTARTED) {
@@ -79,11 +85,20 @@ export const InfoBar = () => {
     };
 
     return (
-      <>
-        <InfoBarContainer>{infoText}</InfoBarContainer>
-        <div style={{ width: '100%', maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
-          <RestartButton onClick={handleRestart}>Restart Game</RestartButton>
-        </div>
-      </>
+        <>
+            <InfoBarContainer>{infoText}</InfoBarContainer>
+            <div
+                style={{
+                    width: "100%",
+                    maxWidth: 560,
+                    margin: "0 auto",
+                    textAlign: "center",
+                }}
+            >
+                <RestartButton onClick={handleRestart}>
+                    Restart Game
+                </RestartButton>
+            </div>
+        </>
     );
 };
