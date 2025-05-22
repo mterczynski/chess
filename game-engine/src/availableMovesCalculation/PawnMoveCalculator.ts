@@ -63,33 +63,34 @@ export class PawnMoveCalculator implements PieceMoveCalculator {
             forwardSingleMove?.to.rank === 1 ||
             forwardSingleMove?.to.rank === Game.boardSize;
 
-        if (forwardSingleMove) {
-            if (isPromotionAvailable) {
-                forwardMoves.push(
-                    {
-                        ...forwardSingleMove,
-                        type: MoveType.PROMOTION,
-                        promoteTo: PieceType.KNIGHT,
-                    },
-                    {
-                        ...forwardSingleMove,
-                        type: MoveType.PROMOTION,
-                        promoteTo: PieceType.BISHOP,
-                    },
-                    {
-                        ...forwardSingleMove,
-                        type: MoveType.PROMOTION,
-                        promoteTo: PieceType.ROOK,
-                    },
-                    {
-                        ...forwardSingleMove,
-                        type: MoveType.PROMOTION,
-                        promoteTo: PieceType.QUEEN,
-                    }
-                );
-            } else {
-                forwardMoves.push(forwardSingleMove);
-            }
+        // At the end, ensure all promotion moves have isAttacking: false if not set
+        if (isPromotionAvailable && forwardSingleMove) {
+            forwardMoves.push(
+                {
+                    ...forwardSingleMove,
+                    type: MoveType.PROMOTION,
+                    promoteTo: PieceType.KNIGHT,
+                    isAttacking: false,
+                },
+                {
+                    ...forwardSingleMove,
+                    type: MoveType.PROMOTION,
+                    promoteTo: PieceType.BISHOP,
+                    isAttacking: false,
+                },
+                {
+                    ...forwardSingleMove,
+                    type: MoveType.PROMOTION,
+                    promoteTo: PieceType.ROOK,
+                    isAttacking: false,
+                },
+                {
+                    ...forwardSingleMove,
+                    type: MoveType.PROMOTION,
+                    promoteTo: PieceType.QUEEN,
+                    isAttacking: false,
+                }
+            );
         }
 
         return forwardMoves;

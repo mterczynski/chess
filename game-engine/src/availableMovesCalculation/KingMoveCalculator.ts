@@ -60,12 +60,16 @@ export class KingMoveCalculator implements PieceMoveCalculator {
         });
 
         return possibleMoves.map((possibleMove) => {
+            const square = board[possibleMove.newFile!][possibleMove.newRank!];
             return {
                 from: king.position,
                 to: {
                     file: possibleMove.newFile!,
                     rank: possibleMove.newRank!,
                 },
+                isAttacking:
+                    !!square && square.player === negatePlayer(king.player),
+                type: MoveType.STANDARD,
             };
         });
     }
@@ -110,6 +114,7 @@ export class KingMoveCalculator implements PieceMoveCalculator {
                 ) as ChessFile,
             },
             type: MoveType.CASTLING,
+            isAttacking: false,
         }));
     }
 }

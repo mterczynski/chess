@@ -31,10 +31,14 @@ export const Board = () => {
 
     return (
         <>
-            <InfoBar/>
+            <InfoBar />
             <BoardContainer>
                 {files.map((file, fileIndex) => (
-                    <File file={file} fileIndex={fileIndex} key={fileIndex}></File>
+                    <File
+                        file={file}
+                        fileIndex={fileIndex}
+                        key={fileIndex}
+                    ></File>
                 ))}
                 <PromotionMenu />
             </BoardContainer>

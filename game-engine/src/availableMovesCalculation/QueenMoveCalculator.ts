@@ -1,5 +1,5 @@
 import { Board } from "../Board";
-import { Move } from "../Moves";
+import { Move, MoveType } from "../Moves";
 import { Queen } from "../pieces";
 import { Position } from "../positions";
 import { DiagonalMoveCalculator } from "./DiagonalMoveCalculator";

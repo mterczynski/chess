@@ -3,6 +3,7 @@ import { Bishop } from "../pieces";
 import { Position } from "../positions";
 import { DiagonalMoveCalculator } from "./DiagonalMoveCalculator";
 import { PieceMoveCalculator } from "./PieceMoveCalculator";
+import { Move, MoveType } from "../Moves";
 
 export class BishopMoveCalculator implements PieceMoveCalculator {
     getAvailableMovesForPieceIgnoringKingSafety(

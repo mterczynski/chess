@@ -39,168 +39,144 @@ describe("AvailableMoveCalculator int.", () => {
                 // left rook moves
                 {
                     from: leftRookPosition,
-                    to: {
-                        file: ChessFile.B,
-                        rank: 1,
-                    },
+                    to: { file: ChessFile.B, rank: 1 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: leftRookPosition,
-                    to: {
-                        file: ChessFile.C,
-                        rank: 1,
-                    },
+                    to: { file: ChessFile.C, rank: 1 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: leftRookPosition,
-                    to: {
-                        file: ChessFile.D,
-                        rank: 1,
-                    },
+                    to: { file: ChessFile.D, rank: 1 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: leftRookPosition,
-                    to: {
-                        file: ChessFile.A,
-                        rank: 2,
-                    },
+                    to: { file: ChessFile.A, rank: 2 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: leftRookPosition,
-                    to: {
-                        file: ChessFile.A,
-                        rank: 3,
-                    },
+                    to: { file: ChessFile.A, rank: 3 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: leftRookPosition,
-                    to: {
-                        file: ChessFile.A,
-                        rank: 4,
-                    },
+                    to: { file: ChessFile.A, rank: 4 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: leftRookPosition,
-                    to: {
-                        file: ChessFile.A,
-                        rank: 5,
-                    },
+                    to: { file: ChessFile.A, rank: 5 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: leftRookPosition,
-                    to: {
-                        file: ChessFile.A,
-                        rank: 6,
-                    },
+                    to: { file: ChessFile.A, rank: 6 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: leftRookPosition,
-                    to: {
-                        file: ChessFile.A,
-                        rank: 7,
-                    },
+                    to: { file: ChessFile.A, rank: 7 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: leftRookPosition,
-                    to: {
-                        file: ChessFile.A,
-                        rank: 8,
-                    },
+                    to: { file: ChessFile.A, rank: 8 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 // king moves
                 {
                     from: kingPosition,
-                    to: {
-                        file: ChessFile.E,
-                        rank: 2,
-                    },
+                    to: { file: ChessFile.E, rank: 2 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: kingPosition,
-                    to: {
-                        file: ChessFile.F,
-                        rank: 1,
-                    },
+                    to: { file: ChessFile.F, rank: 1 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: kingPosition,
-                    to: {
-                        file: ChessFile.F,
-                        rank: 2,
-                    },
+                    to: { file: ChessFile.F, rank: 2 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: kingPosition,
-                    to: {
-                        file: ChessFile.G,
-                        rank: 1,
-                    },
+                    to: { file: ChessFile.G, rank: 1 },
                     type: MoveType.CASTLING,
+                    isAttacking: false,
                 },
 
                 // right rook moves
                 {
                     from: rightRookPosition,
-                    to: {
-                        file: ChessFile.G,
-                        rank: 1,
-                    },
+                    to: { file: ChessFile.G, rank: 1 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: rightRookPosition,
-                    to: {
-                        file: ChessFile.F,
-                        rank: 1,
-                    },
+                    to: { file: ChessFile.F, rank: 1 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: rightRookPosition,
-                    to: {
-                        file: ChessFile.H,
-                        rank: 2,
-                    },
+                    to: { file: ChessFile.H, rank: 2 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: rightRookPosition,
-                    to: {
-                        file: ChessFile.H,
-                        rank: 3,
-                    },
+                    to: { file: ChessFile.H, rank: 3 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: rightRookPosition,
-                    to: {
-                        file: ChessFile.H,
-                        rank: 4,
-                    },
+                    to: { file: ChessFile.H, rank: 4 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: rightRookPosition,
-                    to: {
-                        file: ChessFile.H,
-                        rank: 5,
-                    },
+                    to: { file: ChessFile.H, rank: 5 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: rightRookPosition,
-                    to: {
-                        file: ChessFile.H,
-                        rank: 6,
-                    },
+                    to: { file: ChessFile.H, rank: 6 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: rightRookPosition,
-                    to: {
-                        file: ChessFile.H,
-                        rank: 7,
-                    },
+                    to: { file: ChessFile.H, rank: 7 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: rightRookPosition,
-                    to: {
-                        file: ChessFile.H,
-                        rank: 8,
-                    },
+                    to: { file: ChessFile.H, rank: 8 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
             ];
 
@@ -217,14 +193,10 @@ describe("AvailableMoveCalculator int.", () => {
 
             const expectedAvailableMoves: Move[] = [
                 {
-                    from: {
-                        file: ChessFile.E,
-                        rank: 1,
-                    },
-                    to: {
-                        file: ChessFile.D,
-                        rank: 1,
-                    },
+                    from: { file: ChessFile.E, rank: 1 },
+                    to: { file: ChessFile.D, rank: 1 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
             ];
 
@@ -253,18 +225,26 @@ describe("AvailableMoveCalculator int.", () => {
                 {
                     from: whiteKingPosition,
                     to: { file: ChessFile.D, rank: 1 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: whiteKingPosition,
                     to: { file: ChessFile.E, rank: 2 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: whiteKingPosition,
                     to: { file: ChessFile.F, rank: 1 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
                     from: whiteKingPosition,
                     to: { file: ChessFile.F, rank: 2 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
             ];
 
@@ -292,44 +272,28 @@ describe("AvailableMoveCalculator int.", () => {
 
             const expectedResult: Move[] = [
                 {
-                    from: {
-                        file: ChessFile.E,
-                        rank: 8,
-                    },
-                    to: {
-                        file: ChessFile.D,
-                        rank: 7,
-                    },
+                    from: { file: ChessFile.E, rank: 8 },
+                    to: { file: ChessFile.D, rank: 7 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
-                    from: {
-                        file: ChessFile.E,
-                        rank: 8,
-                    },
-                    to: {
-                        file: ChessFile.D,
-                        rank: 8,
-                    },
+                    from: { file: ChessFile.E, rank: 8 },
+                    to: { file: ChessFile.D, rank: 8 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
-                    from: {
-                        file: ChessFile.E,
-                        rank: 8,
-                    },
-                    to: {
-                        file: ChessFile.F,
-                        rank: 7,
-                    },
+                    from: { file: ChessFile.E, rank: 8 },
+                    to: { file: ChessFile.F, rank: 7 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
                 {
-                    from: {
-                        file: ChessFile.E,
-                        rank: 8,
-                    },
-                    to: {
-                        file: ChessFile.F,
-                        rank: 8,
-                    },
+                    from: { file: ChessFile.E, rank: 8 },
+                    to: { file: ChessFile.F, rank: 8 },
+                    isAttacking: false,
+                    type: MoveType.STANDARD,
                 },
             ];
 
