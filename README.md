@@ -6,7 +6,8 @@ This repository contains `game-engine` and `client` - a UI made in React for pla
 
 Prerequisites:
 
--   NodeJS
+-   NodeJS (tested on version 18.20.8)
+-   npm (tested on version 8.20.8)
 
 ```bash
 # This command will install all required dependencies in all packages (thanks to npm workspaces)
@@ -21,9 +22,9 @@ npm i
 
 ## 🚧 Work progress
 
-| Repository    | Progress     | Comments                                                                         |
-| ------------- | ------------ | -------------------------------------------------------------------------------- |
-| `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done, performance can be improved                                      |
+| Repository    | Progress     | Comments                                                                                                                                             |
+| ------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done, performance can be improved                                                                                                             |
 | `client`      | 🟩🟩🟩🟩⬛⬛ | movable pieces, en passant, castling, checks, checkmates, promotions are working, both sides playable (but without perspective change on black side) |
 
 ## Preview
