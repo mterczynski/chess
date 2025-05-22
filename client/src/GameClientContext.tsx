@@ -24,7 +24,7 @@ export const GameClientContext = React.createContext<{
     setPromotionMenuPosition: React.Dispatch<
         React.SetStateAction<Position | null>
     >;
-    selectPlayer: (player: Player) => void;
+    selectPlayer: (player: Player | null) => void;
     playerSelection: Player | null;
 }>({} as any);
 
@@ -54,7 +54,7 @@ export const GameClientContextProvider = ({
         engineMove(randomMove);
     }, [availableMovesForPlayer, engineMove]);
 
-    const selectPlayer = useCallback((player: Player) => {
+    const selectPlayer = useCallback((player: Player | null) => {
         setPlayerSelection(player);
     }, []);
 

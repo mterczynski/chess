@@ -8,6 +8,7 @@ export const GameEngineContext = React.createContext<{
     currentPlayer: Player | null;
     state: GameState;
     board: Board;
+    restartGame: () => void;
 }>(null as any);
 
 export const GameEngineContextProvider = ({
@@ -19,6 +20,14 @@ export const GameEngineContextProvider = ({
 
     const move = useCallback((move: Move) => {
         game.current.move(move);
+        setCurrentPlayer(game.current.getCurrentPlayer());
+        setAvailableMovesForPlayer(game.current.getAvailableMovesForPlayer());
+        setState(game.current.getState());
+        setBoard(game.current.getBoard());
+    }, []);
+
+    const restartGame = useCallback(() => {
+        game.current = new Game();
         setCurrentPlayer(game.current.getCurrentPlayer());
         setAvailableMovesForPlayer(game.current.getAvailableMovesForPlayer());
         setState(game.current.getState());
@@ -43,6 +52,7 @@ export const GameEngineContextProvider = ({
                 currentPlayer,
                 state,
                 board,
+                restartGame,
             }}
         >
             {children}
