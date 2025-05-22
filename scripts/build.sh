@@ -17,10 +17,10 @@ rm -rf "$REPO_ROOT/build"
 mkdir "$REPO_ROOT/build"
 cd "$REPO_ROOT/client"
 npm run build
-cp -r ./build "$REPO_ROOT/build/client"
+cp -r "$REPO_ROOT/client/dist" "$REPO_ROOT/build/client"
 cd "$REPO_ROOT/game-engine"
 npm run build
-cp -r ./build "$REPO_ROOT/build/game-engine"
+cp -r "$REPO_ROOT/game-engine/build" "$REPO_ROOT/build/game-engine"
 # remove existing links
 cd "$REPO_ROOT/client"
 npm unlink game-engine || true

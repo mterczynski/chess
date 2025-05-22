@@ -12,11 +12,11 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 echo "Linking packages...";
 
 cd "$REPO_ROOT/client";
-npm unlink game-engine;
+npm unlink game-engine || true; # "If this command fails, ignore the error and continue."
 
 cd "$REPO_ROOT/game-engine";
 npm run build;
-cd ./build;
+cd "$REPO_ROOT/game-engine/build";
 npm link;
 
 cd "$REPO_ROOT/client";
