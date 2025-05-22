@@ -3,7 +3,7 @@ import {
     mapIndexToChessFile,
     mapRankIndexToRank,
     Position,
-} from "game-engine/positions";
+} from "game-engine";
 import _ from "lodash";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { GameEngineContext } from "./GameEngineContext";
@@ -89,7 +89,7 @@ export const GameClientContextProvider = ({
         const availableSelectedPieceMoves = availableMovesForPlayer.filter(
             (move) =>
                 move.from.file ===
-                    mapIndexToChessFile(selectedPiece.fileIndex) &&
+                mapIndexToChessFile(selectedPiece.fileIndex) &&
                 move.from.rank === mapRankIndexToRank(selectedPiece.tileIndex)
         );
         setAvailableMoves(availableSelectedPieceMoves);

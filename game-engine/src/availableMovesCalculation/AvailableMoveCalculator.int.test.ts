@@ -1,9 +1,10 @@
-import { AvailableMoveCalculator } from "./index";
+
 import { Move, SpecialMoveType } from "../Moves";
 import { createBishop, createKing, createKnight, createPawn, createQueen, createRook } from "../pieces/PieceFactory";
 import { Player } from "../Player";
 import { ChessFile, Position } from "../positions";
 import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
+import { AvailableMoveCalculator } from "./AvailableMoveCalculator";
 
 describe('AvailableMoveCalculator int.', () => {
     const availableMoveCalculator = new AvailableMoveCalculator();

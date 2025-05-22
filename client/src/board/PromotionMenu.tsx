@@ -4,7 +4,7 @@ import {
     mapIndexToChessFile,
     mapRankIndexToRank,
     Position,
-} from "game-engine/positions";
+} from "game-engine";
 import { useContext } from "react";
 import styled from "styled-components";
 import { GameClientContext } from "../GameClientContext";

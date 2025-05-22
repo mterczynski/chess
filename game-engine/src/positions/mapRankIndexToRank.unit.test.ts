@@ -1,5 +1,4 @@
 import { mapRankIndexToRank } from "./mapRankIndexToRank";
-import { ChessFile } from "./index";
 
 describe("mapRankIndexToRank", () => {
     it("maps 0 to 1", () => {

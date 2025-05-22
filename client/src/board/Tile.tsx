@@ -8,7 +8,7 @@ import {
     arePositionsEqual,
     mapIndexToChessFile,
     mapRankIndexToRank,
-} from "game-engine/positions";
+} from "game-engine";
 import { AvailableMoveDestination } from "./AvailableMoveDestination";
 import { settings } from "../settings";
 

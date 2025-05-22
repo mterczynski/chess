@@ -1,5 +1,5 @@
+import { ChessFile } from "./ChessFile";
 import { mapIndexToChessFile } from "./mapIndexToChessFile";
-import { ChessFile } from "./index";
 
 describe('mapIndexToChessFile', () => {
     it('maps 0 to A', () => {

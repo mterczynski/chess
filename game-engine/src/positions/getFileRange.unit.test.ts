@@ -1,4 +1,4 @@
-import { ChessFile } from "./index"
+import { ChessFile } from "./ChessFile";
 import { getFileRange } from "./getFileRange"
 
 describe('getFileRange', () => {
