@@ -1,6 +1,6 @@
 import { Game } from "../Game";
 import { Board } from "../Board";
-import { Move, SpecialMoveType } from "../Moves";
+import { Move, MoveType } from "../Moves";
 import { Pawn, Piece, PieceType } from "../pieces";
 import { Player } from "../Player";
 import { addToFile, addToRank, ChessFile, Position, Rank } from "../positions";
@@ -39,11 +39,21 @@ export class PawnMoveCalculator implements PieceMoveCalculator {
 
         let forwardSingleMove: Move | null =
             firstSquareUp === null
-                ? { from: pawn.position, to: { file, rank: nextRank } }
+                ? {
+                      from: pawn.position,
+                      to: { file, rank: nextRank },
+                      isAttacking: false,
+                      type: MoveType.STANDARD,
+                  }
                 : null;
         const forwardDoubleMove: Move | null =
             forwardSingleMove && hasntMoved && secondSquareUp === null
-                ? { from: pawn.position, to: { file, rank: nextSecondRank } }
+                ? {
+                      from: pawn.position,
+                      to: { file, rank: nextSecondRank },
+                      type: MoveType.STANDARD,
+                      isAttacking: false,
+                  }
                 : null;
         const forwardMoves: Move[] = [
             ...(forwardDoubleMove ? [forwardDoubleMove] : []),
@@ -58,22 +68,22 @@ export class PawnMoveCalculator implements PieceMoveCalculator {
                 forwardMoves.push(
                     {
                         ...forwardSingleMove,
-                        type: SpecialMoveType.PROMOTION,
+                        type: MoveType.PROMOTION,
                         promoteTo: PieceType.KNIGHT,
                     },
                     {
                         ...forwardSingleMove,
-                        type: SpecialMoveType.PROMOTION,
+                        type: MoveType.PROMOTION,
                         promoteTo: PieceType.BISHOP,
                     },
                     {
                         ...forwardSingleMove,
-                        type: SpecialMoveType.PROMOTION,
+                        type: MoveType.PROMOTION,
                         promoteTo: PieceType.ROOK,
                     },
                     {
                         ...forwardSingleMove,
-                        type: SpecialMoveType.PROMOTION,
+                        type: MoveType.PROMOTION,
                         promoteTo: PieceType.QUEEN,
                     }
                 );
@@ -124,23 +134,31 @@ export class PawnMoveCalculator implements PieceMoveCalculator {
                         file,
                         rank: nextRank,
                     },
-                    type: SpecialMoveType.PROMOTION,
+                    type: MoveType.PROMOTION,
                 };
                 attackingMoves.push({
                     ...promotingMoveBase,
                     promoteTo: PieceType.KNIGHT,
+                    isAttacking: true,
+                    type: MoveType.PROMOTION,
                 });
                 attackingMoves.push({
                     ...promotingMoveBase,
                     promoteTo: PieceType.BISHOP,
+                    isAttacking: true,
+                    type: MoveType.PROMOTION,
                 });
                 attackingMoves.push({
                     ...promotingMoveBase,
                     promoteTo: PieceType.ROOK,
+                    isAttacking: true,
+                    type: MoveType.PROMOTION,
                 });
                 attackingMoves.push({
                     ...promotingMoveBase,
                     promoteTo: PieceType.QUEEN,
+                    isAttacking: true,
+                    type: MoveType.PROMOTION,
                 });
             } else {
                 attackingMoves.push({
@@ -149,6 +167,8 @@ export class PawnMoveCalculator implements PieceMoveCalculator {
                         file,
                         rank: nextRank,
                     },
+                    isAttacking: true,
+                    type: MoveType.STANDARD,
                 });
             }
         };
@@ -193,7 +213,8 @@ export class PawnMoveCalculator implements PieceMoveCalculator {
                         file: lastMove.to.file,
                         rank: addToRank(pawn.position.rank, direction) as Rank,
                     },
-                    type: SpecialMoveType.EN_PASSANT,
+                    type: MoveType.EN_PASSANT,
+                    isAttacking: true,
                 },
             ];
         }

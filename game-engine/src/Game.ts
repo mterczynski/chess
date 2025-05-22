@@ -3,7 +3,7 @@ import { AvailableMoveCalculator } from "./availableMovesCalculation";
 import { CheckCalculator } from "./availableMovesCalculation/CheckCalculator";
 import { Board } from "./Board";
 import { GameState } from "./GameState";
-import { EnPassantMove, Move, PromotionMove, SpecialMoveType } from "./Moves";
+import { EnPassantMove, Move, PromotionMove, MoveType } from "./Moves";
 import { Piece, PieceType, Rook } from "./pieces";
 import { Player } from "./Player";
 import {
@@ -120,10 +120,10 @@ export class Game {
                 arePositionsEqual(availableMove.to, move.to)
         );
 
-        if ((availableMove as any)?.type === SpecialMoveType.PROMOTION) {
-            if ((move as any).type !== SpecialMoveType.PROMOTION) {
+        if ((availableMove as any)?.type === MoveType.PROMOTION) {
+            if ((move as any).type !== MoveType.PROMOTION) {
                 throw new Error(
-                    `Invalid move type (expected=${SpecialMoveType.PROMOTION})`
+                    `Invalid move type (expected=${MoveType.PROMOTION})`
                 );
             }
 
@@ -162,7 +162,7 @@ export class Game {
     }
 
     private enPassantIfAppliable(move: Move) {
-        if ((move as EnPassantMove).type === SpecialMoveType.EN_PASSANT) {
+        if ((move as EnPassantMove).type === MoveType.EN_PASSANT) {
             this.board[move.to.file][
                 move.to.rank +
                     (this.getCurrentPlayer() === Player.WHITE ? -1 : 1)
@@ -199,7 +199,7 @@ export class Game {
             }
         }
         this.enPassantIfAppliable(move);
-        if ((move as any).type === SpecialMoveType.PROMOTION) {
+        if ((move as any).type === MoveType.PROMOTION) {
             this.promote(move as PromotionMove);
         }
         this.moves.push(move);

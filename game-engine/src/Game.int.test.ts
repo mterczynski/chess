@@ -1,7 +1,7 @@
 import { Game } from "./Game";
 import { GameState } from "./GameState";
 import { mapIndexToChessFile } from "./utils";
-import { Move, SpecialMoveType } from "./Moves";
+import { Move, MoveType } from "./Moves";
 import { Player } from "./Player";
 import { ChessFile } from "./positions";
 import { playFoolsMate } from "../test-utils/playFoolsMate";
@@ -144,7 +144,7 @@ describe("Game", () => {
                         to: { file: ChessFile.A, rank: 8 },
                     });
                 }).toThrow(
-                    `Invalid move type (expected=${SpecialMoveType.PROMOTION})`
+                    `Invalid move type (expected=${MoveType.PROMOTION})`
                 );
             });
 
@@ -155,7 +155,7 @@ describe("Game", () => {
                     game.move({
                         from: { file: ChessFile.B, rank: 7 },
                         to: { file: ChessFile.A, rank: 8 },
-                        type: SpecialMoveType.PROMOTION,
+                        type: MoveType.PROMOTION,
                     });
                 }).toThrow("Invalid move: (missing 'promoteTo')");
             });
@@ -168,7 +168,7 @@ describe("Game", () => {
                 game.move({
                     from: { file: ChessFile.B, rank: 7 },
                     to: { file: ChessFile.A, rank: 8 },
-                    type: SpecialMoveType.PROMOTION,
+                    type: MoveType.PROMOTION,
                     promoteTo: PieceType.KNIGHT,
                 });
 
@@ -184,7 +184,7 @@ describe("Game", () => {
                 game.move({
                     from: { file: ChessFile.B, rank: 7 },
                     to: { file: ChessFile.A, rank: 8 },
-                    type: SpecialMoveType.PROMOTION,
+                    type: MoveType.PROMOTION,
                     promoteTo: PieceType.QUEEN,
                 });
 

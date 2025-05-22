@@ -1,4 +1,10 @@
-import { arePositionsEqual, mapIndexToChessFile, mapRankIndexToRank, Piece, SpecialMoveType } from "game-engine";
+import {
+    arePositionsEqual,
+    mapIndexToChessFile,
+    mapRankIndexToRank,
+    Piece,
+    MoveType,
+} from "game-engine";
 import { Piece as PieceComponent } from "./Piece";
 import styled from "styled-components";
 import { useCallback, useContext } from "react";
@@ -63,8 +69,7 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
 
         if (availableMoveToSelectedTile) {
             if (
-                (availableMoveToSelectedTile as any).type ===
-                SpecialMoveType.PROMOTION
+                (availableMoveToSelectedTile as any).type === MoveType.PROMOTION
             ) {
                 gameClientContext.setPromotionMenuPosition(
                     availableMoveToSelectedTile.to

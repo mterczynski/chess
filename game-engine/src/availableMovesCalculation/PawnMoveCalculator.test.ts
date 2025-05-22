@@ -1,6 +1,6 @@
 import { Board } from "../Board";
 import { createNewBoard } from "../utils";
-import { EnPassantMove, Move, PromotionMove, SpecialMoveType } from "../Moves";
+import { EnPassantMove, Move, PromotionMove, MoveType } from "../Moves";
 import { Pawn, PieceType } from "../pieces";
 import { createKnight, createPawn } from "../pieces/PieceFactory";
 import { Player } from "../Player";
@@ -216,7 +216,7 @@ describe("PawnMoveCalculator", () => {
                         file: ChessFile.C,
                         rank: 3,
                     },
-                    type: SpecialMoveType.EN_PASSANT,
+                    type: MoveType.EN_PASSANT,
                 };
                 const lastMove: Move = {
                     from: {
@@ -258,7 +258,7 @@ describe("PawnMoveCalculator", () => {
                         file: ChessFile.A,
                         rank: 6,
                     },
-                    type: SpecialMoveType.EN_PASSANT,
+                    type: MoveType.EN_PASSANT,
                 };
                 const lastMove: Move = {
                     from: {
@@ -296,7 +296,7 @@ describe("PawnMoveCalculator", () => {
                         file: ChessFile.A,
                         rank: 1,
                     },
-                    type: SpecialMoveType.PROMOTION,
+                    type: MoveType.PROMOTION,
                 };
 
                 const pawn: Pawn & { position: Position } = {
@@ -350,7 +350,7 @@ describe("PawnMoveCalculator", () => {
                         file: ChessFile.A,
                         rank: 8,
                     },
-                    type: SpecialMoveType.PROMOTION,
+                    type: MoveType.PROMOTION,
                 };
 
                 const pawn: Pawn & { position: Position } = {
@@ -398,7 +398,7 @@ describe("PawnMoveCalculator", () => {
                 {
                     from: { file: ChessFile.B, rank: 7 },
                     to: { file: ChessFile.A, rank: 8 },
-                    type: SpecialMoveType.PROMOTION,
+                    type: MoveType.PROMOTION,
                 };
 
             expect(

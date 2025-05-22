@@ -1,7 +1,11 @@
-import { PieceType, PromotablePieceType, SpecialMoveType, mapFileToFileIndex,
+import {
+    PieceType,
+    PromotablePieceType,
+    MoveType,
+    mapFileToFileIndex,
     mapIndexToChessFile,
     mapRankIndexToRank,
-    Position
+    Position,
 } from "game-engine";
 import { useContext } from "react";
 import styled from "styled-components";
@@ -48,7 +52,7 @@ export const PromotionMenu = () => {
                 ),
             },
             to: gameClientContext.promotionMenuPosition!,
-            type: SpecialMoveType.PROMOTION,
+            type: MoveType.PROMOTION,
             promoteTo: pieceType,
         });
 

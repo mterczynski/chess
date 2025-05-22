@@ -1,4 +1,4 @@
-import { Move } from "../Moves";
+import { Move, MoveType } from "../Moves";
 import { PieceType, Queen, Rook } from "../pieces";
 import { Player } from "../Player";
 import { ChessFile, Position } from "../positions";
@@ -34,31 +34,31 @@ describe('QueenMoveCalculator', () => {
 
             const expectedMoves: Move[] = [
                 // left
-                { from: queen.position, to: { file: ChessFile.C, rank: 4 } },
-                { from: queen.position, to: { file: ChessFile.B, rank: 4 } },
-                { from: queen.position, to: { file: ChessFile.A, rank: 4 } },
+                { from: queen.position, to: { file: ChessFile.C, rank: 4 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.B, rank: 4 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.A, rank: 4 }, isAttacking: false, type: MoveType.STANDARD },
                 // right
-                { from: queen.position, to: { file: ChessFile.E, rank: 4 } },
-                { from: queen.position, to: { file: ChessFile.F, rank: 4 } },
-                { from: queen.position, to: { file: ChessFile.G, rank: 4 } },
+                { from: queen.position, to: { file: ChessFile.E, rank: 4 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.F, rank: 4 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.G, rank: 4 }, isAttacking: true, type: MoveType.STANDARD },
                 // top
-                { from: queen.position, to: { file: ChessFile.D, rank: 5 } },
+                { from: queen.position, to: { file: ChessFile.D, rank: 5 }, isAttacking: false, type: MoveType.STANDARD },
                 // bottom
-                { from: queen.position, to: { file: ChessFile.D, rank: 3 } },
-                { from: queen.position, to: { file: ChessFile.D, rank: 2 } },
-                { from: queen.position, to: { file: ChessFile.D, rank: 1 } },
+                { from: queen.position, to: { file: ChessFile.D, rank: 3 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.D, rank: 2 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.D, rank: 1 }, isAttacking: false, type: MoveType.STANDARD },
                 // top-left
-                { from: queen.position, to: { file: ChessFile.C, rank: 5 } },
-                { from: queen.position, to: { file: ChessFile.B, rank: 6 } },
+                { from: queen.position, to: { file: ChessFile.C, rank: 5 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.B, rank: 6 }, isAttacking: true, type: MoveType.STANDARD },
                 // top-right
-                { from: queen.position, to: { file: ChessFile.E, rank: 5 } },
-                { from: queen.position, to: { file: ChessFile.F, rank: 6 } },
-                { from: queen.position, to: { file: ChessFile.G, rank: 7 } },
-                { from: queen.position, to: { file: ChessFile.H, rank: 8 } },
+                { from: queen.position, to: { file: ChessFile.E, rank: 5 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.F, rank: 6 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.G, rank: 7 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.H, rank: 8 }, isAttacking: false, type: MoveType.STANDARD },
                 // bottom-left
-                { from: queen.position, to: { file: ChessFile.E, rank: 3 } },
-                { from: queen.position, to: { file: ChessFile.F, rank: 2 } },
-                { from: queen.position, to: { file: ChessFile.G, rank: 1 } },
+                { from: queen.position, to: { file: ChessFile.E, rank: 3 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.F, rank: 2 }, isAttacking: false, type: MoveType.STANDARD },
+                { from: queen.position, to: { file: ChessFile.G, rank: 1 }, isAttacking: false, type: MoveType.STANDARD },
             ];
 
             const result = calculator.getAvailableMovesForPieceIgnoringKingSafety(queen, board);

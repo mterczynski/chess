@@ -1,5 +1,5 @@
 import { Game } from "../src/Game";
-import { SpecialMoveType } from "../src/Moves";
+import { MoveType } from "../src/Moves";
 import { PieceType } from "../src/pieces";
 import { Player } from "../src/Player";
 import { ChessFile } from "../src/positions";
@@ -52,7 +52,7 @@ describe("Black pawn promotion", () => {
                 file: ChessFile.H,
                 rank: 1,
             },
-            type: SpecialMoveType.PROMOTION,
+            type: MoveType.PROMOTION,
             promoteTo: PieceType.QUEEN,
         });
 

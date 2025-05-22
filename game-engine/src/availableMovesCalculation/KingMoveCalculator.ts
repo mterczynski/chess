@@ -1,6 +1,6 @@
 import { Board } from "../Board";
 import { negatePlayer, getFileRange } from "../utils";
-import { Move, SpecialMoveType } from "../Moves";
+import { Move, MoveType } from "../Moves";
 import { getPlayerPieces, King, PieceType } from "../pieces";
 import { ChessFile, Position, addToFile, addToRank } from "../positions";
 import { PieceMoveCalculator } from "./PieceMoveCalculator";
@@ -109,7 +109,7 @@ export class KingMoveCalculator implements PieceMoveCalculator {
                     rook.position.file > king.position.file ? 2 : -2
                 ) as ChessFile,
             },
-            type: SpecialMoveType.CASTLING,
+            type: MoveType.CASTLING,
         }));
     }
 }

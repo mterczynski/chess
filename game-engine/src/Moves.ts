@@ -1,29 +1,38 @@
 import { Position } from "./positions";
 import { PromotablePieceType } from "./pieces";
 
-export enum SpecialMoveType {
-    CASTLING = 'CASTLING',
-    PROMOTION = 'PROMOTION',
-    EN_PASSANT = 'EN_PASSANT',
+export enum MoveType {
+    STANDARD = "STANDARD",
+    CASTLING = "CASTLING",
+    PROMOTION = "PROMOTION",
+    EN_PASSANT = "EN_PASSANT",
 }
 
 /** Includes basic attacking and non-attacking moves */
-export interface NormalMove {
-    from: Position,
-    to: Position,
+interface BaseMove {
+    from: Position;
+    to: Position;
+    isAttacking: boolean;
+    type: MoveType;
 }
 
-export interface EnPassantMove extends NormalMove {
-    type: SpecialMoveType.EN_PASSANT;
+export interface StandardMove extends BaseMove {
+    type: MoveType.STANDARD;
 }
 
-export interface CastlingMove extends NormalMove {
-    type: SpecialMoveType.CASTLING,
+export interface EnPassantMove extends BaseMove {
+    type: MoveType.EN_PASSANT;
+    isAttacking: true;
 }
 
-export interface PromotionMove extends NormalMove {
-    type: SpecialMoveType.PROMOTION,
-    promoteTo: PromotablePieceType,
+export interface CastlingMove extends BaseMove {
+    type: MoveType.CASTLING;
+    isAttacking: false;
 }
 
-export type Move = NormalMove | CastlingMove | PromotionMove | EnPassantMove;
+export interface PromotionMove extends BaseMove {
+    type: MoveType.PROMOTION;
+    promoteTo: PromotablePieceType;
+}
+
+export type Move = StandardMove | CastlingMove | PromotionMove | EnPassantMove;
