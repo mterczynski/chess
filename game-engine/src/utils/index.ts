@@ -10,3 +10,4 @@ export * from "../positions/mapFileToFileIndex";
 export * from "../positions/mapRankIndexToRank";
 export * from "./negatePlayer";
 export * from "./isAttackingMove";
+export * from "./areMovesEqual";
