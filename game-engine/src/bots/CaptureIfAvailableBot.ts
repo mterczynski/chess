@@ -2,6 +2,8 @@ import { Board } from "../Board";
 import { Move } from "../Moves";
 import { PieceType } from "../pieces";
 import { Player } from "../Player";
+import { isAttackingMove } from "../utils/isAttackingMove";
+import _ from "lodash";
 
 export class CaptureIfAvailableBot {
     /**
@@ -12,12 +14,6 @@ export class CaptureIfAvailableBot {
         if (!availableMoves || availableMoves.length === 0) {
             throw new Error("No available moves");
         }
-
-        // Helper to get the piece type at a given position
-        const getPieceTypeAt = (move: Move) => {
-            const target = board[move.to.file][move.to.rank];
-            return target ? target.type : null;
-        };
 
         // Priority: Queen > Rook > Bishop/Knight > Pawn
         const priorities: PieceType[] = [
@@ -31,21 +27,17 @@ export class CaptureIfAvailableBot {
         // Find all capture moves, grouped by captured piece type
         for (const type of priorities) {
             const captureMoves = availableMoves.filter((move) => {
-                // Only consider moves that attack an enemy piece
+                if (!isAttackingMove(move, board)) return false;
                 const target = board[move.to.file][move.to.rank];
-                return (
-                    target && target.player !== botColor && target.type === type
-                );
+                return target && target.type === type;
             });
             if (captureMoves.length > 0) {
-                // Pick randomly among highest-priority captures
-                const idx = Math.floor(Math.random() * captureMoves.length);
-                return captureMoves[idx];
+                // Pick randomly among highest-priority captures using lodash
+                return _.sample(captureMoves)!;
             }
         }
 
         // No capture available, pick a random move
-        const idx = Math.floor(Math.random() * availableMoves.length);
-        return availableMoves[idx];
+        return _.sample(availableMoves)!;
     }
 }
