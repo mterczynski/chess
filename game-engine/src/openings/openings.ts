@@ -100,4 +100,43 @@ export const openings = [
             { from: { file: ChessFile.G, rank: 8 }, to: { file: ChessFile.F, rank: 6 } },
         ],
     },
+    {
+        name: "Polish Opening: Grigorian Variation",
+        moves: [
+            { from: { file: ChessFile.B, rank: 2 }, to: { file: ChessFile.B, rank: 4 } },
+            { from: { file: ChessFile.B, rank: 8 }, to: { file: ChessFile.C, rank: 6 } },
+        ],
+    },
+    {
+        name: "Saragossa Opening",
+        moves: [
+            { from: { file: ChessFile.C, rank: 2 }, to: { file: ChessFile.C, rank: 3 } },
+        ],
+    },
+    {
+        name: "Mieses Opening",
+        moves: [
+            { from: { file: ChessFile.D, rank: 2 }, to: { file: ChessFile.D, rank: 3 } },
+        ],
+    },
+    {
+        name: "Valencia Opening",
+        moves: [
+            { from: { file: ChessFile.D, rank: 2 }, to: { file: ChessFile.D, rank: 3 } },
+            { from: { file: ChessFile.E, rank: 7 }, to: { file: ChessFile.E, rank: 5 } },
+            { from: { file: ChessFile.B, rank: 1 }, to: { file: ChessFile.D, rank: 2 } },
+        ],
+    },
+    {
+        name: "Van't Kruijs Opening",
+        moves: [
+            { from: { file: ChessFile.E, rank: 2 }, to: { file: ChessFile.E, rank: 3 } },
+        ],
+    },
+    {
+        name: "Barnes Opening",
+        moves: [
+            { from: { file: ChessFile.F, rank: 2 }, to: { file: ChessFile.F, rank: 3 } },
+        ],
+    },
 ];
