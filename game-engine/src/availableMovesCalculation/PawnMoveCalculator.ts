@@ -128,19 +128,19 @@ export class PawnMoveCalculator implements PieceMoveCalculator {
                 };
                 attackingMoves.push({
                     ...promotingMoveBase,
-                    promoteTo: PieceType.KNIGHT,
+                    promoteTo: PieceType.KNIGHT as const,
                 });
                 attackingMoves.push({
                     ...promotingMoveBase,
-                    promoteTo: PieceType.BISHOP,
+                    promoteTo: PieceType.BISHOP as const,
                 });
                 attackingMoves.push({
                     ...promotingMoveBase,
-                    promoteTo: PieceType.ROOK,
+                    promoteTo: PieceType.ROOK as const,
                 });
                 attackingMoves.push({
                     ...promotingMoveBase,
-                    promoteTo: PieceType.QUEEN,
+                    promoteTo: PieceType.QUEEN as const,
                 });
             } else {
                 attackingMoves.push({
