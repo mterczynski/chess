@@ -79,11 +79,7 @@ export const GameClientContextProvider = ({
                 clearTimeout(playerTurnTimeoutRef.current);
             }
             playerTurnTimeoutRef.current = setTimeout(() => {
-                const move = bot.makeMove(
-                    board,
-                    availableMovesForPlayer,
-                    currentPlayer
-                );
+                const move = bot.makeMove(board, availableMovesForPlayer);
                 engineMove(move);
             }, 650);
         }
