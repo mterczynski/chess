@@ -1,6 +1,6 @@
 import { Game } from "../Game";
 import { Board } from "../Board";
-import { Move, SpecialMoveType } from "../Moves";
+import { Move, PromotionMove, SpecialMoveType } from "../Moves";
 import { Pawn, Piece, PieceType } from "../pieces";
 import { Player } from "../Player";
 import { addToFile, addToRank, ChessFile, Position, Rank } from "../positions";
@@ -124,23 +124,29 @@ export class PawnMoveCalculator implements PieceMoveCalculator {
                         file,
                         rank: nextRank,
                     },
-                    type: SpecialMoveType.PROMOTION,
+                    type: SpecialMoveType.PROMOTION as const,
                 };
-                attackingMoves.push({
-                    ...promotingMoveBase,
-                    promoteTo: PieceType.KNIGHT as const,
-                });
-                attackingMoves.push({
-                    ...promotingMoveBase,
-                    promoteTo: PieceType.BISHOP as const,
-                });
-                attackingMoves.push({
-                    ...promotingMoveBase,
-                    promoteTo: PieceType.ROOK as const,
-                });
-                attackingMoves.push({
-                    ...promotingMoveBase,
-                    promoteTo: PieceType.QUEEN as const,
+                const attackingPromotionMoves: PromotionMove[] = [
+                    {
+                        ...promotingMoveBase,
+                        promoteTo: PieceType.KNIGHT as const,
+                    },
+                    {
+                        ...promotingMoveBase,
+                        promoteTo: PieceType.BISHOP as const,
+                    },
+                    {
+                        ...promotingMoveBase,
+                        promoteTo: PieceType.ROOK as const,
+                    },
+                    {
+                        ...promotingMoveBase,
+                        promoteTo: PieceType.QUEEN as const,
+                    },
+                ];
+
+                attackingPromotionMoves.forEach((move) => {
+                    attackingMoves.push(move);
                 });
             } else {
                 attackingMoves.push({
