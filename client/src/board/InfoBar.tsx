@@ -1,8 +1,10 @@
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useMemo, useRef } from "react";
 import { GameEngineContext } from "../GameEngineContext";
 import { GameClientContext } from "../GameClientContext";
 import { Player, GameState } from "game-engine";
+import { openings } from "game-engine/src/openings/openings";
+import { areMovesEqual } from "game-engine/src/utils";
 
 const InfoBarContainer = styled.div`
     width: 100%;
@@ -37,7 +39,8 @@ const RestartButton = styled.button`
 `;
 
 export const InfoBar = () => {
-    const { currentPlayer, state, restartGame } = useContext(GameEngineContext);
+    const { currentPlayer, state, restartGame, moveHistory } =
+        useContext(GameEngineContext);
     const {
         setSelectedPiece,
         setAvailableMoves,
@@ -45,6 +48,32 @@ export const InfoBar = () => {
         selectPlayer,
         playerTurnTimeoutRef,
     } = useContext(GameClientContext);
+
+    // Track last matched opening across renders
+    const lastOpeningRef = useRef<string | null>(null);
+
+    // Find current opening using move history
+    const currentOpening = useMemo(() => {
+        if (!moveHistory || moveHistory.length === 0) return null; // Prevent matching on empty board
+        const matchingOpenings = openings.filter(
+            (opening) =>
+                moveHistory.length >= opening.moves.length &&
+                opening.moves.every((move, index) =>
+                    areMovesEqual(move, moveHistory[index])
+                )
+        );
+
+        return (
+            matchingOpenings.sort((a, b) => {
+                return a.moves.length - b.moves.length;
+            })[0]?.name || null
+        );
+    }, [moveHistory]);
+
+    // Persist last matched opening
+    if (currentOpening) {
+        lastOpeningRef.current = currentOpening;
+    }
 
     let infoText = null;
     if (state === GameState.IN_PROGRESS || state === GameState.UNSTARTED) {
@@ -82,11 +111,27 @@ export const InfoBar = () => {
             clearTimeout(playerTurnTimeoutRef.current);
             playerTurnTimeoutRef.current = null;
         }
+        lastOpeningRef.current = null; // Reset opening on restart
     };
 
     return (
         <>
-            <InfoBarContainer>{infoText}</InfoBarContainer>
+            <InfoBarContainer>
+                {lastOpeningRef.current && (
+                    <span
+                        style={{
+                            display: "block",
+                            fontSize: "1rem",
+                            fontWeight: 400,
+                            color: "#b3e5fc",
+                            marginBottom: "0.2em",
+                        }}
+                    >
+                        Opening: {lastOpeningRef.current}
+                    </span>
+                )}
+                {infoText}
+            </InfoBarContainer>
             <div
                 style={{
                     width: "100%",
