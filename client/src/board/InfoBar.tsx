@@ -3,8 +3,7 @@ import { useContext, useMemo, useRef } from "react";
 import { GameEngineContext } from "../GameEngineContext";
 import { GameClientContext } from "../GameClientContext";
 import { Player, GameState } from "game-engine";
-import { openings } from "game-engine/src/openings/openings";
-import { areMovesEqual } from "game-engine/src/utils";
+import { findOpeningByMoves } from "game-engine/src/utils/findOpeningByMoves";
 
 const InfoBarContainer = styled.div`
     width: 100%;
@@ -53,26 +52,14 @@ export const InfoBar = () => {
     const lastOpeningRef = useRef<string | null>(null);
 
     // Find current opening using move history
-    const currentOpening = useMemo(() => {
-        if (!moveHistory || moveHistory.length === 0) return null; // Prevent matching on empty board
-        const matchingOpenings = openings.filter(
-            (opening) =>
-                moveHistory.length >= opening.moves.length &&
-                opening.moves.every((move, index) =>
-                    areMovesEqual(move, moveHistory[index])
-                )
-        );
-
-        return (
-            matchingOpenings.sort((a, b) => {
-                return a.moves.length - b.moves.length;
-            })[0]?.name || null
-        );
-    }, [moveHistory]);
+    const currentOpening = useMemo(
+        () => findOpeningByMoves(moveHistory),
+        [moveHistory]
+    );
 
     // Persist last matched opening
-    if (currentOpening) {
-        lastOpeningRef.current = currentOpening;
+    if (currentOpening?.name) {
+        lastOpeningRef.current = currentOpening.name;
     }
 
     let infoText = null;
@@ -117,19 +104,23 @@ export const InfoBar = () => {
     return (
         <>
             <InfoBarContainer>
-                {lastOpeningRef.current && (
-                    <span
-                        style={{
-                            display: "block",
-                            fontSize: "1rem",
-                            fontWeight: 400,
-                            color: "#b3e5fc",
-                            marginBottom: "0.2em",
-                        }}
-                    >
-                        Opening: {lastOpeningRef.current}
-                    </span>
-                )}
+                <span
+                    style={{
+                        display: "block",
+                        minHeight: "1.4em", // Reserve space for one line
+                        fontSize: "1rem",
+                        fontWeight: 400,
+                        color: lastOpeningRef.current
+                            ? "#b3e5fc"
+                            : "transparent",
+                        marginBottom: "0.2em",
+                        transition: "color 0.2s",
+                    }}
+                >
+                    {lastOpeningRef.current
+                        ? `Opening: ${lastOpeningRef.current}`
+                        : "Opening: "}
+                </span>
                 {infoText}
             </InfoBarContainer>
             <div

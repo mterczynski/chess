@@ -11,3 +11,4 @@ export * from "../positions/mapRankIndexToRank";
 export * from "./negatePlayer";
 export * from "./isAttackingMove";
 export * from "./areMovesEqual";
+export * from "./findOpeningByMoves";

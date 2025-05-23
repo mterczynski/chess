@@ -1,4 +1,4 @@
-import { ChessFile } from ".";
+import { ChessFile } from "./ChessFile";
 
 export function addToFile(
     file: ChessFile,

@@ -1,8 +1,8 @@
 import { Player } from "../Player";
-import { ChessFile } from "../positions";
 import { getEmptyBoard } from "../../test-utils/getEmptyBoard";
 import { getPlayerKing } from "./getPlayerKing";
 import { PieceType } from "./types/PieceType";
+import { ChessFile } from "../positions";
 
 describe('getPlayerKing', () => {
     const board = getEmptyBoard();
