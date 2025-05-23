@@ -1,6 +1,12 @@
+import { Move } from "../Moves";
 import { ChessFile } from "../positions";
 
-export const openings = [
+export interface Opening {
+    name: string;
+    moves: Move[];
+}
+
+export const openings: Opening[] = [
     {
         name: "Ruy Lopez",
         moves: [
