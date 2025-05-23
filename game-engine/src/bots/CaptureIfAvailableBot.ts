@@ -1,7 +1,6 @@
 import { Board } from "../Board";
 import { Move } from "../Moves";
 import { PieceType } from "../pieces";
-import { Player } from "../Player";
 import { isAttackingMove } from "../utils/isAttackingMove";
 import _ from "lodash";
 
@@ -10,7 +9,7 @@ export class CaptureIfAvailableBot {
      * Selects a capture move if available, prioritizing captures in this order:
      * Queen > Rook > Bishop/Knight > Pawn. If no capture is available, picks a random move.
      */
-    makeMove(board: Board, availableMoves: Move[], botColor: Player): Move {
+    makeMove(board: Board, availableMoves: Move[]): Move {
         if (!availableMoves || availableMoves.length === 0) {
             throw new Error("No available moves");
         }

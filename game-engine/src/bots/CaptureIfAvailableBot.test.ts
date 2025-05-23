@@ -26,7 +26,7 @@ describe("CaptureIfAvailableBot", () => {
             },
         ];
         const bot = new CaptureIfAvailableBot();
-        const move = bot.makeMove(board, moves, Player.WHITE);
+        const move = bot.makeMove(board, moves);
         expect(move.to).toEqual({ file: ChessFile.A, rank: 4 });
     });
 
@@ -49,7 +49,7 @@ describe("CaptureIfAvailableBot", () => {
             },
         ];
         const bot = new CaptureIfAvailableBot();
-        const move = bot.makeMove(board, moves, Player.WHITE);
+        const move = bot.makeMove(board, moves);
         expect(move.to).toEqual({ file: ChessFile.C, rank: 3 }); // Bishop
     });
 
@@ -72,7 +72,7 @@ describe("CaptureIfAvailableBot", () => {
             },
         ];
         const bot = new CaptureIfAvailableBot();
-        const move = bot.makeMove(board, moves, Player.WHITE);
+        const move = bot.makeMove(board, moves);
         expect(moves).toContainEqual(move);
     });
 });
