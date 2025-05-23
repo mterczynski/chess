@@ -1,9 +1,20 @@
-import { GameState, Move, Player, mapIndexToChessFile,
+import {
+    GameState,
+    Move,
+    Player,
+    mapIndexToChessFile,
     mapRankIndexToRank,
-    Position
+    Position,
+    CaptureIfAvailableBot,
 } from "game-engine";
 import _ from "lodash";
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { GameEngineContext } from "./GameEngineContext";
 import { handleGameEnd } from "./handle-game-end";
 
@@ -47,15 +58,11 @@ export const GameClientContextProvider = ({
         move: engineMove,
         state,
         currentPlayer,
+        board,
     } = useContext(GameEngineContext);
 
     const playerTurnTimeoutRef = useRef<any>(null);
-
-    const makeRandomMove = useCallback(() => {
-        const randomMove = _.sample(availableMovesForPlayer) as Move;
-
-        engineMove(randomMove);
-    }, [availableMovesForPlayer, engineMove]);
+    const bot = new CaptureIfAvailableBot();
 
     const selectPlayer = useCallback((player: Player | null) => {
         setPlayerSelection(player);
@@ -65,16 +72,29 @@ export const GameClientContextProvider = ({
         if (
             playerSelection !== null &&
             currentPlayer !== playerSelection &&
+            currentPlayer &&
             (state === GameState.UNSTARTED || state === GameState.IN_PROGRESS)
         ) {
             if (playerTurnTimeoutRef.current) {
                 clearTimeout(playerTurnTimeoutRef.current);
             }
             playerTurnTimeoutRef.current = setTimeout(() => {
-                makeRandomMove();
+                const move = bot.makeMove(
+                    board,
+                    availableMovesForPlayer,
+                    currentPlayer
+                );
+                engineMove(move);
             }, 650);
         }
-    }, [currentPlayer, makeRandomMove, playerSelection, state]);
+    }, [
+        currentPlayer,
+        playerSelection,
+        state,
+        availableMovesForPlayer,
+        engineMove,
+        board,
+    ]);
 
     useEffect(() => {
         // setTimeout used to display last played move before showing an alert
