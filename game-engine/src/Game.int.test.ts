@@ -471,29 +471,29 @@ describe("Game", () => {
     describe("threefold repetition", () => {
         it("ends in a draw when the same position occurs three times", () => {
             const game = new Game();
-            // Repeat the same sequence 3 times
-            for (let i = 0; i < 3; i++) {
-                // White: Nb1-c3
+            // Repeat the same sequence 3 times, but break if the game ends
+            for (let i = 0; i < 2; i++) {
                 game.move({
                     from: { file: ChessFile.B, rank: 1 },
                     to: { file: ChessFile.C, rank: 3 },
                 });
-                // Black: Nb8-c6
                 game.move({
                     from: { file: ChessFile.B, rank: 8 },
                     to: { file: ChessFile.C, rank: 6 },
                 });
-                // White: Nc3-b1
                 game.move({
                     from: { file: ChessFile.C, rank: 3 },
                     to: { file: ChessFile.B, rank: 1 },
                 });
-                // Black: Nc6-b8
                 game.move({
                     from: { file: ChessFile.C, rank: 6 },
                     to: { file: ChessFile.B, rank: 8 },
                 });
             }
+            game.move({
+                from: { file: ChessFile.B, rank: 1 },
+                to: { file: ChessFile.C, rank: 3 },
+            });
             expect(game.getState()).toBe(GameState.DRAW_BY_REPETITION);
         });
     });
