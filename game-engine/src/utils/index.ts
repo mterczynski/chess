@@ -9,3 +9,4 @@ export * from "../positions/mapIndexToChessFile";
 export * from "../positions/mapFileToFileIndex";
 export * from "../positions/mapRankIndexToRank";
 export * from "./negatePlayer";
+export * from "./isAttackingMove";
