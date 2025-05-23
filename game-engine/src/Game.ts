@@ -92,6 +92,10 @@ export class Game {
         return clone;
     }
 
+    getMoveHistory(): Move[] {
+        return _.cloneDeep(this.moves);
+    }
+
     private getLastMove(): Move | null {
         return this.moves.slice(-1)[0] || null;
     }
