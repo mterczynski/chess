@@ -73,6 +73,20 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
                     rank: mapRankIndexToRank(tileIndex),
                 })
             );
+        const allavailableMoveToSelectedTile =
+            gameEngineContext.availableMovesForPlayer.filter((move) =>
+                arePositionsEqual(move.to, {
+                    file: mapIndexToChessFile(fileIndex),
+                    rank: mapRankIndexToRank(tileIndex),
+                })
+            );
+
+        console.log(
+            "## allavailableMoveToSelectedTile",
+            allavailableMoveToSelectedTile,
+            "availableMoveToSelectedTile",
+            availableMoveToSelectedTile
+        );
 
         if (availableMoveToSelectedTile) {
             if (
@@ -83,6 +97,8 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
                     availableMoveToSelectedTile.to
                 );
             } else {
+                // Always clear and update selected piece before moving
+                gameClientContext.setSelectedPiece(null); // Deselect to prevent stale selection
                 gameEngineContext.move(availableMoveToSelectedTile);
             }
         } else if (isOwnPieceSelected) {
