@@ -75,4 +75,10 @@ describe("CaptureIfAvailableBot", () => {
         const move = bot.makeMove(board, moves);
         expect(moves).toContainEqual(move);
     });
+
+    it("throws an error if no available moves (empty array)", () => {
+        const bot = new CaptureIfAvailableBot();
+        const board = getEmptyBoard();
+        expect(() => bot.makeMove(board, [])).toThrow("No available moves");
+    });
 });

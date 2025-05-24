@@ -7,13 +7,16 @@
         "game-engine"
     ],
     "scripts": {
-        "postinstall": "sh link-packages.sh",
+        "postinstall": "sh scripts/link-packages.sh",
         "start": "cd ./client && npm start",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:ci": "jest --ci",
+        "test:coverage": "jest --coverage",
         "build:engine": "cd ./game-engine && npm run build",
-        "build": "sh build.sh"
+        "build": "sh scripts/build.sh",
+        "cleanup": "sh scripts/cleanup.sh",
+        "deploy": "sh scripts/deploy.sh"
     },
     "keywords": [
         "chess",
