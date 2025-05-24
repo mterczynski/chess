@@ -1,20 +1,13 @@
 import { GameState, Player } from "game-engine";
 import { GameMode } from "../GameMode";
+import { isDraw } from "game-engine/src/utils";
 
 export function handleGameEnd(
     gameState: GameState,
     playerSelection: Player,
     gameMode: GameMode
 ) {
-    // todo: create isDraw function in game-engine
-    const isDraw = [
-        GameState.DRAW_BY_50_MOVE_RULE,
-        GameState.DRAW_BY_75_MOVE_RULE,
-        GameState.DRAW_BY_AGREEMENT,
-        GameState.DRAW_BY_INSUFFICIENT_MATERIAL,
-        GameState.DRAW_BY_REPETITION,
-        GameState.DRAW_BY_STALEMATE,
-    ].includes(gameState);
+    const isGameDrawn = isDraw(gameState);
 
     if (gameState === GameState.DRAW_BY_50_MOVE_RULE) {
         return alert("Draw by 50 move rule");
@@ -36,7 +29,7 @@ export function handleGameEnd(
                 alert("You won");
             } else if (gameState === GameState.BLACK_WON) {
                 alert("You lost");
-            } else if (isDraw) {
+            } else if (isGameDrawn) {
                 alert("Game drawn"); // TODO - add more descriptive messages that mention draw reason
             }
         } else {
@@ -44,7 +37,7 @@ export function handleGameEnd(
                 alert("You won");
             } else if (gameState === GameState.WHITE_WON) {
                 alert("You lost");
-            } else if (isDraw) {
+            } else if (isGameDrawn) {
                 alert("Game drawn"); // TODO - add more descriptive messages that mention draw reason
             }
         }
@@ -53,7 +46,7 @@ export function handleGameEnd(
             alert("White won");
         } else if (gameState === GameState.BLACK_WON) {
             alert("Black won");
-        } else if (isDraw) {
+        } else if (isGameDrawn) {
             alert("Game drawn"); // TODO - add more descriptive messages that mention draw reason
         }
     }
