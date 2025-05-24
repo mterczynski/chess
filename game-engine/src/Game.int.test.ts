@@ -421,6 +421,22 @@ describe("Game", () => {
         });
     });
 
+    describe("getMoveHistory", () => {
+        it("returns a deep clone of the move history after several moves", () => {
+            game.move({ from: { file: ChessFile.E, rank: 2 }, to: { file: ChessFile.E, rank: 4 } });
+            game.move({ from: { file: ChessFile.E, rank: 7 }, to: { file: ChessFile.E, rank: 5 } });
+            game.move({ from: { file: ChessFile.G, rank: 1 }, to: { file: ChessFile.F, rank: 3 } });
+            const history = game.getMoveHistory();
+            expect(history).toHaveLength(3);
+            expect(history[0]).toEqual({ from: { file: ChessFile.E, rank: 2 }, to: { file: ChessFile.E, rank: 4 } });
+            expect(history[1]).toEqual({ from: { file: ChessFile.E, rank: 7 }, to: { file: ChessFile.E, rank: 5 } });
+            expect(history[2]).toEqual({ from: { file: ChessFile.G, rank: 1 }, to: { file: ChessFile.F, rank: 3 } });
+            // Mutating the returned array should not affect the internal state
+            history.push({ from: { file: ChessFile.A, rank: 2 }, to: { file: ChessFile.A, rank: 3 } });
+            expect(game.getMoveHistory()).toHaveLength(3);
+        });
+    });
+
     describe("en passant", () => {
         it("works on white side", () => {
             const game = new Game();
