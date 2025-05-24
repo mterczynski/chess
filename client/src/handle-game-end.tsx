@@ -6,6 +6,7 @@ export function handleGameEnd(
     playerSelection: Player,
     gameMode: GameMode
 ) {
+    // todo: create isDraw function in game-engine
     const isDraw = [
         GameState.DRAW_BY_50_MOVE_RULE,
         GameState.DRAW_BY_75_MOVE_RULE,
