@@ -9,10 +9,15 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-echo "Linking packages...";
+echo "Unlinking packages...";
 
 cd "$REPO_ROOT/client";
 npm unlink game-engine || true; # "If this command fails, ignore the error and continue."
+
+cd "$REPO_ROOT/server";
+npm unlink game-engine || true; # "If this command fails, ignore the error and continue."
+
+echo "Linking packages...";
 
 cd "$REPO_ROOT/game-engine";
 npm run build;
