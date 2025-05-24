@@ -1,6 +1,11 @@
 import { GameState, Player } from "game-engine";
+import { GameMode } from "./GameMode";
 
-export function handleGameEnd(gameState: GameState, playerSelection: Player) {
+export function handleGameEnd(
+    gameState: GameState,
+    playerSelection: Player,
+    gameMode: GameMode
+) {
     const isDraw = [
         GameState.DRAW_BY_50_MOVE_RULE,
         GameState.DRAW_BY_75_MOVE_RULE,
@@ -24,19 +29,29 @@ export function handleGameEnd(gameState: GameState, playerSelection: Player) {
         return alert("Draw by stalemate");
     }
 
-    if (playerSelection === Player.WHITE) {
-        if (gameState === GameState.WHITE_WON) {
-            alert("You won");
-        } else if (gameState === GameState.BLACK_WON) {
-            alert("You lost");
-        } else if (isDraw) {
-            alert("Game drawn"); // TODO - add more descriptive messages that mention draw reason
+    if (gameMode === GameMode.VS_BOT) {
+        if (playerSelection === Player.WHITE) {
+            if (gameState === GameState.WHITE_WON) {
+                alert("You won");
+            } else if (gameState === GameState.BLACK_WON) {
+                alert("You lost");
+            } else if (isDraw) {
+                alert("Game drawn"); // TODO - add more descriptive messages that mention draw reason
+            }
+        } else {
+            if (gameState === GameState.BLACK_WON) {
+                alert("You won");
+            } else if (gameState === GameState.WHITE_WON) {
+                alert("You lost");
+            } else if (isDraw) {
+                alert("Game drawn"); // TODO - add more descriptive messages that mention draw reason
+            }
         }
-    } else {
-        if (gameState === GameState.BLACK_WON) {
-            alert("You won");
-        } else if (gameState === GameState.WHITE_WON) {
-            alert("You lost");
+    } else if (gameMode === GameMode.VS_PLAYER_OFFLINE) {
+        if (gameState === GameState.WHITE_WON) {
+            alert("White won");
+        } else if (gameState === GameState.BLACK_WON) {
+            alert("Black won");
         } else if (isDraw) {
             alert("Game drawn"); // TODO - add more descriptive messages that mention draw reason
         }
