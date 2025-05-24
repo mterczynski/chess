@@ -15,6 +15,18 @@ export class LobbyController {
                 message: 'Name and password must be strings.',
             };
         }
+        if (
+            lobbies.some(
+                (lobby) =>
+                    lobby.name === body.name &&
+                    lobby.password === body.password,
+            )
+        ) {
+            return {
+                success: false,
+                message: 'A lobby with this name and password already exists.',
+            };
+        }
         lobbies.push({ name: body.name, password: body.password });
         return { success: true };
     }
