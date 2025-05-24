@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Board } from "./board/Board";
-import { GameClientContext } from "./GameClientContext";
+import { GameClientContext } from "./contexts/GameClientContext";
 import { PlayerSelectionScreen } from "./menus/PlayerSelectionScreen";
 import { ModeSelectionScreen } from "./menus/ModeSelectionScreen";
 import { GameMode } from "./GameMode";

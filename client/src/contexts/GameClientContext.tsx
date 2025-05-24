@@ -16,8 +16,8 @@ import React, {
     useState,
 } from "react";
 import { GameEngineContext } from "./GameEngineContext";
-import { handleGameEnd } from "./handle-game-end";
-import { GameMode } from "./GameMode";
+import { handleGameEnd } from "../handle-game-end";
+import { GameMode } from "../GameMode";
 
 interface SelectedPiece {
     fileIndex: number;

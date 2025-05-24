@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useContext, useMemo, useRef } from "react";
-import { GameEngineContext } from "../GameEngineContext";
-import { GameClientContext } from "../GameClientContext";
+import { GameEngineContext } from "../contexts/GameEngineContext";
+import { GameClientContext } from "../contexts/GameClientContext";
 import { Player, GameState } from "game-engine";
 import { openings } from "game-engine/src/openings/openings";
 import { areMovesEqual } from "game-engine/src/utils";

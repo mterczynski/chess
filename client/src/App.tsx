@@ -1,6 +1,6 @@
 import "./App.css";
-import { GameClientContextProvider } from "./GameClientContext";
-import { GameEngineContextProvider } from "./GameEngineContext";
+import { GameClientContextProvider } from "./contexts/GameClientContext";
+import { GameEngineContextProvider } from "./contexts/GameEngineContext";
 import { GameScreenSelector } from "./GameScreenSelector";
 
 function App() {

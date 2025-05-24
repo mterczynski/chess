@@ -1,6 +1,6 @@
 import { PieceType, Player } from "game-engine";
 import styled from "styled-components";
-import { GameClientContext } from "../GameClientContext";
+import { GameClientContext } from "../contexts/GameClientContext";
 import { useContext } from "react";
 
 interface PieceProps {

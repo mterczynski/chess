@@ -9,9 +9,9 @@ import {
 } from "game-engine";
 import { useContext } from "react";
 import styled from "styled-components";
-import { GameClientContext } from "../GameClientContext";
+import { GameClientContext } from "../contexts/GameClientContext";
 import { Piece } from "./Piece";
-import { GameEngineContext } from "../GameEngineContext";
+import { GameEngineContext } from "../contexts/GameEngineContext";
 import { settings } from "../settings";
 
 const PromotionMenuContainer = styled.div<{ position: Position }>`

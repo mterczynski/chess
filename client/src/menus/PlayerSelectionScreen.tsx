@@ -1,7 +1,7 @@
 import { Player } from "game-engine";
 import { useContext } from "react";
 import styled from "styled-components";
-import { GameClientContext } from "../GameClientContext";
+import { GameClientContext } from "../contexts/GameClientContext";
 import { GameMode } from "../GameMode";
 
 const Container = styled.div`

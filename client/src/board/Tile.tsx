@@ -9,8 +9,8 @@ import {
 import { Piece as PieceComponent } from "./Piece";
 import styled from "styled-components";
 import { useCallback, useContext } from "react";
-import { GameClientContext } from "../GameClientContext";
-import { GameEngineContext } from "../GameEngineContext";
+import { GameClientContext } from "../contexts/GameClientContext";
+import { GameEngineContext } from "../contexts/GameEngineContext";
 import { AvailableMoveDestination } from "./AvailableMoveDestination";
 import { settings } from "../settings";
 import { GameMode } from "../GameMode";
