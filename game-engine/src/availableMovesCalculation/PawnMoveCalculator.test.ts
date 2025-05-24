@@ -468,7 +468,7 @@ describe("PawnMoveCalculator", () => {
             ).toEqual(0);
         });
 
-       describe("errors - invalid arguments", () => {
+        describe("errors - invalid arguments", () => {
             test("throws if white pawn is on last rank (8)", () => {
                 const board = getEmptyBoard();
                 const pawn: Pawn & { position: Position } = {
