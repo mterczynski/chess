@@ -13,7 +13,8 @@
         "test:watch": "jest --watch",
         "test:ci": "jest --ci",
         "build:engine": "cd ./game-engine && npm run build",
-        "build": "sh build.sh"
+        "build": "sh build.sh",
+        "cleanup": "sh cleanup.sh"
     },
     "keywords": [
         "chess",
