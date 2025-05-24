@@ -1,7 +1,7 @@
 import { GameState } from "../GameState";
 
 /**
- * Returns true if the given game state is a draw state.
+ * @description Returns true if the given game state is a draw state.
  */
 export function isDraw(state: GameState): boolean {
     return (
