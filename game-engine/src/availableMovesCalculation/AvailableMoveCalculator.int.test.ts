@@ -310,5 +310,16 @@ describe('AvailableMoveCalculator int.', () => {
             expect(result).toEqual(expect.arrayContaining(expectedResult));
             expect(result.length).toEqual(expectedResult.length);
         });
+
+        it("throws an error for unknown piece type using public API", () => {
+            const board = getEmptyBoard()
+            // Simulate a piece with an invalid type
+            const invalidPiece = { type: "INVALID_TYPE" as any, player: Player.WHITE, file: "A", rank: 1 };
+            board[ChessFile.A][1] = invalidPiece;
+            // Try to get available moves for a player with only the invalid piece
+            expect(() => {
+                availableMoveCalculator.getAvailableMovesForPlayer(board, Player.WHITE, null);
+            }).toThrow("Unknown piece type");
+        });
     });
 });
