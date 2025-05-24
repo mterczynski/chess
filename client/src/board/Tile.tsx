@@ -12,8 +12,6 @@ const TileBackground = styled.div<{ color: string }>`
     background: ${({ color }) => color};
     border-top: ${settings.borderStyle};
     border-right: ${settings.borderStyle};
-    // width: ${settings.tileSizeInPx}px;
-    // height: ${settings.tileSizeInPx}px;
 
     width: 100%;
     height: 100%;
