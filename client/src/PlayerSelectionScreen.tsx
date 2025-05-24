@@ -2,7 +2,7 @@ import { Player } from "game-engine";
 import { useContext } from "react";
 import styled from "styled-components";
 import { GameClientContext } from "./GameClientContext";
-import { GameMode } from "./ModeSelectionScreen";
+import { GameMode } from "./GameMode";
 
 const Container = styled.div`
     position: absolute;

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { GameMode } from "./GameMode";
 
 const Wrapper = styled.div`
     display: flex;
@@ -29,13 +30,6 @@ const Button = styled.button`
         color: #fff;
     }
 `;
-
-// todo - move it to a different file?
-export enum GameMode {
-    VS_BOT = "vs_bot",
-    VS_PLAYER_OFFLINE = "vs_player_offline",
-    VS_PLAYER_ONLINE = "vs_player_online", // unused for now
-}
 
 interface ModeSelectionScreenProps {
     onSelect: (mode: GameMode) => void;

@@ -17,6 +17,7 @@ import React, {
 } from "react";
 import { GameEngineContext } from "./GameEngineContext";
 import { handleGameEnd } from "./handle-game-end";
+import { GameMode } from "./GameMode";
 
 interface SelectedPiece {
     fileIndex: number;
@@ -38,6 +39,8 @@ export const GameClientContext = React.createContext<{
     selectPlayer: (player: Player | null) => void;
     playerSelection: Player | null;
     playerTurnTimeoutRef: React.MutableRefObject<any>;
+    gameMode: GameMode | null;
+    setGameMode: React.Dispatch<React.SetStateAction<GameMode | null>>;
 }>({} as any);
 
 export const GameClientContextProvider = ({
@@ -52,6 +55,7 @@ export const GameClientContextProvider = ({
     const [availableMoves, setAvailableMoves] = useState<Move[]>([]);
     const [promotionMenuPosition, setPromotionMenuPosition] =
         useState<Position | null>(null); // stores null or promoting position
+    const [gameMode, setGameMode] = useState<GameMode | null>(null);
 
     const {
         availableMovesForPlayer,
@@ -127,6 +131,8 @@ export const GameClientContextProvider = ({
                 selectPlayer,
                 playerSelection,
                 playerTurnTimeoutRef,
+                gameMode,
+                setGameMode,
             }}
         >
             {children}

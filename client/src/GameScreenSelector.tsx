@@ -1,18 +1,20 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Board } from "./board/Board";
 import { GameClientContext } from "./GameClientContext";
 import { PlayerSelectionScreen } from "./PlayerSelectionScreen";
-import { ModeSelectionScreen, GameMode } from "./ModeSelectionScreen";
+import { ModeSelectionScreen } from "./ModeSelectionScreen";
+import { GameMode } from "./GameMode";
 
 export const GameScreenSelector = () => {
     const gameClientContext = useContext(GameClientContext);
-    const [mode, setMode] = useState<GameMode | null>(null);
+    const mode = gameClientContext.gameMode;
+    const setMode = gameClientContext.setGameMode;
 
+    // Skip player selection in offline PvP mode
     if (!mode) {
         return <ModeSelectionScreen onSelect={setMode} />;
     }
 
-    // Skip player selection in offline PvP mode
     if (mode === GameMode.VS_PLAYER_OFFLINE) {
         return <Board />;
     }
