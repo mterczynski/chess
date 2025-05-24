@@ -12,6 +12,11 @@ export const GameScreenSelector = () => {
         return <ModeSelectionScreen onSelect={setMode} />;
     }
 
+    // Skip player selection in offline PvP mode
+    if (mode === GameMode.VS_PLAYER_OFFLINE) {
+        return <Board />;
+    }
+
     if (gameClientContext.playerSelection === null) {
         return <PlayerSelectionScreen mode={mode} />;
     }
