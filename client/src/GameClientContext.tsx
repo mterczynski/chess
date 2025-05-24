@@ -102,7 +102,7 @@ export const GameClientContextProvider = ({
         // setTimeout used to display last played move before showing an alert
         setTimeout(() => {
             if (!gameMode) {
-                throw new Error("Game mode is not set");
+                return;
             }
             handleGameEnd(state, playerSelection!, gameMode);
         });
