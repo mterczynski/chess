@@ -16,6 +16,7 @@ import {
     createNewBoard,
     isCastleablePiece,
     isCastleablePieceType,
+    isDraw,
     negatePlayer,
 } from "./utils";
 import { serializeBoardState } from "./utils/serializeBoardState";
@@ -106,17 +107,9 @@ export class Game {
     }
 
     private isGameOver(): boolean {
-        const draws = [
-            GameState.DRAW_BY_50_MOVE_RULE,
-            GameState.DRAW_BY_75_MOVE_RULE,
-            GameState.DRAW_BY_AGREEMENT,
-            GameState.DRAW_BY_INSUFFICIENT_MATERIAL,
-            GameState.DRAW_BY_REPETITION,
-            GameState.DRAW_BY_STALEMATE,
-        ];
-
-        return [GameState.WHITE_WON, GameState.BLACK_WON, ...draws].includes(
-            this.state
+        return (
+            [GameState.WHITE_WON, GameState.BLACK_WON].includes(this.state) ||
+            isDraw(this.state)
         );
     }
 
