@@ -19,7 +19,7 @@ Prerequisites:
 npm i
 ```
 
-## Available scripts
+## Available npm scripts
 
 -   🚀 `start`: runs the `client` application
 -   🔗 `postinstall` - links the packages (run automatically after `npm install`)
@@ -27,6 +27,7 @@ npm i
 -   🧽 `cleanup`: clears all generated/built/installed content (such as /coverage, /dist, /node_modules)
 -   🧪 `test`: runs the tests in `game-engine` (and in `client` when implemented)
 -   🧪 `test:watch`: same as above but in watch mode
+-   🧪 `test:coverage`: runs all tests, produces coverage (open `coverage\lcov-report\index.html` in the browser to see the results)
 
 ## 🚧 Work progress
 
