@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { GameEngineContext } from "../GameEngineContext";
+import { GameEngineContext } from "../contexts/GameEngineContext";
 import { File } from "./File";
 import { InfoBar } from "./InfoBar";
 import { PromotionMenu } from "./PromotionMenu";
-import { GameClientContext } from "../GameClientContext";
+import { GameClientContext } from "../contexts/GameClientContext";
 import { Player } from "game-engine";
 
 const BoardContainer = styled.div<{ useBlackPerspective?: boolean }>`

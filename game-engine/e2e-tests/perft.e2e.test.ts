@@ -1,8 +1,12 @@
-// https://www.chessprogramming.org/Perft
-// https://www.chessprogramming.org/Perft_Results
+
 
 import { Game } from "../";
 
+/**
+ *  Verification of game-engine validity after checking available moves amount
+ *  https://www.chessprogramming.org/Perft
+ *  https://www.chessprogramming.org/Perft_Results
+*/
 describe("Perft", () => {
     function getAvailableMovesAmountForGameTree(
         game: Game,
@@ -48,9 +52,10 @@ describe("Perft", () => {
 
     // commented due to slow speed
 
+    // the test below passed on 24.05.2025
     // it("is 8902 for maxDepth=3", () => {
     //     const game = new Game();
-    //     game.disableMoveValidityChecking();
+    //     // game.disableMoveValidityChecking();
     //     expect(getAvailableMovesAmountForGameTree(game, 3)).toEqual(
     //         8902 + 400 + 20
     //     );

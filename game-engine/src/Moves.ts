@@ -11,6 +11,10 @@ export enum SpecialMoveType {
 export interface NormalMove {
     from: Position,
     to: Position,
+    /** Optional: true if this move attacks an enemy piece */
+    isAttacking?: boolean;
+    /** Optional: type of move, e.g. 'STANDARD' */
+    type?: string;
 }
 
 export interface EnPassantMove extends NormalMove {

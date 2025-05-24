@@ -9,6 +9,7 @@ export const GameEngineContext = React.createContext<{
     state: GameState;
     board: Board;
     restartGame: () => void;
+    moveHistory: Move[];
 }>(null as any);
 
 export const GameEngineContextProvider = ({
@@ -18,20 +19,22 @@ export const GameEngineContextProvider = ({
 }) => {
     const game = useRef(new Game());
 
-    const move = useCallback((move: Move) => {
-        game.current.move(move);
+    const syncState = () => {
         setCurrentPlayer(game.current.getCurrentPlayer());
         setAvailableMovesForPlayer(game.current.getAvailableMovesForPlayer());
         setState(game.current.getState());
         setBoard(game.current.getBoard());
+        setMoveHistory(game.current.getMoveHistory());
+    };
+
+    const move = useCallback((move: Move) => {
+        game.current.move(move);
+        syncState();
     }, []);
 
     const restartGame = useCallback(() => {
         game.current = new Game();
-        setCurrentPlayer(game.current.getCurrentPlayer());
-        setAvailableMovesForPlayer(game.current.getAvailableMovesForPlayer());
-        setState(game.current.getState());
-        setBoard(game.current.getBoard());
+        syncState();
     }, []);
 
     var initial = game.current.getAvailableMovesForPlayer();
@@ -43,6 +46,9 @@ export const GameEngineContextProvider = ({
     );
     const [state, setState] = useState(game.current.getState());
     const [board, setBoard] = useState(game.current.getBoard());
+    const [moveHistory, setMoveHistory] = useState(
+        game.current.getMoveHistory()
+    );
 
     return (
         <GameEngineContext.Provider
@@ -52,6 +58,7 @@ export const GameEngineContextProvider = ({
                 currentPlayer,
                 state,
                 board,
+                moveHistory,
                 restartGame,
             }}
         >

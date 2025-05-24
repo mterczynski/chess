@@ -6,8 +6,13 @@ This repository contains `game-engine` and `client` - a UI made in React for pla
 
 Prerequisites:
 
--   NodeJS (tested on version 18.20.8)
--   npm (tested on version 8.20.8)
+- NodeJS
+- npm
+
+| Tool Versions         | Node.js | npm    |
+|----------------------|---------|--------|
+| Supported (variant 1) | 24.1.0  | 11.3.0 |
+| Supported (variant 2) | 18.20.8 | 8.20.8 |
 
 ```bash
 # This command will install all required dependencies in all packages (thanks to npm workspaces)
@@ -19,6 +24,7 @@ npm i
 -   🚀 `start`: runs the `client` application
 -   🔗 `postinstall` - links the packages (run automatically after `npm install`)
 -   📦 `build`: links the packages and builds both `client` and `game-engine`
+-   🧽 `cleanup`: clears all generated/built/installed content (such as /coverage, /dist, /node_modules)
 -   🧪 `test`: runs the tests in `game-engine` (and in `client` when implemented)
 -   🧪 `test:watch`: same as above but in watch mode
 
@@ -31,4 +37,4 @@ npm i
 
 ## Preview
 
-<img src="./preview.jpg" alt="" width="400" height="400"/>
+<img src="./preview.png" alt="" width="400" height="400"/>

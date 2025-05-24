@@ -1,11 +1,23 @@
-import { GameState, Move, Player, mapIndexToChessFile,
+import {
+    GameState,
+    Move,
+    Player,
+    mapIndexToChessFile,
     mapRankIndexToRank,
-    Position
+    Position,
+    CaptureIfAvailableBot,
 } from "game-engine";
 import _ from "lodash";
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { GameEngineContext } from "./GameEngineContext";
-import { handleGameEnd } from "./handle-game-end";
+import { handleGameEnd } from "../popups/handle-game-end";
+import { GameMode } from "../GameMode";
 
 interface SelectedPiece {
     fileIndex: number;
@@ -27,6 +39,8 @@ export const GameClientContext = React.createContext<{
     selectPlayer: (player: Player | null) => void;
     playerSelection: Player | null;
     playerTurnTimeoutRef: React.MutableRefObject<any>;
+    gameMode: GameMode | null;
+    setGameMode: React.Dispatch<React.SetStateAction<GameMode | null>>;
 }>({} as any);
 
 export const GameClientContextProvider = ({
@@ -41,21 +55,18 @@ export const GameClientContextProvider = ({
     const [availableMoves, setAvailableMoves] = useState<Move[]>([]);
     const [promotionMenuPosition, setPromotionMenuPosition] =
         useState<Position | null>(null); // stores null or promoting position
+    const [gameMode, setGameMode] = useState<GameMode | null>(null);
 
     const {
         availableMovesForPlayer,
         move: engineMove,
         state,
         currentPlayer,
+        board,
     } = useContext(GameEngineContext);
 
     const playerTurnTimeoutRef = useRef<any>(null);
-
-    const makeRandomMove = useCallback(() => {
-        const randomMove = _.sample(availableMovesForPlayer) as Move;
-
-        engineMove(randomMove);
-    }, [availableMovesForPlayer, engineMove]);
+    const bot = new CaptureIfAvailableBot();
 
     const selectPlayer = useCallback((player: Player | null) => {
         setPlayerSelection(player);
@@ -65,21 +76,35 @@ export const GameClientContextProvider = ({
         if (
             playerSelection !== null &&
             currentPlayer !== playerSelection &&
+            currentPlayer &&
             (state === GameState.UNSTARTED || state === GameState.IN_PROGRESS)
         ) {
             if (playerTurnTimeoutRef.current) {
                 clearTimeout(playerTurnTimeoutRef.current);
             }
-            playerTurnTimeoutRef.current = setTimeout(() => {
-                makeRandomMove();
-            }, 650);
+            if (gameMode === GameMode.VS_BOT) {
+                playerTurnTimeoutRef.current = setTimeout(() => {
+                    const move = bot.makeMove(board, availableMovesForPlayer);
+                    engineMove(move);
+                }, 650);
+            }
         }
-    }, [currentPlayer, makeRandomMove, playerSelection, state]);
+    }, [
+        currentPlayer,
+        playerSelection,
+        state,
+        availableMovesForPlayer,
+        engineMove,
+        board,
+    ]);
 
     useEffect(() => {
         // setTimeout used to display last played move before showing an alert
         setTimeout(() => {
-            handleGameEnd(state, playerSelection!);
+            if (!gameMode) {
+                return;
+            }
+            handleGameEnd(state, playerSelection!, gameMode);
         });
     }, [playerSelection, state]);
 
@@ -111,6 +136,8 @@ export const GameClientContextProvider = ({
                 selectPlayer,
                 playerSelection,
                 playerTurnTimeoutRef,
+                gameMode,
+                setGameMode,
             }}
         >
             {children}

@@ -1,13 +1,12 @@
+import { Game } from "../src/Game";
+import { GameState } from "../src/GameState";
+import { ChessFile } from "../src/positions";
+
 /*
     Full E2E test that plays through the Immortal Game, one of the most famous chess games
     https://en.wikipedia.org/wiki/Immortal_Game
     https://www.chessgames.com/perl/chessgame?gid=1018910
 */
-
-import { Game } from "../src/Game";
-import { GameState } from "../src/GameState";
-import { ChessFile } from "../src/positions";
-
 describe('Immortal game', () => {
     test('play all the moves, check that white won', () => {
         const game = new Game();

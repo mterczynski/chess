@@ -1,3 +1,7 @@
+import { Game } from "../src/Game";
+import { GameState } from "../src/GameState";
+import { ChessFile } from "../src/positions";
+
 /**
  * https://chess.stackexchange.com/a/28803
  * https://www.chess.com/forum/view/game-showcase/fastest-stalemate-known-in-chess
@@ -5,11 +9,6 @@
  * Stalemate in 10 moves by Sam Loyd, one of the fastest known ways to stalemate
  *
 */
-
-import { Game } from "../src/Game";
-import { GameState } from "../src/GameState";
-import { ChessFile } from "../src/positions";
-
 describe('Ten move draw', () => {
     test('play all the moves, check that game ended in a draw', () => {
         const game = new Game();

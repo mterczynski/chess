@@ -1,6 +1,8 @@
 import _ from "lodash";
-import { AvailableMoveCalculator } from "./availableMovesCalculation";
-import { CheckCalculator } from "./availableMovesCalculation/CheckCalculator";
+import {
+    AvailableMoveCalculator,
+    CheckCalculator,
+} from "./availableMovesCalculation";
 import { Board } from "./Board";
 import { GameState } from "./GameState";
 import { EnPassantMove, Move, PromotionMove, SpecialMoveType } from "./Moves";
@@ -16,8 +18,10 @@ import {
     createNewBoard,
     isCastleablePiece,
     isCastleablePieceType,
+    isDraw,
     negatePlayer,
 } from "./utils";
+import { serializeBoardState } from "./utils/serializeBoardState";
 
 export class Game {
     static readonly boardSize = 8;
@@ -25,6 +29,8 @@ export class Game {
     private currentPlayer: Player = Player.WHITE;
     private board: Board = createNewBoard();
     private moves: Move[] = [];
+    // Map: serialized position -> count
+    private positionCounts: Record<string, number> = {};
 
     constructor(
         private readonly checkCalculator = new CheckCalculator(),
@@ -55,6 +61,7 @@ export class Game {
         }
 
         this.applyMove(updatedMove);
+        this.updatePositionCounts();
         this.state = this.getNewGameStateAfterMove();
 
         if (this.state === GameState.IN_PROGRESS) {
@@ -88,6 +95,10 @@ export class Game {
         return clone;
     }
 
+    getMoveHistory(): Move[] {
+        return _.cloneDeep(this.moves);
+    }
+
     private getLastMove(): Move | null {
         return this.moves.slice(-1)[0] || null;
     }
@@ -98,17 +109,9 @@ export class Game {
     }
 
     private isGameOver(): boolean {
-        const draws = [
-            GameState.DRAW_BY_50_MOVE_RULE,
-            GameState.DRAW_BY_75_MOVE_RULE,
-            GameState.DRAW_BY_AGREEMENT,
-            GameState.DRAW_BY_INSUFFICIENT_MATERIAL,
-            GameState.DRAW_BY_REPETITION,
-            GameState.DRAW_BY_STALEMATE,
-        ];
-
-        return [GameState.WHITE_WON, GameState.BLACK_WON, ...draws].includes(
-            this.state
+        return (
+            [GameState.WHITE_WON, GameState.BLACK_WON].includes(this.state) ||
+            isDraw(this.state)
         );
     }
 
@@ -189,11 +192,8 @@ export class Game {
         const piece = this.board[move.from.file][move.from.rank] as Piece;
         this.board[move.to.file][move.to.rank] = piece;
         this.board[move.from.file][move.from.rank] = null;
-
         if (isCastleablePiece(piece)) {
             piece.hasMoved = true;
-
-            // TODO - use SpecialMoveType (?)
             if (this.checkForCastle(move, piece)) {
                 this.castleRook(move);
             }
@@ -208,6 +208,11 @@ export class Game {
     // todo - extract to separate class (?)
     // maybe extract it to a class called GameStateHandler (?)
     private getNewGameStateAfterMove(): GameState {
+        const key = serializeBoardState(this.board, this.currentPlayer);
+        if (this.positionCounts[key] >= 3) {
+            return GameState.DRAW_BY_REPETITION;
+        }
+
         if (this.state === GameState.UNSTARTED) {
             return GameState.IN_PROGRESS;
         }
@@ -245,5 +250,10 @@ export class Game {
         }
 
         return this.state;
+    }
+
+    private updatePositionCounts() {
+        const key = serializeBoardState(this.board, this.currentPlayer);
+        this.positionCounts[key] = (this.positionCounts[key] || 0) + 1;
     }
 }

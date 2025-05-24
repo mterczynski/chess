@@ -5,6 +5,6 @@ export const settings = {
             light: "white",
         },
     },
-    tileSizeInPx: 70,
-    borderStyle: "2px solid black"
+    tileSizeInPx: 70, // todo - verify if works correctly on mobile devices
+    borderStyle: "2px solid black",
 };

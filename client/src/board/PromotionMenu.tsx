@@ -1,13 +1,17 @@
-import { PieceType, PromotablePieceType, SpecialMoveType, mapFileToFileIndex,
+import {
+    PieceType,
+    PromotablePieceType,
+    SpecialMoveType,
+    mapFileToFileIndex,
     mapIndexToChessFile,
     mapRankIndexToRank,
-    Position
+    Position,
 } from "game-engine";
 import { useContext } from "react";
 import styled from "styled-components";
-import { GameClientContext } from "../GameClientContext";
+import { GameClientContext } from "../contexts/GameClientContext";
 import { Piece } from "./Piece";
-import { GameEngineContext } from "../GameEngineContext";
+import { GameEngineContext } from "../contexts/GameEngineContext";
 import { settings } from "../settings";
 
 const PromotionMenuContainer = styled.div<{ position: Position }>`
@@ -36,6 +40,7 @@ const PieceSquare = styled.div`
 export const PromotionMenu = () => {
     const gameEngineContext = useContext(GameEngineContext);
     const gameClientContext = useContext(GameClientContext);
+    const player = gameEngineContext.currentPlayer;
 
     const onClick = (pieceType: PromotablePieceType) => {
         gameEngineContext.move({
@@ -56,36 +61,28 @@ export const PromotionMenu = () => {
     };
 
     if (gameClientContext.promotionMenuPosition) {
+        if (!player) {
+            throw new Error("Player is not selected for promotion menu");
+        }
+
         return (
             <PromotionMenuContainer
                 position={gameClientContext.promotionMenuPosition}
             >
                 <PieceSquare onClick={() => onClick(PieceType.KNIGHT)}>
-                    <Piece
-                        color={gameClientContext.playerSelection!}
-                        pieceType={PieceType.KNIGHT}
-                    ></Piece>
+                    <Piece color={player} pieceType={PieceType.KNIGHT}></Piece>
                 </PieceSquare>
 
                 <PieceSquare onClick={() => onClick(PieceType.BISHOP)}>
-                    <Piece
-                        color={gameClientContext.playerSelection!}
-                        pieceType={PieceType.BISHOP}
-                    ></Piece>
+                    <Piece color={player} pieceType={PieceType.BISHOP}></Piece>
                 </PieceSquare>
 
                 <PieceSquare onClick={() => onClick(PieceType.ROOK)}>
-                    <Piece
-                        color={gameClientContext.playerSelection!}
-                        pieceType={PieceType.ROOK}
-                    ></Piece>
+                    <Piece color={player} pieceType={PieceType.ROOK}></Piece>
                 </PieceSquare>
 
                 <PieceSquare onClick={() => onClick(PieceType.QUEEN)}>
-                    <Piece
-                        color={gameClientContext.playerSelection!}
-                        pieceType={PieceType.QUEEN}
-                    ></Piece>
+                    <Piece color={player} pieceType={PieceType.QUEEN}></Piece>
                 </PieceSquare>
             </PromotionMenuContainer>
         );
