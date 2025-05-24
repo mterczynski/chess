@@ -95,7 +95,9 @@ export class PawnMoveCalculator implements PieceMoveCalculator {
         const nextRank = addToRank(pawn.position.rank, direction);
 
         if (nextRank === null) {
-            return [];
+            throw new Error(
+                "Pawn on final rank - impossible scenario detected"
+            );
         }
 
         const checkForPossibleAttackOnFile = (file: ChessFile | null): void => {
