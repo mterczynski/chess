@@ -4,7 +4,7 @@ import { GameEngineContext } from "../contexts/GameEngineContext";
 import { GameClientContext } from "../contexts/GameClientContext";
 import { Player, GameState } from "game-engine";
 import { openings } from "game-engine/src/openings/openings";
-import { areMovesEqual } from "game-engine/src/utils";
+import { areMovesEqual, isDraw } from "game-engine/src/utils";
 
 const InfoBarContainer = styled.div`
     width: 100%;
@@ -89,14 +89,7 @@ export const InfoBar = () => {
         infoText = "White wins!";
     } else if (state === GameState.BLACK_WON) {
         infoText = "Black wins!";
-    } else if (
-        state === GameState.DRAW_BY_STALEMATE ||
-        state === GameState.DRAW_BY_INSUFFICIENT_MATERIAL ||
-        state === GameState.DRAW_BY_REPETITION ||
-        state === GameState.DRAW_BY_50_MOVE_RULE ||
-        state === GameState.DRAW_BY_75_MOVE_RULE ||
-        state === GameState.DRAW_BY_AGREEMENT
-    ) {
+    } else if (isDraw(state)) {
         infoText = "Draw!";
     } else {
         infoText = "Game Over";
