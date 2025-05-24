@@ -22,4 +22,7 @@ npm link;
 cd "$REPO_ROOT/client";
 npm link game-engine;
 
+cd "$REPO_ROOT/server";
+npm link game-engine;
+
 echo "Packages linked";
