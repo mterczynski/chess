@@ -4,11 +4,13 @@
     "description": "Chess game",
     "workspaces": [
         "client",
-        "game-engine"
+        "game-engine",
+        "server"
     ],
     "scripts": {
         "postinstall": "sh scripts/link-packages.sh",
         "start": "cd ./client && npm start",
+        "start:server": "cd ./server && npm start",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:ci": "jest --ci",
