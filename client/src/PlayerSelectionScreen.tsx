@@ -2,6 +2,7 @@ import { Player } from "game-engine";
 import { useContext } from "react";
 import styled from "styled-components";
 import { GameClientContext } from "./GameClientContext";
+import { GameMode } from "./GameMode";
 
 const Container = styled.div`
     position: absolute;
@@ -46,7 +47,11 @@ const Button = styled.button<{ background?: string; color?: string }>`
     }
 `;
 
-export const PlayerSelectionScreen = () => {
+interface PlayerSelectionScreenProps {
+    mode?: GameMode;
+}
+
+export const PlayerSelectionScreen = ({ mode }: PlayerSelectionScreenProps) => {
     const gameClientContext = useContext(GameClientContext);
 
     return (

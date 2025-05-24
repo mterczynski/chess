@@ -47,6 +47,7 @@ export const InfoBar = () => {
         setPromotionMenuPosition,
         selectPlayer,
         playerTurnTimeoutRef,
+        setGameMode,
     } = useContext(GameClientContext);
 
     // Track last matched opening across renders
@@ -112,6 +113,7 @@ export const InfoBar = () => {
             playerTurnTimeoutRef.current = null;
         }
         lastOpeningRef.current = null; // Reset opening on restart
+        setGameMode(null); // Reset mode and go back to mode selection
     };
 
     return (
