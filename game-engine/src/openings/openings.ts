@@ -158,6 +158,7 @@ export const openings: Opening[] = [
             { from: { file: ChessFile.B, rank: 2 }, to: { file: ChessFile.B, rank: 4 } },
         ],
     },
+    // todo - allow Four Knights Game to start from both Petrov and Italian Game
     {
         name: "Four Knights Game",
         moves: [
