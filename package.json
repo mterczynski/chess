@@ -14,7 +14,8 @@
         "test:ci": "jest --ci",
         "build:engine": "cd ./game-engine && npm run build",
         "build": "sh scripts/build.sh",
-        "cleanup": "sh cleanup.sh"
+        "cleanup": "sh scripts/cleanup.sh",
+        "deploy": "sh scripts/deploy.sh"
     },
     "keywords": [
         "chess",
