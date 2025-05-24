@@ -1,5 +1,5 @@
 import { GameState, Player } from "game-engine";
-import { GameMode } from "./GameMode";
+import { GameMode } from "../GameMode";
 
 export function handleGameEnd(
     gameState: GameState,

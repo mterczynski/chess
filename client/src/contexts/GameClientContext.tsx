@@ -16,7 +16,7 @@ import React, {
     useState,
 } from "react";
 import { GameEngineContext } from "./GameEngineContext";
-import { handleGameEnd } from "../handle-game-end";
+import { handleGameEnd } from "../popups/handle-game-end";
 import { GameMode } from "../GameMode";
 
 interface SelectedPiece {
