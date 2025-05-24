@@ -530,6 +530,9 @@ describe("Game", () => {
     // });
 
     // describe("50 move rule", () => {
+
+    // draw is always enabled, so not sure if this rule is needed (todo - check)
+
     //     it("enables players to end a game with a draw when no capture or pawn has been moved in 50 consecutive moves", () => {
     //         throw "todo";
     //     });
