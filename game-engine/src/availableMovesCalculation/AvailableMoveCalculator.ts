@@ -94,9 +94,7 @@ export class AvailableMoveCalculator {
             return this.kingMoveCalculator.getAvailableMovesForPieceIgnoringKingSafety(pieceWithPostion, board);
         }
 
-        console.error('unknown piece type')
-
-        return [];
+        throw new Error('Unknown piece type')
     }
 
     private getAvailableMovesForPlayerIgnoringKingSafety(board: Board, player: Player, lastMove: Move | null): Move[] {
