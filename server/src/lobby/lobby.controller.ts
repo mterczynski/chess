@@ -1,6 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
+import { Game } from 'game-engine';
 
-const lobbies: { name: string; password: string }[] = [];
+const lobbies: { name: string; password: string; gameInstance: Game }[] = [];
 
 @Controller('lobby')
 export class LobbyController {
@@ -27,7 +28,11 @@ export class LobbyController {
                 message: 'A lobby with this name and password already exists.',
             };
         }
-        lobbies.push({ name: body.name, password: body.password });
+        lobbies.push({
+            name: body.name,
+            password: body.password,
+            gameInstance: new Game(),
+        });
         return { success: true };
     }
 }
