@@ -99,7 +99,10 @@ export const GameClientContextProvider = ({
     useEffect(() => {
         // setTimeout used to display last played move before showing an alert
         setTimeout(() => {
-            handleGameEnd(state, playerSelection!);
+            if (!gameMode) {
+                throw new Error("Game mode is not set");
+            }
+            handleGameEnd(state, playerSelection!, gameMode);
         });
     }, [playerSelection, state]);
 
