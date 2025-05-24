@@ -1,16 +1,19 @@
 {
-  "name": "game-engine",
-  "version": "1.0.0",
-  "description": "This is the game engine of chess. Game class is exported that can be used to create an instance of the game, and play it by interacting with API of created game instance.",
-  "main": "index.ts",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "build": "tsc && cp package.json build/package.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT"
+    "name": "game-engine",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "This is the game engine of chess. Game class is exported that can be used to create an instance of the game, and play it by interacting with API of created game instance.",
+    "main": "build/index.js",
+    "directories": {
+        "doc": "docs"
+    },
+    "scripts": {
+        "build:esm": "tsc --project tsconfig.esm.json",
+        "build:cjs": "tsc --project tsconfig.cjs.json",
+        "build": "tsc && cp package.json build/package.json && npm run build:esm && npm run build:cjs",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT"
 }
