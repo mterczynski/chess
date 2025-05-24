@@ -467,5 +467,31 @@ describe("PawnMoveCalculator", () => {
                     .filter((move) => (move as any).type).length
             ).toEqual(0);
         });
+
+       describe("errors - invalid arguments", () => {
+            test("throws if white pawn is on last rank (8)", () => {
+                const board = getEmptyBoard();
+                const pawn: Pawn & { position: Position } = {
+                    ...createPawn(Player.WHITE),
+                    position: { file: ChessFile.A, rank: 8 },
+                };
+                board[ChessFile.A][8] = pawn;
+                expect(() => calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, null)).toThrow(
+                    /Pawn on final rank/
+                );
+            });
+
+            test("throws if black pawn is on first rank (1)", () => {
+                const board = getEmptyBoard();
+                const pawn: Pawn & { position: Position } = {
+                    ...createPawn(Player.BLACK),
+                    position: { file: ChessFile.A, rank: 1 },
+                };
+                board[ChessFile.A][1] = pawn;
+                expect(() => calculator.getAvailableMovesForPieceIgnoringKingSafety(pawn, board, null)).toThrow(
+                    /Pawn on final rank/
+                );
+            });
+        });
     });
 });
