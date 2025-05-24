@@ -4,7 +4,8 @@ import { GameEngineContext } from "../contexts/GameEngineContext";
 import { GameClientContext } from "../contexts/GameClientContext";
 import { Player, GameState } from "game-engine";
 import { openings } from "game-engine/src/openings/openings";
-import { areMovesEqual, isDraw } from "game-engine/src/utils";
+import { isDraw } from "game-engine/src/utils";
+import { findOpeningByMoves } from "game-engine/src/openings/utils";
 
 const InfoBarContainer = styled.div`
     width: 100%;
@@ -54,22 +55,10 @@ export const InfoBar = () => {
     const lastOpeningRef = useRef<string | null>(null);
 
     // Find current opening using move history
-    const currentOpening = useMemo(() => {
-        if (!moveHistory || moveHistory.length === 0) return null; // Prevent matching on empty board
-        const matchingOpenings = openings.filter(
-            (opening) =>
-                moveHistory.length >= opening.moves.length &&
-                opening.moves.every((move, index) =>
-                    areMovesEqual(move, moveHistory[index])
-                )
-        );
-
-        return (
-            matchingOpenings.sort((a, b) => {
-                return a.moves.length - b.moves.length;
-            })[0]?.name || null
-        );
-    }, [moveHistory]);
+    const currentOpening = useMemo(
+        () => findOpeningByMoves(moveHistory, openings),
+        [moveHistory]
+    );
 
     // Persist last matched opening
     if (currentOpening) {
