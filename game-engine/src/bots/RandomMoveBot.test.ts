@@ -1,9 +1,10 @@
 import { RandomMoveBot } from "./RandomMoveBot";
 import { Move } from "../Moves";
 import { ChessFile } from "../positions/ChessFile";
+import { getEmptyBoard } from "game-engine/test-utils/getEmptyBoard";
 
 describe("RandomMoveBot", () => {
-    const dummyBoard = {} as any;
+    const emptyBoard = getEmptyBoard()
 
     it("returns the only available move", () => {
         const bot = new RandomMoveBot();
@@ -14,7 +15,7 @@ describe("RandomMoveBot", () => {
                 isAttacking: false,
             },
         ];
-        const move = bot.makeMove(dummyBoard, moves);
+        const move = bot.makeMove(emptyBoard, moves);
         expect(move).toEqual(moves[0]);
     });
 
@@ -32,7 +33,12 @@ describe("RandomMoveBot", () => {
                 isAttacking: false,
             },
         ];
-        const move = bot.makeMove(dummyBoard, moves);
+        const move = bot.makeMove(emptyBoard, moves);
         expect(moves).toContainEqual(move);
+    });
+
+    it("throws an error if no available moves (empty array)", () => {
+        const bot = new RandomMoveBot();
+        expect(() => bot.makeMove(emptyBoard, [])).toThrow("No available moves");
     });
 });
