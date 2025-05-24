@@ -6,8 +6,13 @@ This repository contains `game-engine` and `client` - a UI made in React for pla
 
 Prerequisites:
 
-- NodeJS (tested on version 18.20.8)
-- npm (tested on version 8.20.8)
+- NodeJS
+- npm
+
+| Tool Versions         | Node.js | npm    |
+|----------------------|---------|--------|
+| Supported (variant 1) | 24.1.0  | 11.3.0 |
+| Supported (variant 2) | 18.20.8 | 8.20.8 |
 
 ```bash
 # This command will install all required dependencies in all packages (thanks to npm workspaces)
