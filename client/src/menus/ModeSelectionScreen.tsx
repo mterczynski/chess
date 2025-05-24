@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { GameMode } from "./GameMode";
+import { GameMode } from "../GameMode";
 
 const Wrapper = styled.div`
     display: flex;
