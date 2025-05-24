@@ -1,6 +1,8 @@
 import _ from "lodash";
-import { AvailableMoveCalculator } from "./availableMovesCalculation";
-import { CheckCalculator } from "./availableMovesCalculation/CheckCalculator";
+import {
+    AvailableMoveCalculator,
+    CheckCalculator,
+} from "./availableMovesCalculation";
 import { Board } from "./Board";
 import { GameState } from "./GameState";
 import { EnPassantMove, Move, PromotionMove, SpecialMoveType } from "./Moves";
