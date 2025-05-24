@@ -67,26 +67,12 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
                 (gameClientContext.gameMode === GameMode.VS_PLAYER_OFFLINE &&
                     piece.player === gameEngineContext.currentPlayer));
         const availableMoveToSelectedTile =
-            gameEngineContext.availableMovesForPlayer.find((move) =>
+            gameClientContext.availableMoves.find((move) =>
                 arePositionsEqual(move.to, {
                     file: mapIndexToChessFile(fileIndex),
                     rank: mapRankIndexToRank(tileIndex),
                 })
             );
-        const allavailableMoveToSelectedTile =
-            gameEngineContext.availableMovesForPlayer.filter((move) =>
-                arePositionsEqual(move.to, {
-                    file: mapIndexToChessFile(fileIndex),
-                    rank: mapRankIndexToRank(tileIndex),
-                })
-            );
-
-        console.log(
-            "## allavailableMoveToSelectedTile",
-            allavailableMoveToSelectedTile,
-            "availableMoveToSelectedTile",
-            availableMoveToSelectedTile
-        );
 
         if (availableMoveToSelectedTile) {
             if (
