@@ -1,4 +1,4 @@
-# 1. Reinstall, rebuild
+# 1. Reinstall, test, build
 npm run cleanup;
 npm i;
 npm run test;
