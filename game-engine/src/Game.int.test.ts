@@ -455,8 +455,6 @@ describe("Game", () => {
         });
     });
 
-    // TODO - uncomment tests
-
     it("prevents from making move after game is finished", () => {
         const game = playFoolsMate();
 
@@ -468,106 +466,110 @@ describe("Game", () => {
         }).toThrow("Game has already finished, no more moves can be made");
     });
 
-    describe("threefold repetition", () => {
-        it("ends in a draw when the same position occurs three times", () => {
-            const game = new Game();
-            // Repeat the same sequence 3 times, but break if the game ends
-            for (let i = 0; i < 2; i++) {
+    describe("draws", () => {
+        describe("threefold repetition", () => {
+            it("ends in a draw when the same position occurs three times", () => {
+                const game = new Game();
+                // Repeat the same sequence 3 times, but break if the game ends
+                for (let i = 0; i < 2; i++) {
+                    game.move({
+                        from: { file: ChessFile.B, rank: 1 },
+                        to: { file: ChessFile.C, rank: 3 },
+                    });
+                    game.move({
+                        from: { file: ChessFile.B, rank: 8 },
+                        to: { file: ChessFile.C, rank: 6 },
+                    });
+                    game.move({
+                        from: { file: ChessFile.C, rank: 3 },
+                        to: { file: ChessFile.B, rank: 1 },
+                    });
+                    game.move({
+                        from: { file: ChessFile.C, rank: 6 },
+                        to: { file: ChessFile.B, rank: 8 },
+                    });
+                }
                 game.move({
                     from: { file: ChessFile.B, rank: 1 },
                     to: { file: ChessFile.C, rank: 3 },
                 });
-                game.move({
-                    from: { file: ChessFile.B, rank: 8 },
-                    to: { file: ChessFile.C, rank: 6 },
-                });
-                game.move({
-                    from: { file: ChessFile.C, rank: 3 },
-                    to: { file: ChessFile.B, rank: 1 },
-                });
-                game.move({
-                    from: { file: ChessFile.C, rank: 6 },
-                    to: { file: ChessFile.B, rank: 8 },
-                });
-            }
-            game.move({
-                from: { file: ChessFile.B, rank: 1 },
-                to: { file: ChessFile.C, rank: 3 },
+                expect(game.getState()).toBe(GameState.DRAW_BY_REPETITION);
             });
-            expect(game.getState()).toBe(GameState.DRAW_BY_REPETITION);
         });
+
+        // TODO - uncomment tests
+
+        // describe("it ends in a draw when none of the players can win due to insuffiecient pieces to cause a check mate", () => {
+        //     test("king vs king", () => {
+        //         throw "todo";
+        //     });
+
+        //     test("king + bishop vs king", () => {
+        //         throw "todo";
+        //     });
+
+        //     test("king + knight vs king", () => {});
+
+        //     describe("2 knights + king vs king", () => {
+        //         test("2 knights + king vs king is a draw", () => {
+        //             throw "todo";
+        //         });
+
+        //         test("2 knights + king vs king + pawn is not a draw", () => {
+        //             throw "todo";
+        //         });
+        //     });
+
+        //     test("king and bishop versus king and bishop with the bishops on the same color", () => {});
+        //     // todo - add more scenarios
+        // });
+
+        // describe("it ends in a draw when the board position is repeated 3 times", () => {
+        //     test("todo", () => {
+        //         throw "todo";
+        //     });
+        // });
+
+        // describe("50 move rule", () => {
+
+        // draw is always enabled, so not sure if this rule is needed (todo - check)
+
+        //     it("enables players to end a game with a draw when no capture or pawn has been moved in 50 consecutive moves", () => {
+        //         throw "todo";
+        //     });
+        // });
+
+        // describe("75 move rule", () => {
+        //     it("causes game to end automatically with a draw when no capture or pawn has been moved in 75 consecutive moves", () => {
+        //         const game = new Game();
+
+        //         for (let i = 0; i < 74 / 2; i++) {
+        //             game.move({
+        //                 from: { file: ChessFile.B, rank: 1 },
+        //                 to: { file: ChessFile.A, rank: 3 },
+        //             });
+        //             game.move({
+        //                 from: { file: ChessFile.B, rank: 8 },
+        //                 to: { file: ChessFile.A, rank: 6 },
+        //             });
+
+        //             game.move({
+        //                 from: { file: ChessFile.A, rank: 3 },
+        //                 to: { file: ChessFile.B, rank: 1 },
+        //             });
+        //             game.move({
+        //                 from: { file: ChessFile.A, rank: 6 },
+        //                 to: { file: ChessFile.B, rank: 8 },
+        //             });
+        //         }
+
+        //         expect(game.getState()).toEqual(GameState.IN_PROGRESS);
+        //         game.move({
+        //             from: { file: ChessFile.B, rank: 1 },
+        //             to: { file: ChessFile.A, rank: 3 },
+        //         });
+        //         expect(game.getState()).toEqual(GameState.DRAW_BY_75_MOVE_RULE);
+        //     });
+        // });
     });
-
-    // describe("it ends in a draw when none of the players can win due to insuffiecient pieces to cause a check mate", () => {
-    //     test("king vs king", () => {
-    //         throw "todo";
-    //     });
-
-    //     test("king + bishop vs king", () => {
-    //         throw "todo";
-    //     });
-
-    //     test("king + knight vs king", () => {});
-
-    //     describe("2 knights + king vs king", () => {
-    //         test("2 knights + king vs king is a draw", () => {
-    //             throw "todo";
-    //         });
-
-    //         test("2 knights + king vs king + pawn is not a draw", () => {
-    //             throw "todo";
-    //         });
-    //     });
-
-    //     test("king and bishop versus king and bishop with the bishops on the same color", () => {});
-    //     // todo - add more scenarios
-    // });
-
-    // describe("it ends in a draw when the board position is repeated 3 times", () => {
-    //     test("todo", () => {
-    //         throw "todo";
-    //     });
-    // });
-
-    // describe("50 move rule", () => {
-
-    // draw is always enabled, so not sure if this rule is needed (todo - check)
-
-    //     it("enables players to end a game with a draw when no capture or pawn has been moved in 50 consecutive moves", () => {
-    //         throw "todo";
-    //     });
-    // });
-
-    // describe("75 move rule", () => {
-    //     it("causes game to end automatically with a draw when no capture or pawn has been moved in 75 consecutive moves", () => {
-    //         const game = new Game();
-
-    //         for (let i = 0; i < 74 / 2; i++) {
-    //             game.move({
-    //                 from: { file: ChessFile.B, rank: 1 },
-    //                 to: { file: ChessFile.A, rank: 3 },
-    //             });
-    //             game.move({
-    //                 from: { file: ChessFile.B, rank: 8 },
-    //                 to: { file: ChessFile.A, rank: 6 },
-    //             });
-
-    //             game.move({
-    //                 from: { file: ChessFile.A, rank: 3 },
-    //                 to: { file: ChessFile.B, rank: 1 },
-    //             });
-    //             game.move({
-    //                 from: { file: ChessFile.A, rank: 6 },
-    //                 to: { file: ChessFile.B, rank: 8 },
-    //             });
-    //         }
-
-    //         expect(game.getState()).toEqual(GameState.IN_PROGRESS);
-    //         game.move({
-    //             from: { file: ChessFile.B, rank: 1 },
-    //             to: { file: ChessFile.A, rank: 3 },
-    //         });
-    //         expect(game.getState()).toEqual(GameState.DRAW_BY_75_MOVE_RULE);
-    //     });
-    // });
 });
