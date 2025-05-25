@@ -12,6 +12,7 @@ const Wrapper = styled.div`
 
 const Title = styled.h2`
     margin-bottom: 2rem;
+    color: white;
 `;
 
 const ModeButton = styled.button<{ color: string; disabled?: boolean }>`
