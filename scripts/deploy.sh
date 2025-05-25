@@ -13,7 +13,7 @@ npm i
 npm run test
 npm run build
 
-# 2. Move build to mterczynski.github.io
+# 2. Move client build to mterczynski.github.io
 cp -r ./client/dist/* ../mterczynski.github.io/chess/
 cd ../mterczynski.github.io
 
@@ -21,3 +21,5 @@ cd ../mterczynski.github.io
 git add .
 git commit -a -m "Update chess build"
 git push
+
+# todo - deploy server to some free/cheap cloud solution
