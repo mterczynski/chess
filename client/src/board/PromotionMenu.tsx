@@ -26,7 +26,6 @@ const PieceSquare = styled.div`
     position: relative;
     width: ${settings.tileSizeInPx}px;
     height: ${settings.tileSizeInPx}px;
-    background: #ffffff;
     border-bottom: ${settings.borderStyle};
     border-left: ${settings.borderStyle};
     background: #d0bf04c1;
@@ -46,10 +45,10 @@ export const PromotionMenu = () => {
         gameEngineContext.move({
             from: {
                 file: mapIndexToChessFile(
-                    gameClientContext.selectedPiece!.fileIndex
+                    gameClientContext.selectedPiece!.fileIndex,
                 ),
                 rank: mapRankIndexToRank(
-                    gameClientContext.selectedPiece!.tileIndex
+                    gameClientContext.selectedPiece!.tileIndex,
                 ),
             },
             to: gameClientContext.promotionMenuPosition!,
