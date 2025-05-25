@@ -71,6 +71,9 @@ export class LobbyController {
             name: lobby.name,
             moves: lobby.gameInstance.getMoveHistory().length,
             gameState: lobby.gameInstance.getState(),
+            currentPlayer: lobby.gameInstance.getCurrentPlayer?.() ?? null,
+            board: lobby.gameInstance.getBoard?.() ?? null,
+            availableMoves: lobby.gameInstance.getAvailableMovesForPlayer(),
         };
     }
 

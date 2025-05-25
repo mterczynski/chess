@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { LobbyController } from "./lobby.controller";
-import { ChessFile, GameState, Move } from "game-engine";
+import { ChessFile, GameState, Move, PieceType, Player } from "game-engine";
 import {
     BadRequestException,
     ConflictException,
@@ -114,6 +114,22 @@ describe("LobbyController", () => {
                     name: "lobby1",
                     moves: 0,
                     gameState: GameState.UNSTARTED,
+                    currentPlayer: Player.WHITE,
+                });
+
+                expect(lobby1.availableMoves.length).toBe(20);
+                expect(
+                    lobby1.availableMoves.find(
+                        (move) =>
+                            move.from.file === ChessFile.E &&
+                            move.from.rank === 2 &&
+                            move.to.file === ChessFile.E &&
+                            move.to.rank === 4,
+                    ),
+                );
+                expect(lobby1.board[ChessFile.E][2]).toEqual({
+                    player: Player.WHITE,
+                    type: PieceType.PAWN,
                 });
                 expect(lobby2).toMatchObject({
                     id: 2,
