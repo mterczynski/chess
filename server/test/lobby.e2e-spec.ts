@@ -3,6 +3,7 @@ import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from '../src/app.module';
 
+// todo - fix e2e tests, include them in server/package.json:test script
 describe('/lobby (e2e)', () => {
     let app: INestApplication;
 
