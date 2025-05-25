@@ -100,3 +100,7 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 ## Important notes
 
 `"builder": "webpack"` was used in `./nest-cli.json` to fix issues with importing game-engine in server
+
+## Insomnia REST API Client
+
+`Insomnia_Collection.yaml` can be imported to [Insomnia REST](https://insomnia.rest/) for API testing
