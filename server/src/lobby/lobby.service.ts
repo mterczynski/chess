@@ -4,19 +4,25 @@ import {
     ConflictException,
     NotFoundException,
 } from "@nestjs/common";
-import { Game, Move } from "game-engine";
+import { Game } from "game-engine";
+import { Observable, Subject } from "rxjs";
+import {
+    CreateLobbyDto,
+    Lobby,
+    LobbyDetailsDto,
+    LobbySummaryDto,
+    LobbyUpdateDto,
+    MoveDto,
+} from "./lobby.types";
 
 @Injectable()
 export class LobbyService {
     private idCounter = 1;
-    private lobbies: {
-        id: number;
-        name: string;
-        password: string;
-        gameInstance: Game;
-    }[] = [];
+    private lobbies: Lobby[] = [];
+    private lobbySseSubjects: { [lobbyId: number]: Subject<LobbyUpdateDto> } =
+        {};
 
-    createLobby(body: { name: string; password: string }) {
+    createLobby(body: CreateLobbyDto) {
         if (
             typeof body.name !== "string" ||
             typeof body.password !== "string"
@@ -40,10 +46,20 @@ export class LobbyService {
             password: body.password,
             gameInstance: new Game(),
         });
+
         return { id: this.idCounter - 1, name: body.name };
     }
 
-    getLobbies() {
+    getLobbySseObservable(id: string): Observable<LobbyUpdateDto> {
+        const lobbyId = Number(id);
+        if (!this.lobbySseSubjects[lobbyId]) {
+            this.lobbySseSubjects[lobbyId] = new Subject();
+        }
+
+        return this.lobbySseSubjects[lobbyId].asObservable();
+    }
+
+    getLobbies(): LobbySummaryDto[] {
         return this.lobbies.map((lobby) => ({
             id: lobby.id,
             name: lobby.name,
@@ -52,24 +68,25 @@ export class LobbyService {
         }));
     }
 
-    getLobby(id: string) {
+    getLobby(id: string): LobbyDetailsDto {
         const lobbyId = Number(id);
         const lobby = this.lobbies.find((l) => l.id === lobbyId);
         if (!lobby) {
             throw new NotFoundException("Lobby not found.");
         }
+
         return {
             id: lobby.id,
             name: lobby.name,
             moves: lobby.gameInstance.getMoveHistory().length,
             gameState: lobby.gameInstance.getState(),
-            currentPlayer: lobby.gameInstance.getCurrentPlayer?.() ?? null,
+            currentPlayer: lobby.gameInstance.getCurrentPlayer(),
             board: lobby.gameInstance.getBoard?.() ?? null,
             availableMoves: lobby.gameInstance.getAvailableMovesForPlayer(),
         };
     }
 
-    move(id: string, body: { move: Move; password: string }) {
+    move(id: string, body: MoveDto) {
         const lobbyId = Number(id);
         const lobby = this.lobbies.find((l) => l.id === lobbyId);
         if (!lobby) {
@@ -83,6 +100,16 @@ export class LobbyService {
         } catch (e) {
             throw new BadRequestException("Invalid move");
         }
+        // Notify all SSE subscribers about the new move
+        const updatedLobby = this.getLobby(id);
+
+        if (this.lobbySseSubjects[lobbyId]) {
+            this.lobbySseSubjects[lobbyId].next({
+                move: body.move,
+                lobby: updatedLobby,
+            });
+        }
+
         return this.getLobby(id);
     }
 }

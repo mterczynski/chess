@@ -1,13 +1,15 @@
-import { Controller, Post, Body, Get, Param } from "@nestjs/common";
+import { Controller, Post, Body, Get, Param, Sse } from "@nestjs/common";
 import { Move } from "game-engine";
 import { LobbyService } from "./lobby.service";
+import { map, Observable, tap } from "rxjs";
+import { CreateLobbyDto, LobbyUpdateDto } from "./lobby.types";
 
 @Controller("lobby")
 export class LobbyController {
     constructor(private readonly lobbyService: LobbyService) {}
 
     @Post()
-    createLobby(@Body() body: { name: string; password: string }) {
+    createLobby(@Body() body: CreateLobbyDto) {
         return this.lobbyService.createLobby(body);
     }
 
@@ -27,5 +29,16 @@ export class LobbyController {
         @Body() body: { move: Move; password: string },
     ) {
         return this.lobbyService.move(id, body);
+    }
+
+    @Sse(":id/game-updates")
+    sseLobbyMoves(
+        @Param("id") id: string,
+    ): Observable<{ data: LobbyUpdateDto }> {
+        return this.lobbyService.getLobbySseObservable(id).pipe(
+            map((data) => {
+                return { data };
+            }),
+        );
     }
 }
