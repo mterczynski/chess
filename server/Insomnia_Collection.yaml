@@ -25,12 +25,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: "{{ _['{{ \\'my custom template logic\\' | urlencode }}'] }}/lobby"
+  - url: "{{ _.BASE_URL }}/lobby"
     name: lobby
     meta:
       id: req_ff753a791db841c2a9f98a93adfeb9f6
       created: 1748168801916
-      modified: 1748169067951
+      modified: 1748169836625
       isPrivate: false
       sortKey: -1748168801916
     method: POST
@@ -58,6 +58,151 @@ collection:
         send: true
         store: true
       rebuildPath: true
+  - url: "{{ _.BASE_URL }}/lobby"
+    name: lobby
+    meta:
+      id: req_188ad9479d0049e3bd3707942f75f504
+      created: 1748169752698
+      modified: 1748169818363
+      isPrivate: false
+      sortKey: -1748169752698
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.1.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.BASE_URL }}/lobby/1"
+    name: lobby/{id}
+    meta:
+      id: req_fc6ff8751c2c4d8683eb6b9df7a85b1f
+      created: 1748176891572
+      modified: 1748177898091
+      isPrivate: false
+      sortKey: -1748169277307
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.1.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.BASE_URL }}/lobby/1/move"
+    name: lobby/{id}/move E2->E4
+    meta:
+      id: req_f5df13e89c724b7d80e4fed56dd93212
+      created: 1748178820474
+      modified: 1748179591959
+      isPrivate: false
+      sortKey: -1748168773673
+    method: POST
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "password": "maslomaslo123",
+          "move": {
+            "from": {
+              "file": "E",
+              "rank": 2
+            },
+            "to": {
+              "file": "E",
+              "rank": 4
+            }
+          }
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.1.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.BASE_URL }}/lobby/1/move"
+    name: lobby/{id}/move E7->E5
+    meta:
+      id: req_ac9c1c0d73794cdea171d02df45fb6ba
+      created: 1748179595634
+      modified: 1748179607304
+      isPrivate: false
+      sortKey: -1748168759551.5
+    method: POST
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "password": "maslomaslo123",
+          "move": {
+            "from": {
+              "file": "E",
+              "rank": 7
+            },
+            "to": {
+              "file": "E",
+              "rank": 5
+            }
+          }
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.1.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.BASE_URL }}/user"
+    name: user
+    meta:
+      id: req_4545ba9377c444db90029347d86d61c8
+      created: 1748188447239
+      modified: 1748188503274
+      isPrivate: false
+      sortKey: -1748168787794.5
+    method: POST
+    body:
+      mimeType: application/x-www-form-urlencoded
+      params:
+        - id: pair_eb1a15dfdb494dcda3daee8a212cef0a
+          name: name
+          value: my-user2
+          disabled: false
+    headers:
+      - name: Content-Type
+        value: application/x-www-form-urlencoded
+      - name: User-Agent
+        value: insomnia/11.1.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
 cookieJar:
   name: Default Jar
   meta:
@@ -69,7 +214,8 @@ environments:
   meta:
     id: env_2d7f8680acecb3d6012f394824a6423ab6f5125e
     created: 1748168745392
-    modified: 1748168918214
+    modified: 1748169794858
     isPrivate: false
   data:
     "{{ 'my custom template logic' | urlencode }}": http://localhost:3000
+    BASE_URL: http://localhost:3000
