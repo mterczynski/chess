@@ -24,7 +24,9 @@ const Button = styled.button<{ disabled?: boolean }>`
     color: ${({ disabled }) => (disabled ? "#aaa" : "#222")};
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s;
+    transition:
+        background 0.2s,
+        color 0.2s;
     ${({ disabled }) =>
         !disabled &&
         ` &:hover {
@@ -46,11 +48,8 @@ export const ModeSelectionScreen: React.FC<ModeSelectionScreenProps> = ({
         <Button onClick={() => onSelect(GameMode.VS_PLAYER_OFFLINE)}>
             Play vs Player locally
         </Button>
-        <Button
-            disabled /*onClick={() => onSelect(GameMode.VS_PLAYER_ONLINE)}*/
-        >
-            Play vs Player online (coming soon)
+        <Button onClick={() => onSelect(GameMode.VS_PLAYER_ONLINE)}>
+            Play vs Player online (work in progress)
         </Button>
-        {/* <Button onClick={() => onSelect(GameMode.VS_PLAYER_ONLINE)}>Play Online (coming soon)</Button> */}
     </Wrapper>
 );
