@@ -13,12 +13,17 @@ cd "$REPO_ROOT"
 
 # todo - standarize build folders - use either dist or build, not both
 echo '🚧 Building...'
+
+cd "$REPO_ROOT/game-engine"
+rm -rf ./build
+npm run build
+
 cd "$REPO_ROOT/client"
 rm -rf ./dist
 npm run build
 
-cd "$REPO_ROOT/game-engine"
-rm -rf ./build
+cd "$REPO_ROOT/server"
+rm -rf ./dist
 npm run build
 
 echo '📦 Build done'
