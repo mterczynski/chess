@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get } from "@nestjs/common";
+import { Controller, Post, Body, Get, Param } from "@nestjs/common";
 import { Game } from "game-engine";
 
 @Controller("lobby")
@@ -54,5 +54,32 @@ export class LobbyController {
                 gameState: lobby.gameInstance.getState(),
             })),
         };
+    }
+
+    // todo - test
+    @Get(":id")
+    getLobby(@Param("id") id: string) {
+        const lobbyId = Number(id);
+        const lobby = this.lobbies.find((l) => l.id === lobbyId);
+        if (!lobby) {
+            return { success: false, message: "Lobby not found." };
+        }
+        return {
+            success: true,
+            lobby: {
+                id: lobby.id,
+                name: lobby.name,
+                moves: lobby.gameInstance.getMoveHistory().length,
+                gameState: lobby.gameInstance.getState(),
+            },
+        };
+    }
+
+    @Post("/{id}/move")
+    move() {
+        // 1. find lobby by id
+        // 2. call game.move
+        // 3. return success false if game.move throws
+        // 4. return lobby using this.getLobby(id)
     }
 }
