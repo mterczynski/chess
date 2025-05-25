@@ -21,13 +21,7 @@ cp -r "$REPO_ROOT/client/dist" "$REPO_ROOT/build/client"
 cd "$REPO_ROOT/game-engine"
 npm run build
 cp -r "$REPO_ROOT/game-engine/build" "$REPO_ROOT/build/game-engine"
-# remove existing links
-cd "$REPO_ROOT/client"
-npm unlink game-engine || true
-# link built packages
-cd "$REPO_ROOT/build/game-engine"
-npm link
-cd "$REPO_ROOT/client"
-npm link game-engine
+
+sh ./link-packages.sh
 
 echo '📦 Build done'
