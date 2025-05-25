@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { settings } from "../settings";
 
 const Wrapper = styled.div`
     display: flex;
@@ -66,7 +67,7 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack }) => {
         }
 
         try {
-            const res = await fetch("http://localhost:3000/lobby", {
+            const res = await fetch(`${settings.serverURL}/lobby`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name, password }),

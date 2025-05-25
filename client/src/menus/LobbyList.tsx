@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { CreateLobbyForm } from "./CreateLobbyForm";
+import { settings } from "../settings";
 
 const Wrapper = styled.div`
     display: flex;
@@ -66,7 +67,7 @@ export const LobbyList: React.FC<{}> = () => {
     const [showCreateForm, setShowCreateForm] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:3000/lobby")
+        fetch(`${settings.serverURL}/lobby`)
             .then((res) => res.json())
             .then((data) => setLobbies(data))
             .catch(() => setLobbies([]));
