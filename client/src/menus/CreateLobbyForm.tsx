@@ -94,12 +94,19 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack }) => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     autoFocus
+                    spellCheck={false}
+                    autoCorrect="off"
+                    autoCapitalize="off"
                 />
                 <Input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="new-password"
+                    spellCheck={false}
+                    autoCorrect="off"
+                    autoCapitalize="off"
                 />
                 {error && <div style={{ color: "red" }}>{error}</div>}
                 <ButtonRow>
