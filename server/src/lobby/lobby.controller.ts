@@ -1,4 +1,13 @@
-import { Controller, Post, Body, Get, Param } from "@nestjs/common";
+import {
+    Controller,
+    Post,
+    Body,
+    Get,
+    Param,
+    BadRequestException,
+    ConflictException,
+    NotFoundException,
+} from "@nestjs/common";
 import { Game } from "game-engine";
 
 @Controller("lobby")
@@ -17,10 +26,7 @@ export class LobbyController {
             typeof body.name !== "string" ||
             typeof body.password !== "string"
         ) {
-            return {
-                success: false,
-                message: "Name and password must be strings.",
-            };
+            throw new BadRequestException("Name and password must be strings.");
         }
         if (
             this.lobbies.some(
@@ -29,10 +35,9 @@ export class LobbyController {
                     lobby.password === body.password,
             )
         ) {
-            return {
-                success: false,
-                message: "A lobby with this name and password already exists.",
-            };
+            throw new ConflictException(
+                "A lobby with this name and password already exists.",
+            );
         }
         this.lobbies.push({
             id: this.idCounter++,
@@ -40,43 +45,37 @@ export class LobbyController {
             password: body.password,
             gameInstance: new Game(),
         });
-        return { success: true };
+        return { id: this.idCounter - 1, name: body.name };
     }
 
     @Get()
     getLobbies() {
-        return {
-            success: true,
-            lobbies: this.lobbies.map((lobby) => ({
-                id: lobby.id,
-                name: lobby.name,
-                moves: lobby.gameInstance.getMoveHistory().length,
-                gameState: lobby.gameInstance.getState(),
-            })),
-        };
+        return this.lobbies.map((lobby) => ({
+            id: lobby.id,
+            name: lobby.name,
+            moves: lobby.gameInstance.getMoveHistory().length,
+            gameState: lobby.gameInstance.getState(),
+        }));
     }
 
-    // todo - test
     @Get(":id")
     getLobby(@Param("id") id: string) {
         const lobbyId = Number(id);
         const lobby = this.lobbies.find((l) => l.id === lobbyId);
         if (!lobby) {
-            return { success: false, message: "Lobby not found." };
+            throw new NotFoundException("Lobby not found.");
         }
         return {
-            success: true,
-            lobby: {
-                id: lobby.id,
-                name: lobby.name,
-                moves: lobby.gameInstance.getMoveHistory().length,
-                gameState: lobby.gameInstance.getState(),
-            },
+            id: lobby.id,
+            name: lobby.name,
+            moves: lobby.gameInstance.getMoveHistory().length,
+            gameState: lobby.gameInstance.getState(),
         };
     }
 
-    @Post("/{id}/move")
-    move() {
+    // todo
+    @Post(":id/move")
+    move(@Param("id") id: string) {
         // 1. find lobby by id
         // 2. call game.move
         // 3. return success false if game.move throws
