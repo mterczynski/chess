@@ -3,11 +3,7 @@ import {
     BadRequestException,
     ConflictException,
 } from "@nestjs/common";
-
-export interface User {
-    id: number;
-    name: string;
-}
+import { User } from "./user";
 
 @Injectable()
 export class UserService {
