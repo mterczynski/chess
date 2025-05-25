@@ -2,7 +2,7 @@ import { Board } from "../Board";
 import { Move } from "../Moves";
 import { PieceType } from "../pieces";
 import { isAttackingMove } from "../utils/isAttackingMove";
-import _ from "lodash";
+import * as _ from "lodash";
 
 export class CaptureIfAvailableBot {
     /**

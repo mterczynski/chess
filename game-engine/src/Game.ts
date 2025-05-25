@@ -1,4 +1,4 @@
-import _ from "lodash";
+import * as _ from "lodash";
 import {
     AvailableMoveCalculator,
     CheckCalculator,
@@ -35,8 +35,8 @@ export class Game {
     constructor(
         private readonly checkCalculator = new CheckCalculator(),
         private readonly availableMoveCalculator: AvailableMoveCalculator = new AvailableMoveCalculator(
-            checkCalculator
-        )
+            checkCalculator,
+        ),
     ) {}
 
     getState(): GameState {
@@ -51,7 +51,7 @@ export class Game {
     move(move: Move): void {
         if (this.isGameOver()) {
             throw new Error(
-                "Game has already finished, no more moves can be made"
+                "Game has already finished, no more moves can be made",
             );
         }
 
@@ -73,7 +73,7 @@ export class Game {
         return this.availableMoveCalculator.getAvailableMovesForPlayer(
             this.board,
             this.currentPlayer,
-            this.getLastMove()
+            this.getLastMove(),
         );
     }
 
@@ -120,13 +120,13 @@ export class Game {
         const availableMove = availableMoves.find(
             (availableMove) =>
                 arePositionsEqual(availableMove.from, move.from) &&
-                arePositionsEqual(availableMove.to, move.to)
+                arePositionsEqual(availableMove.to, move.to),
         );
 
         if ((availableMove as any)?.type === SpecialMoveType.PROMOTION) {
             if ((move as any).type !== SpecialMoveType.PROMOTION) {
                 throw new Error(
-                    `Invalid move type (expected=${SpecialMoveType.PROMOTION})`
+                    `Invalid move type (expected=${SpecialMoveType.PROMOTION})`,
                 );
             }
 
@@ -149,7 +149,7 @@ export class Game {
         const rook = this.board[rookFile][rank] as Rook;
         const newRookFile = addToFile(
             kingMove.to.file,
-            isKingMoveToTheRight ? -1 : 1
+            isKingMoveToTheRight ? -1 : 1,
         ) as ChessFile;
 
         this.board[newRookFile][rank] = rook;
@@ -159,7 +159,7 @@ export class Game {
     private checkForCastle(move: Move, piece: Piece) {
         const isKing = piece.type === PieceType.KING;
         const filesToMove = Math.abs(
-            getFileDifference(move.from.file, move.to.file)
+            getFileDifference(move.from.file, move.to.file),
         );
         return isKing && filesToMove === 2;
     }
@@ -175,7 +175,7 @@ export class Game {
 
     private promote(move: PromotionMove) {
         this.board[move.to.file][move.to.rank] = isCastleablePieceType(
-            move.promoteTo
+            move.promoteTo,
         )
             ? {
                   player: this.currentPlayer,
@@ -222,7 +222,7 @@ export class Game {
             this.availableMoveCalculator.getAvailableMovesForPlayer(
                 this.board,
                 enemy,
-                this.getLastMove()
+                this.getLastMove(),
             );
 
         if (enemyMoves.length === 0) {
@@ -230,14 +230,14 @@ export class Game {
                 this.availableMoveCalculator.getAvailableMovesForPlayer(
                     this.board,
                     this.currentPlayer,
-                    this.getLastMove()
+                    this.getLastMove(),
                 );
 
             const checkingPiecesOfCurrentPlayer =
                 this.checkCalculator.getCheckingEnemyPieces(
                     enemy,
                     this.board,
-                    availableCurrentPlayerMoves
+                    availableCurrentPlayerMoves,
                 );
 
             if (checkingPiecesOfCurrentPlayer.length === 0) {
