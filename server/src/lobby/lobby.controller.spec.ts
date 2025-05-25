@@ -96,5 +96,34 @@ describe("LobbyController", () => {
                 expect(result[1].gameState).toBe(GameState.UNSTARTED);
             });
         });
+
+        describe("getLobby", () => {
+            it("should return the correct lobby by id", () => {
+                controller.createLobby({ name: "lobby1", password: "pw1" });
+                controller.createLobby({ name: "lobby2", password: "pw2" });
+
+                const lobby1 = controller.getLobby("1");
+                const lobby2 = controller.getLobby("2");
+
+                expect(lobby1).toMatchObject({
+                    id: 1,
+                    name: "lobby1",
+                    moves: 0,
+                    gameState: GameState.UNSTARTED,
+                });
+                expect(lobby2).toMatchObject({
+                    id: 2,
+                    name: "lobby2",
+                    moves: 0,
+                    gameState: GameState.UNSTARTED,
+                });
+            });
+
+            it("should throw NotFoundException for non-existent id", () => {
+                expect(() => controller.getLobby("999")).toThrowError(
+                    "Lobby not found.",
+                );
+            });
+        });
     });
 });
