@@ -46,7 +46,6 @@ describe("CheckCalculator", () => {
             { type: PieceType.ROOK, player: Player.BLACK, hasMoved: true, position: { file: ChessFile.B, rank: 1 } },
             { type: PieceType.QUEEN, player: Player.BLACK, position: { file: ChessFile.H, rank: 1 } }
         ];
-        console.log('## result', result)
         expect(result).toEqual(expect.arrayContaining(expected));
         expect(result.length).toBe(2);
     });
