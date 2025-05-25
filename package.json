@@ -4,15 +4,17 @@
     "description": "Chess game",
     "workspaces": [
         "client",
-        "game-engine"
+        "game-engine",
+        "server"
     ],
     "scripts": {
         "postinstall": "sh scripts/link-packages.sh",
         "start": "cd ./client && npm start",
-        "test": "jest",
+        "start:server": "cd ./server && npm start",
+        "test": "jest && cd server && npm test",
         "test:watch": "jest --watch",
-        "test:ci": "jest --ci",
-        "test:coverage": "jest --coverage",
+        "test:ci": "jest --ci && cd server && npm run test:ci",
+        "test:coverage": "jest --coverage && cd server && npm run test:coverage",
         "build:engine": "cd ./game-engine && npm run build",
         "build": "sh scripts/build.sh",
         "cleanup": "sh scripts/cleanup.sh",

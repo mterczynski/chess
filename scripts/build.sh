@@ -11,23 +11,19 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 cd "$REPO_ROOT"
 
+# todo - standarize build folders - use either dist or build, not both
 echo '🚧 Building...'
-sh "$SCRIPT_DIR/link-packages.sh"
-rm -rf "$REPO_ROOT/build"
-mkdir "$REPO_ROOT/build"
-cd "$REPO_ROOT/client"
-npm run build
-cp -r "$REPO_ROOT/client/dist" "$REPO_ROOT/build/client"
+
 cd "$REPO_ROOT/game-engine"
+rm -rf ./build
 npm run build
-cp -r "$REPO_ROOT/game-engine/build" "$REPO_ROOT/build/game-engine"
-# remove existing links
+
 cd "$REPO_ROOT/client"
-npm unlink game-engine || true
-# link built packages
-cd "$REPO_ROOT/build/game-engine"
-npm link
-cd "$REPO_ROOT/client"
-npm link game-engine
+rm -rf ./dist
+npm run build
+
+cd "$REPO_ROOT/server"
+rm -rf ./dist
+npm run build
 
 echo '📦 Build done'

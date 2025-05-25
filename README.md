@@ -21,11 +21,12 @@ npm i
 
 ## Available npm scripts
 
--   🚀 `start`: runs the `client` application
+-   🚀 `start`: runs the `client` application on http://localhost:5173 (if available)
+-   🚀 `start:server`: runs the `server` application on http://localhost:3000 (if available)
 -   🔗 `postinstall` - links the packages (run automatically after `npm install`)
--   📦 `build`: links the packages and builds both `client` and `game-engine`
+-   📦 `build`: builds all packages
 -   🧽 `cleanup`: clears all generated/built/installed content (such as /coverage, /dist, /node_modules)
--   🧪 `test`: runs the tests in `game-engine` (and in `client` when implemented)
+-   🧪 `test`: runs the tests in all repositories (todo: make it work for e2e server tests too)
 -   🧪 `test:watch`: same as above but in watch mode
 -   🧪 `test:coverage`: runs all tests, produces coverage (open `coverage\lcov-report\index.html` in the browser to see the results)
 
@@ -33,8 +34,9 @@ npm i
 
 | Repository    | Progress     | Comments                                                                                              |
 | ------------- | ------------ | ----------------------------------------------------------------------------------------------------- |
-| `game-engine` | 🟩🟩🟩🟩🟩⬛ | mostly done, performance can be improved                                                              |
-| `client`      | 🟩🟩🟩🟩🟩⬛ | movable pieces, en passant, castling, checks, checkmates, promotions are working, both sides playable (but there are responsivness issuesP) |
+| `game-engine` | 🟩🟩🟩🟩⬛⬛ | core logic is mostly implemented, performance can be improved, missing draw by agreement, no clocks, bots are too easy                                                              |
+| `client`      | 🟩🟩🟩🟩⬛⬛ | game engine is implemented, both sides are playable, but are responsivness issues |
+| `server`      | ⬛⬛⬛⬛⬛⬛ | started on 24.05.2025, lobby creation works |
 
 ## Preview
 
