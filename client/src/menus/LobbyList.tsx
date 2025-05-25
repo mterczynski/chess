@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { CreateLobbyForm } from "./CreateLobbyForm";
 
 const Wrapper = styled.div`
     display: flex;
@@ -62,6 +63,7 @@ type Lobby = {
 
 export const LobbyList: React.FC<{}> = () => {
     const [lobbies, setLobbies] = useState<Lobby[]>([]);
+    const [showCreateForm, setShowCreateForm] = useState(false);
 
     useEffect(() => {
         fetch("http://localhost:3000/lobby")
@@ -70,13 +72,13 @@ export const LobbyList: React.FC<{}> = () => {
             .catch(() => setLobbies([]));
     }, []);
 
+    if (showCreateForm) {
+        return <CreateLobbyForm onBack={() => setShowCreateForm(false)} />;
+    }
+
     return (
         <Wrapper>
-            <CreateButton
-                onClick={() => {
-                    console.log("Create new lobby button clicked");
-                }}
-            >
+            <CreateButton onClick={() => setShowCreateForm(true)}>
                 Create New Lobby
             </CreateButton>
             <LobbyListContainer>
