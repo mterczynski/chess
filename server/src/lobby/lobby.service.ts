@@ -50,6 +50,7 @@ export class LobbyService {
         return { id: this.idCounter - 1, name: body.name };
     }
 
+    // todo - cover with unit test
     getLobbySseObservable(id: string): Observable<LobbyUpdateDto> {
         const lobbyId = Number(id);
         if (!this.lobbySseSubjects[lobbyId]) {
