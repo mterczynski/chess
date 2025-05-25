@@ -1,0 +1,75 @@
+type: collection.insomnia.rest/5.0
+name: Chess server (https://github.com/mterczynski/chess/tree/main/server)
+meta:
+  id: wrk_6810a267a8d24de898392deefcb71a47
+  created: 1748168745390
+  modified: 1748168782421
+collection:
+  - url: localhost:3000
+    name: /
+    meta:
+      id: req_b364f572bc2b4d64824a0657f0f7bc7a
+      created: 1748168745430
+      modified: 1748168811393
+      isPrivate: false
+      sortKey: -1748168745430
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.1.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _['{{ \\'my custom template logic\\' | urlencode }}'] }}/lobby"
+    name: lobby
+    meta:
+      id: req_ff753a791db841c2a9f98a93adfeb9f6
+      created: 1748168801916
+      modified: 1748169067951
+      isPrivate: false
+      sortKey: -1748168801916
+    method: POST
+    body:
+      mimeType: application/x-www-form-urlencoded
+      params:
+        - id: pair_eb1a15dfdb494dcda3daee8a212cef0a
+          name: name
+          value: my-lobby
+          disabled: false
+        - id: pair_9b5b2f4c1ae94fb38aa049de924e3dee
+          name: password
+          value: maslomaslo123
+          disabled: false
+    headers:
+      - name: Content-Type
+        value: application/x-www-form-urlencoded
+      - name: User-Agent
+        value: insomnia/11.1.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_2d7f8680acecb3d6012f394824a6423ab6f5125e
+    created: 1748168745392
+    modified: 1748168745392
+environments:
+  name: Base Environment
+  meta:
+    id: env_2d7f8680acecb3d6012f394824a6423ab6f5125e
+    created: 1748168745392
+    modified: 1748168918214
+    isPrivate: false
+  data:
+    "{{ 'my custom template logic' | urlencode }}": http://localhost:3000
