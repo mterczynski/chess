@@ -1,7 +1,5 @@
 import { Controller, Post, Body } from '@nestjs/common';
-// @ts-ignore
 import { Game } from 'game-engine';
-// import { Game } from 'game-enginedd';
 
 const lobbies: {
     name: string;
@@ -9,14 +7,6 @@ const lobbies: {
     gameInstance: Game;
 }[] = [];
 
-debugger;
-// console.log('###### b', b)
-
-var b = Game;
-console.log('###### b', b);
-
-var a = new Game();
-b;
 @Controller('lobby')
 export class LobbyController {
     @Post()
@@ -45,7 +35,7 @@ export class LobbyController {
         lobbies.push({
             name: body.name,
             password: body.password,
-            gameInstance: {} as any,
+            gameInstance: new Game(),
         });
         return { success: true };
     }
