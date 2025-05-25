@@ -28,4 +28,8 @@ export class UserService {
 
         return user;
     }
+
+    getUserById(userId: number): User | null {
+        return this.users.find((user) => user.id === userId) ?? null;
+    }
 }

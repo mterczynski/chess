@@ -3,6 +3,7 @@ import {
     BadRequestException,
     ConflictException,
     NotFoundException,
+    Inject,
 } from "@nestjs/common";
 import { Game } from "game-engine";
 import { Observable, Subject } from "rxjs";
@@ -14,6 +15,7 @@ import {
     LobbyUpdateDto,
     MoveDto,
 } from "./lobby.types";
+import { UserService } from "../user";
 
 @Injectable()
 export class LobbyService {
@@ -22,7 +24,14 @@ export class LobbyService {
     private lobbySseSubjects: { [lobbyId: number]: Subject<LobbyUpdateDto> } =
         {};
 
+    constructor(@Inject() private userService: UserService) {}
+
     createLobby(body: CreateLobbyDto) {
+        const user = this.userService.getUserById(Number(body.userId));
+
+        if (!user) {
+            throw new NotFoundException("User with provided id not found");
+        }
         if (
             typeof body.name !== "string" ||
             typeof body.password !== "string"
@@ -45,6 +54,7 @@ export class LobbyService {
             name: body.name,
             password: body.password,
             gameInstance: new Game(),
+            users: [user],
         });
 
         return { id: this.idCounter - 1, name: body.name };

@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Get, Param, Sse } from "@nestjs/common";
 import { Move } from "game-engine";
 import { LobbyService } from "./lobby.service";
-import { map, Observable, tap } from "rxjs";
+import { map, Observable } from "rxjs";
 import { CreateLobbyDto, LobbyUpdateDto } from "./lobby.types";
 
 @Controller("lobby")

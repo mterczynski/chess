@@ -1,10 +1,12 @@
 import { Board, Game, GameState, Move, Player } from "game-engine";
+import { User } from "src/user/user";
 
 export interface Lobby {
     id: number;
     name: string;
     password: string;
     gameInstance: Game;
+    users: User[];
 }
 
 export interface LobbyDetailsDto {
@@ -25,6 +27,7 @@ export interface LobbySummaryDto {
 }
 
 export interface CreateLobbyDto {
+    userId: string;
     name: string;
     password: string;
 }
