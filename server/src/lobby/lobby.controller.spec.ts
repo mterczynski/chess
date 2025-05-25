@@ -1,7 +1,11 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { LobbyController } from "./lobby.controller";
-import { GameState } from "game-engine";
-import { BadRequestException, ConflictException } from "@nestjs/common";
+import { ChessFile, GameState, Move } from "game-engine";
+import {
+    BadRequestException,
+    ConflictException,
+    NotFoundException,
+} from "@nestjs/common";
 
 describe("LobbyController", () => {
     let controller: LobbyController;
@@ -123,6 +127,62 @@ describe("LobbyController", () => {
                 expect(() => controller.getLobby("999")).toThrowError(
                     "Lobby not found.",
                 );
+            });
+        });
+
+        describe("move", () => {
+            it("should make a valid move when password is correct", () => {
+                controller.createLobby({ name: "lobby1", password: "pw1" });
+                const move: Move = {
+                    from: { file: ChessFile.D, rank: 2 },
+                    to: { file: ChessFile.D, rank: 4 },
+                };
+                const result = controller.move("1", { move, password: "pw1" });
+                expect(result.id).toBe(1);
+                expect(result.moves).toBe(1);
+                expect(result.name).toBe("lobby1");
+                expect(result.gameState).toBe(GameState.IN_PROGRESS);
+            });
+
+            it("should throw BadRequestException for incorrect password", () => {
+                controller.createLobby({ name: "lobby1", password: "pw1" });
+                const move: Move = {
+                    from: { file: ChessFile.D, rank: 2 },
+                    to: { file: ChessFile.D, rank: 4 },
+                };
+                expect(() =>
+                    controller.move("1", {
+                        move,
+                        password: "wrong",
+                    }),
+                ).toThrow(BadRequestException);
+            });
+
+            it("should throw NotFoundException for non-existent lobby", () => {
+                const move: Move = {
+                    from: { file: ChessFile.D, rank: 2 },
+                    to: { file: ChessFile.D, rank: 4 },
+                };
+                expect(() =>
+                    controller.move("999", { move, password: "pw1" }),
+                ).toThrow(NotFoundException);
+            });
+
+            it("should throw BadRequestException for invalid move", () => {
+                controller.createLobby({ name: "lobby1", password: "pw1" });
+                // Invalid move: moving black's piece in first move
+                const move: Move = {
+                    from: { file: ChessFile.E, rank: 7 },
+                    to: { file: ChessFile.E, rank: 5 },
+                };
+                try {
+                    controller.move("1", { move, password: "pw1" });
+                    // If no error is thrown, fail the test
+                    fail("Expected BadRequestException to be thrown");
+                } catch (e) {
+                    expect(e).toBeInstanceOf(BadRequestException);
+                    expect(e.message).toContain("Invalid move");
+                }
             });
         });
     });
