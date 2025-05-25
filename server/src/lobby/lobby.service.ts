@@ -1,0 +1,88 @@
+import {
+    Injectable,
+    BadRequestException,
+    ConflictException,
+    NotFoundException,
+} from "@nestjs/common";
+import { Game, Move } from "game-engine";
+
+@Injectable()
+export class LobbyService {
+    private idCounter = 1;
+    private lobbies: {
+        id: number;
+        name: string;
+        password: string;
+        gameInstance: Game;
+    }[] = [];
+
+    createLobby(body: { name: string; password: string }) {
+        if (
+            typeof body.name !== "string" ||
+            typeof body.password !== "string"
+        ) {
+            throw new BadRequestException("Name and password must be strings.");
+        }
+        if (
+            this.lobbies.some(
+                (lobby) =>
+                    lobby.name === body.name &&
+                    lobby.password === body.password,
+            )
+        ) {
+            throw new ConflictException(
+                "A lobby with this name and password already exists.",
+            );
+        }
+        this.lobbies.push({
+            id: this.idCounter++,
+            name: body.name,
+            password: body.password,
+            gameInstance: new Game(),
+        });
+        return { id: this.idCounter - 1, name: body.name };
+    }
+
+    getLobbies() {
+        return this.lobbies.map((lobby) => ({
+            id: lobby.id,
+            name: lobby.name,
+            moves: lobby.gameInstance.getMoveHistory().length,
+            gameState: lobby.gameInstance.getState(),
+        }));
+    }
+
+    getLobby(id: string) {
+        const lobbyId = Number(id);
+        const lobby = this.lobbies.find((l) => l.id === lobbyId);
+        if (!lobby) {
+            throw new NotFoundException("Lobby not found.");
+        }
+        return {
+            id: lobby.id,
+            name: lobby.name,
+            moves: lobby.gameInstance.getMoveHistory().length,
+            gameState: lobby.gameInstance.getState(),
+            currentPlayer: lobby.gameInstance.getCurrentPlayer?.() ?? null,
+            board: lobby.gameInstance.getBoard?.() ?? null,
+            availableMoves: lobby.gameInstance.getAvailableMovesForPlayer(),
+        };
+    }
+
+    move(id: string, body: { move: Move; password: string }) {
+        const lobbyId = Number(id);
+        const lobby = this.lobbies.find((l) => l.id === lobbyId);
+        if (!lobby) {
+            throw new NotFoundException("Lobby not found.");
+        }
+        if (lobby.password !== body.password) {
+            throw new BadRequestException("Incorrect password.");
+        }
+        try {
+            lobby.gameInstance.move(body.move);
+        } catch (e) {
+            throw new BadRequestException("Invalid move");
+        }
+        return this.getLobby(id);
+    }
+}

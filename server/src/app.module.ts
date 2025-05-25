@@ -5,6 +5,7 @@ import { LobbyController } from "./lobby/lobby.controller";
 import { DevtoolsModule } from "@nestjs/devtools-integration";
 import { UserController } from "./user/user.controller";
 import { UserService } from "./user/user.service";
+import { LobbyService } from "./lobby/lobby.service";
 
 @Module({
     imports: [
@@ -14,6 +15,6 @@ import { UserService } from "./user/user.service";
         }),
     ],
     controllers: [AppController, LobbyController, UserController],
-    providers: [AppService, UserService],
+    providers: [AppService, UserService, LobbyService],
 })
 export class AppModule {}
