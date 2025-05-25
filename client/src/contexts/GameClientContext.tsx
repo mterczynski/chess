@@ -40,6 +40,8 @@ export const GameClientContext = React.createContext<{
     playerSelection: Player | null;
     playerTurnTimeoutRef: React.MutableRefObject<any>;
     gameMode: GameMode | null;
+    username: string | null;
+    setUsername: React.Dispatch<React.SetStateAction<string | null>>;
     setGameMode: React.Dispatch<React.SetStateAction<GameMode | null>>;
 }>({} as any);
 
@@ -49,13 +51,14 @@ export const GameClientContextProvider = ({
     children: JSX.Element;
 }) => {
     const [selectedPiece, setSelectedPiece] = useState<SelectedPiece | null>(
-        null
+        null,
     );
     const [playerSelection, setPlayerSelection] = useState<Player | null>(null);
     const [availableMoves, setAvailableMoves] = useState<Move[]>([]);
     const [promotionMenuPosition, setPromotionMenuPosition] =
         useState<Position | null>(null); // stores null or promoting position
     const [gameMode, setGameMode] = useState<GameMode | null>(null);
+    const [username, setUsername] = useState<string | null>(null);
 
     const {
         availableMovesForPlayer,
@@ -119,7 +122,7 @@ export const GameClientContextProvider = ({
             (move) =>
                 move.from.file ===
                     mapIndexToChessFile(selectedPiece.fileIndex) &&
-                move.from.rank === mapRankIndexToRank(selectedPiece.tileIndex)
+                move.from.rank === mapRankIndexToRank(selectedPiece.tileIndex),
         );
         setAvailableMoves(availableSelectedPieceMoves);
     }, [selectedPiece, availableMovesForPlayer]);
@@ -138,6 +141,8 @@ export const GameClientContextProvider = ({
                 playerTurnTimeoutRef,
                 gameMode,
                 setGameMode,
+                username,
+                setUsername,
             }}
         >
             {children}
