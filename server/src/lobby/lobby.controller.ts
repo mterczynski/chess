@@ -3,7 +3,9 @@ import { Game } from "game-engine";
 
 @Controller("lobby")
 export class LobbyController {
+    private idCounter = 1;
     private lobbies: {
+        id: number;
         name: string;
         password: string;
         gameInstance: Game;
@@ -33,6 +35,7 @@ export class LobbyController {
             };
         }
         this.lobbies.push({
+            id: this.idCounter++,
             name: body.name,
             password: body.password,
             gameInstance: new Game(),
@@ -45,6 +48,7 @@ export class LobbyController {
         return {
             success: true,
             lobbies: this.lobbies.map((lobby) => ({
+                id: lobby.id,
                 name: lobby.name,
                 moves: lobby.gameInstance.getMoveHistory().length,
                 gameState: lobby.gameInstance.getState(),

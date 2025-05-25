@@ -75,6 +75,8 @@ describe("LobbyController", () => {
             expect(result.lobbies.length).toBe(2);
 
             // Check exact name values and properties for the first two lobbies
+            expect(result.lobbies[0].id).toBe(1);
+            expect(result.lobbies[1].id).toBe(2);
             expect(result.lobbies[0].name).toBe("lobby1");
             expect(result.lobbies[1].name).toBe("lobby2");
             expect(result.lobbies[0]).not.toHaveProperty("password");
