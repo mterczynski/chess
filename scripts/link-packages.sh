@@ -31,3 +31,5 @@ cd "$REPO_ROOT/server";
 npm link game-engine;
 
 echo "Packages linked";
+
+# todo - check if some steps are redundant
