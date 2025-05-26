@@ -8,6 +8,7 @@ import { negatePlayer } from "./utils";
 import { serializeBoardState } from "./utils/serializeBoardState";
 import { Board } from "./Board";
 import { Move } from "./Moves";
+import { InsufficientMaterialCalculator } from "./InsufficientMaterialCalculator";
 
 /**
  * Handles the logic for determining the new game state after a move.
@@ -37,6 +38,11 @@ export class GameStateHandler {
         const key = serializeBoardState(board, currentPlayer);
         if (positionCounts[key] >= 3) {
             return GameState.DRAW_BY_REPETITION;
+        }
+
+        // Use InsufficientMaterialCalculator for draw by insufficient material
+        if (InsufficientMaterialCalculator.isInsufficientMaterial(board)) {
+            return GameState.DRAW_BY_INSUFFICIENT_MATERIAL;
         }
 
         if (currentState === GameState.UNSTARTED) {

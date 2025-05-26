@@ -1,7 +1,7 @@
 import { Board } from "./Board";
 import { PieceType } from "./pieces";
 import type { Piece } from "./pieces";
-import { arePositionsEqual, ChessFile, Position, Rank } from "./positions";
+import { ChessFile, Position, Rank } from "./positions";
 
 /**
  * Utility to check for insufficient material (no possible checkmate).
