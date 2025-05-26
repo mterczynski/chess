@@ -19,9 +19,9 @@ import {
     isCastleablePiece,
     isCastleablePieceType,
     isDraw,
-    negatePlayer,
 } from "./utils";
 import { serializeBoardState } from "./utils/serializeBoardState";
+import { GameStateHandler } from "./GameStateHandler";
 
 export class Game {
     static readonly boardSize = 8;
@@ -35,6 +35,10 @@ export class Game {
     constructor(
         private readonly checkCalculator = new CheckCalculator(),
         private readonly availableMoveCalculator: AvailableMoveCalculator = new AvailableMoveCalculator(
+            checkCalculator,
+        ),
+        private readonly gameStateHandler = new GameStateHandler(
+            availableMoveCalculator,
             checkCalculator,
         ),
     ) {}
@@ -205,51 +209,14 @@ export class Game {
         this.moves.push(move);
     }
 
-    // todo - extract to separate class (?)
-    // maybe extract it to a class called GameStateHandler (?)
     private getNewGameStateAfterMove(): GameState {
-        const key = serializeBoardState(this.board, this.currentPlayer);
-        if (this.positionCounts[key] >= 3) {
-            return GameState.DRAW_BY_REPETITION;
-        }
-
-        if (this.state === GameState.UNSTARTED) {
-            return GameState.IN_PROGRESS;
-        }
-
-        const enemy = negatePlayer(this.currentPlayer);
-        const enemyMoves =
-            this.availableMoveCalculator.getAvailableMovesForPlayer(
-                this.board,
-                enemy,
-                this.getLastMove(),
-            );
-
-        if (enemyMoves.length === 0) {
-            const availableCurrentPlayerMoves =
-                this.availableMoveCalculator.getAvailableMovesForPlayer(
-                    this.board,
-                    this.currentPlayer,
-                    this.getLastMove(),
-                );
-
-            const checkingPiecesOfCurrentPlayer =
-                this.checkCalculator.getCheckingEnemyPieces(
-                    enemy,
-                    this.board,
-                    availableCurrentPlayerMoves,
-                );
-
-            if (checkingPiecesOfCurrentPlayer.length === 0) {
-                return GameState.DRAW_BY_STALEMATE;
-            } else {
-                return this.currentPlayer === Player.WHITE
-                    ? GameState.WHITE_WON
-                    : GameState.BLACK_WON;
-            }
-        }
-
-        return this.state;
+        return this.gameStateHandler.getNewGameStateAfterMove(
+            this.board,
+            this.currentPlayer,
+            this.positionCounts,
+            this.state,
+            this.getLastMove(),
+        );
     }
 
     private updatePositionCounts() {
