@@ -1,7 +1,7 @@
 import { Board } from "./Board";
 import { PieceType } from "./pieces";
 import type { Piece } from "./pieces";
-import { ChessFile } from "./positions";
+import { arePositionsEqual, ChessFile, Position, Rank } from "./positions";
 
 /**
  * Utility to check for insufficient material (no possible checkmate).
@@ -52,12 +52,12 @@ export class InsufficientMaterialCalculator {
         ) {
             if (!board) return false;
             // Find bishops and their positions from the board
-            const bishops: { file: string; rank: number }[] = [];
+            const bishops: Position[] = [];
             for (const file of Object.values(ChessFile)) {
-                for (let rank = 1; rank <= 8; rank++) {
+                for (let rank: Rank = 1; rank <= 8; rank++) {
                     const piece = board[file][rank];
-                    if (piece && piece.type === PieceType.BISHOP) {
-                        bishops.push({ file, rank });
+                    if (piece?.type === PieceType.BISHOP) {
+                        bishops.push({ file, rank: rank as Rank });
                     }
                 }
             }
