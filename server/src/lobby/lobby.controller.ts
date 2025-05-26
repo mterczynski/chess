@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Get, Param, Sse } from "@nestjs/common";
+import {
+    Controller,
+    Post,
+    Body,
+    Get,
+    Param,
+    Sse,
+    Headers,
+} from "@nestjs/common";
 import { Move } from "game-engine";
 import { LobbyService } from "./lobby.service";
 import { map, Observable } from "rxjs";
@@ -35,7 +43,10 @@ export class LobbyController {
     @Sse(":id/game-updates")
     sseLobbyMoves(
         @Param("id") id: string,
+        @Headers("x-lobby-password") password: string,
     ): Observable<{ data: LobbyUpdateDto }> {
+        // Validate password before subscribing to SSE
+        this.lobbyService.getLobby(id, password); // Throws if invalid
         return this.lobbyService.getLobbySseObservable(id).pipe(
             map((data) => {
                 return { data };
