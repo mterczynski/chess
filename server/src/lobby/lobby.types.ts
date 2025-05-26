@@ -27,7 +27,6 @@ export interface LobbySummaryDto {
 }
 
 export interface CreateLobbyDto {
-    userId: string;
     name: string;
     password: string;
 }

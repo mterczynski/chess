@@ -41,3 +41,14 @@ npm i
 ## Preview
 
 <img src="./preview.png" alt="" width="400" height="400"/>
+
+
+## Online PvP User Flow
+
+**Lobby creator always plays White, the joiner always plays Black**
+
+1. User receives the list of all joinable lobbies  
+2. a. User can click on a lobby to join it (a password popup appears if lobby has password)  
+   b. User sees a create lobby button. On click, user gets redirected to lobby name/password form (password is optional). After submit, lobby becomes visible on lobby list and the creator joins the lobby as White.  
+
+The lobby is removed on the server right after the game ends. Players can watch the final board for as long as they wish.

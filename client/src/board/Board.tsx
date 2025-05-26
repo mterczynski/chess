@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { GameEngineContext } from "../contexts/GameEngineContext";
 import { File } from "./File";
@@ -32,6 +33,7 @@ const BoardContainer = styled.div<{ useBlackPerspective?: boolean }>`
 export const Board = () => {
     const gameEngineContext = useContext(GameEngineContext);
     const gameClientContext = useContext(GameClientContext);
+    const { id } = useParams();
     const files = Object.values(gameEngineContext.board);
 
     return (

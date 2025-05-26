@@ -22,17 +22,13 @@ import { UserService } from "../user";
 export class LobbyService {
     private idCounter = 1;
     private lobbies: Lobby[] = [];
+    private finishedLobbies: Lobby[] = [];
     private lobbySseSubjects: { [lobbyId: number]: Subject<LobbyUpdateDto> } =
         {};
 
     constructor(@Inject() private userService: UserService) {}
 
     createLobby(body: CreateLobbyDto) {
-        const user = this.userService.getUserById(Number(body.userId));
-
-        if (!user) {
-            throw new NotFoundException("User with provided id not found");
-        }
         if (
             typeof body.name !== "string" ||
             typeof body.password !== "string"
@@ -55,7 +51,7 @@ export class LobbyService {
             name: body.name,
             password: body.password,
             gameInstance: new Game(),
-            users: [user],
+            users: [], // No user tracking
         });
 
         return { id: this.idCounter - 1, name: body.name };
@@ -82,15 +78,17 @@ export class LobbyService {
 
     getLobby(id: string, password: string): LobbyDetailsDto {
         const lobbyId = Number(id);
-        const lobby = this.lobbies.find((l) => l.id === lobbyId);
+        let lobby = this.lobbies.find((l) => l.id === lobbyId);
         if (!lobby) {
-            throw new NotFoundException("Lobby not found.");
+            // Check finished lobbies for viewing final board
+            lobby = this.finishedLobbies.find((l) => l.id === lobbyId);
+            if (!lobby) {
+                throw new NotFoundException("Lobby not found.");
+            }
         }
-
         if (lobby.password !== password) {
             throw new ForbiddenException("Incorrect password.");
         }
-
         return {
             id: lobby.id,
             name: lobby.name,
@@ -118,14 +116,22 @@ export class LobbyService {
         }
         // Notify all SSE subscribers about the new move
         const updatedLobby = this.getLobby(id, body.password);
-
         if (this.lobbySseSubjects[lobbyId]) {
             this.lobbySseSubjects[lobbyId].next({
                 move: body.move,
                 lobby: updatedLobby,
             });
         }
-
+        // If game is over, move lobby to finishedLobbies and remove from active lobbies
+        const gameState = lobby.gameInstance.getState();
+        if (
+            gameState === "WHITE_WON" ||
+            gameState === "BLACK_WON" ||
+            gameState.startsWith("DRAW")
+        ) {
+            this.finishedLobbies.push(lobby);
+            this.lobbies = this.lobbies.filter((l) => l.id !== lobbyId);
+        }
         return this.getLobby(id, body.password);
     }
 }

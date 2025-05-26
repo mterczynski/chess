@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { settings } from "../settings";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
     display: flex;
@@ -56,16 +57,17 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack }) => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
 
-        if (!name.trim() || !password.trim()) {
-            setError("Name and password are required.");
+        if (!name.trim()) {
+            setError("Name is required.");
             return;
         }
-
+        // Password is optional
         try {
             const res = await fetch(`${settings.serverURL}/lobby`, {
                 method: "POST",
@@ -77,8 +79,9 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack }) => {
                 setError(data.message || "Failed to create lobby.");
                 return;
             }
-            // Optionally: refresh lobby list or redirect
-            onBack();
+            const data = await res.json();
+            // Redirect to board/game screen for the new lobby
+            navigate(`/lobby/${data.id}`);
         } catch {
             setError("Failed to create lobby.");
         }
