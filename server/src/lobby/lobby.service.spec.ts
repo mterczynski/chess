@@ -108,12 +108,18 @@ describe("LobbyService", () => {
     });
 
     describe("getLobby", () => {
-        const lobbyCreateResult = service.createLobby({
-            name: "lobby1",
-            password: "pw1",
-            userId: "1",
+        let lobbyCreateResult: any;
+        let lobbyId: string;
+
+        beforeEach(() => {
+            lobbyCreateResult = service.createLobby({
+                name: "lobby1",
+                password: "pw1",
+                userId: "1",
+            });
+            lobbyId = lobbyCreateResult.id.toString();
         });
-        const lobbyId = lobbyCreateResult.id.toString();
+
         it("should get a lobby by id with all useful fields", () => {
             const lobby = service.getLobby(lobbyId, "pw1");
             expect(lobby).toMatchObject({
