@@ -2,6 +2,7 @@ import { LobbyService } from "./lobby.service";
 import {
     BadRequestException,
     ConflictException,
+    ForbiddenException,
     NotFoundException,
 } from "@nestjs/common";
 import { GameState, ChessFile, Move } from "game-engine";
@@ -11,92 +12,132 @@ describe("LobbyService", () => {
     let service: LobbyService;
     let userService: UserService;
 
-    beforeEach(() => {
+    beforeAll(() => {
         userService = new UserService();
-        // Register a user to use for lobby creation
         userService.registerUser("testuser");
         service = new LobbyService(userService);
     });
 
-    it("should create a lobby with valid data", () => {
-        const result = service.createLobby({
-            name: "test",
-            password: "pw",
+    beforeEach(() => {
+        userService = new UserService();
+        userService.registerUser("testuser");
+        service = new LobbyService(userService);
+    });
+
+    describe("createLobby", () => {
+        it("should create a lobby with valid data", () => {
+            const result = service.createLobby({
+                name: "test",
+                password: "pw",
+                userId: "1",
+            });
+            expect(result).toEqual({ id: 1, name: "test" });
+        });
+
+        it("should throw ConflictException for duplicate name+password", () => {
+            service.createLobby({ name: "test", password: "pw", userId: "1" });
+            expect(() =>
+                service.createLobby({
+                    name: "test",
+                    password: "pw",
+                    userId: "1",
+                }),
+            ).toThrow(ConflictException);
+        });
+
+        it("should allow same name with different password", () => {
+            service.createLobby({ name: "test", password: "pw1", userId: "1" });
+            expect(() =>
+                service.createLobby({
+                    name: "test",
+                    password: "pw2",
+                    userId: "1",
+                }),
+            ).not.toThrow();
+        });
+
+        it("should throw BadRequestException for non-string name or password", () => {
+            expect(() =>
+                service.createLobby({
+                    name: 123 as any,
+                    password: "pw",
+                    userId: "1",
+                }),
+            ).toThrow(BadRequestException);
+            expect(() =>
+                service.createLobby({
+                    name: "test",
+                    password: 123 as any,
+                    userId: "1",
+                }),
+            ).toThrow(BadRequestException);
+        });
+
+        it("should throw NotFoundException for non-existent user", () => {
+            expect(() =>
+                service.createLobby({
+                    name: "test",
+                    password: "pw",
+                    userId: "999",
+                }),
+            ).toThrow(NotFoundException);
+        });
+    });
+
+    describe("getLobbies", () => {
+        it("should list all lobbies without passwords", () => {
+            service.createLobby({
+                name: "lobby1",
+                password: "pw1",
+                userId: "1",
+            });
+            service.createLobby({
+                name: "lobby2",
+                password: "pw2",
+                userId: "1",
+            });
+            const lobbies = service.getLobbies();
+            expect(Array.isArray(lobbies)).toBe(true);
+            expect(lobbies.length).toBe(2);
+            expect(lobbies[0]).toHaveProperty("id");
+            expect(lobbies[0]).toHaveProperty("name");
+            expect(lobbies[0]).toHaveProperty("moves");
+            expect(lobbies[0]).toHaveProperty("gameState");
+            expect(lobbies[0]).not.toHaveProperty("password");
+        });
+    });
+
+    describe("getLobby", () => {
+        const lobbyCreateResult = service.createLobby({
+            name: "lobby1",
+            password: "pw1",
             userId: "1",
         });
-        expect(result).toEqual({ id: 1, name: "test" });
-    });
-
-    it("should throw ConflictException for duplicate name+password", () => {
-        service.createLobby({ name: "test", password: "pw", userId: "1" });
-        expect(() =>
-            service.createLobby({ name: "test", password: "pw", userId: "1" }),
-        ).toThrow(ConflictException);
-    });
-
-    it("should allow same name with different password", () => {
-        service.createLobby({ name: "test", password: "pw1", userId: "1" });
-        expect(() =>
-            service.createLobby({ name: "test", password: "pw2", userId: "1" }),
-        ).not.toThrow();
-    });
-
-    it("should throw BadRequestException for non-string name or password", () => {
-        expect(() =>
-            service.createLobby({
-                name: 123 as any,
-                password: "pw",
-                userId: "1",
-            }),
-        ).toThrow(BadRequestException);
-        expect(() =>
-            service.createLobby({
-                name: "test",
-                password: 123 as any,
-                userId: "1",
-            }),
-        ).toThrow(BadRequestException);
-    });
-
-    it("should throw NotFoundException for non-existent user", () => {
-        expect(() =>
-            service.createLobby({
-                name: "test",
-                password: "pw",
-                userId: "999",
-            }),
-        ).toThrow(NotFoundException);
-    });
-
-    it("should list all lobbies without passwords", () => {
-        service.createLobby({ name: "lobby1", password: "pw1", userId: "1" });
-        service.createLobby({ name: "lobby2", password: "pw2", userId: "1" });
-        const lobbies = service.getLobbies();
-        expect(Array.isArray(lobbies)).toBe(true);
-        expect(lobbies.length).toBe(2);
-        expect(lobbies[0]).toHaveProperty("id");
-        expect(lobbies[0]).toHaveProperty("name");
-        expect(lobbies[0]).toHaveProperty("moves");
-        expect(lobbies[0]).toHaveProperty("gameState");
-        expect(lobbies[0]).not.toHaveProperty("password");
-    });
-
-    it("should get a lobby by id with all useful fields", () => {
-        service.createLobby({ name: "lobby1", password: "pw1", userId: "1" });
-        const lobby = service.getLobby("1");
-        expect(lobby).toMatchObject({
-            id: 1,
-            name: "lobby1",
-            moves: 0,
-            gameState: GameState.UNSTARTED,
+        const lobbyId = lobbyCreateResult.id.toString();
+        it("should get a lobby by id with all useful fields", () => {
+            const lobby = service.getLobby(lobbyId, "pw1");
+            expect(lobby).toMatchObject({
+                id: 1,
+                name: "lobby1",
+                moves: 0,
+                gameState: GameState.UNSTARTED,
+            });
+            expect(lobby).toHaveProperty("currentPlayer");
+            expect(lobby).toHaveProperty("board");
+            expect(lobby).toHaveProperty("availableMoves");
         });
-        expect(lobby).toHaveProperty("currentPlayer");
-        expect(lobby).toHaveProperty("board");
-        expect(lobby).toHaveProperty("availableMoves");
-    });
 
-    it("should throw NotFoundException for non-existent lobby", () => {
-        expect(() => service.getLobby("999")).toThrow(NotFoundException);
+        it("should throw NotFoundException for non-existent lobby", () => {
+            expect(() => service.getLobby("999", "pw1")).toThrow(
+                NotFoundException,
+            );
+        });
+
+        it("should throw ForbiddenException for existent lobby with incorrect password provided", () => {
+            expect(() => service.getLobby(lobbyId, "pw222")).toThrow(
+                ForbiddenException,
+            );
+        });
     });
 
     it("should make a valid move when password is correct", () => {

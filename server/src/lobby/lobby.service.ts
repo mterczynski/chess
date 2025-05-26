@@ -4,6 +4,7 @@ import {
     ConflictException,
     NotFoundException,
     Inject,
+    ForbiddenException,
 } from "@nestjs/common";
 import { Game } from "game-engine";
 import { Observable, Subject } from "rxjs";
@@ -79,11 +80,15 @@ export class LobbyService {
         }));
     }
 
-    getLobby(id: string): LobbyDetailsDto {
+    getLobby(id: string, password: string): LobbyDetailsDto {
         const lobbyId = Number(id);
         const lobby = this.lobbies.find((l) => l.id === lobbyId);
         if (!lobby) {
             throw new NotFoundException("Lobby not found.");
+        }
+
+        if (lobby.password !== password) {
+            throw new ForbiddenException("Incorrect password.");
         }
 
         return {
@@ -112,7 +117,7 @@ export class LobbyService {
             throw new BadRequestException("Invalid move");
         }
         // Notify all SSE subscribers about the new move
-        const updatedLobby = this.getLobby(id);
+        const updatedLobby = this.getLobby(id, body.password);
 
         if (this.lobbySseSubjects[lobbyId]) {
             this.lobbySseSubjects[lobbyId].next({
@@ -121,6 +126,6 @@ export class LobbyService {
             });
         }
 
-        return this.getLobby(id);
+        return this.getLobby(id, body.password);
     }
 }

@@ -18,9 +18,10 @@ export class LobbyController {
         return this.lobbyService.getLobbies();
     }
 
-    @Get(":id")
-    getLobby(@Param("id") id: string) {
-        return this.lobbyService.getLobby(id);
+    // Change to POST to allow password in body
+    @Post(":id")
+    getLobby(@Param("id") id: string, @Body() body: { password: string }) {
+        return this.lobbyService.getLobby(id, body.password);
     }
 
     @Post(":id/move")
