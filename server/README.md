@@ -104,3 +104,7 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 ## Insomnia REST API Client
 
 `Insomnia_Collection.yaml` can be imported to [Insomnia REST](https://insomnia.rest/) for API testing
+
+## Render.com deployed service link
+
+https://dashboard.render.com/web/srv-d0qeo195pdvs73ai12jg/deploys/dep-d0qeo1h5pdvs73ai12p0
