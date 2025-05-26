@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { useContext, useMemo, useRef } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { GameEngineContext } from "../contexts/GameEngineContext";
 import { GameClientContext } from "../contexts/GameClientContext";
 import { Player, GameState } from "game-engine";
 import { openings } from "game-engine/src/openings/openings";
 import { areMovesEqual, isDraw } from "game-engine/src/utils";
+import { GameMode } from "../GameMode";
 
 const InfoBarContainer = styled.div`
     width: 100%;
@@ -49,6 +50,16 @@ export const InfoBar = () => {
         playerTurnTimeoutRef,
         setGameMode,
     } = useContext(GameClientContext);
+    const gameClientContext = useContext(GameClientContext);
+    // Show waiting message if only one player in online PvP
+    const isOnlinePvp = gameClientContext.gameMode === GameMode.VS_PLAYER_ONLINE;
+    // 'waiting' is true if in online PvP and the game is still UNSTARTED (i.e., only one player has joined)
+    const [waiting, setWaiting] = useState(false);
+    useEffect(() => {
+        if (isOnlinePvp) {
+            setWaiting(state === GameState.UNSTARTED);
+        }
+    }, [isOnlinePvp, state]);
 
     // Track last matched opening across renders
     const lastOpeningRef = useRef<string | null>(null);
@@ -77,7 +88,10 @@ export const InfoBar = () => {
     }
 
     let infoText = null;
-    if (state === GameState.IN_PROGRESS || state === GameState.UNSTARTED) {
+
+    if (waiting) {
+        infoText = "Waiting for other player to join...";
+    } else if (state === GameState.IN_PROGRESS || state === GameState.UNSTARTED) {
         if (currentPlayer === Player.WHITE) {
             infoText = "White's turn";
         } else if (currentPlayer === Player.BLACK) {
