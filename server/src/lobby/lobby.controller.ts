@@ -28,8 +28,8 @@ export class LobbyController {
 
     // Change to POST to allow password in body
     @Post(":id")
-    getLobby(@Param("id") id: string, @Body() body: { password: string }) {
-        return this.lobbyService.getLobby(id, body.password);
+    getLobby(@Param("id") id: string, @Body() body: { password: string }, @Headers('x-session-id') sessionId?: string) {
+        return this.lobbyService.getLobby(id, body.password, sessionId);
     }
 
     @Post(":id/move")

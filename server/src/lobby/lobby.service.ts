@@ -6,7 +6,7 @@ import {
     Inject,
     ForbiddenException,
 } from "@nestjs/common";
-import { Game } from "game-engine";
+import { Game, GameState } from "game-engine";
 import { Observable, Subject } from "rxjs";
 import {
     CreateLobbyDto,
@@ -51,9 +51,8 @@ export class LobbyService {
             name: body.name,
             password: body.password,
             gameInstance: new Game(),
-            users: [], // No user tracking
+            playerSessions: [], // Start with empty session list
         });
-
         return { id: this.idCounter - 1, name: body.name };
     }
 
@@ -76,11 +75,10 @@ export class LobbyService {
         }));
     }
 
-    getLobby(id: string, password: string): LobbyDetailsDto {
+    getLobby(id: string, password: string, sessionId?: string): LobbyDetailsDto {
         const lobbyId = Number(id);
         let lobby = this.lobbies.find((l) => l.id === lobbyId);
         if (!lobby) {
-            // Check finished lobbies for viewing final board
             lobby = this.finishedLobbies.find((l) => l.id === lobbyId);
             if (!lobby) {
                 throw new NotFoundException("Lobby not found.");
@@ -88,6 +86,16 @@ export class LobbyService {
         }
         if (lobby.password !== password) {
             throw new ForbiddenException("Incorrect password.");
+        }
+        // Track player session (only for active lobbies)
+        if (lobby && this.lobbies.includes(lobby) && sessionId) {
+            if (!lobby.playerSessions.includes(sessionId)) {
+                lobby.playerSessions.push(sessionId);
+            }
+            // If 2 players joined and game is UNSTARTED, start the game
+            if (lobby.playerSessions.length === 2 && lobby.gameInstance.getState() === GameState.UNSTARTED) {
+                (lobby.gameInstance as any).state = GameState.IN_PROGRESS;
+            }
         }
         return {
             id: lobby.id,
@@ -97,6 +105,7 @@ export class LobbyService {
             currentPlayer: lobby.gameInstance.getCurrentPlayer(),
             board: lobby.gameInstance.getBoard?.() ?? null,
             availableMoves: lobby.gameInstance.getAvailableMovesForPlayer(),
+            playerCount: lobby.playerSessions.length,
         };
     }
 

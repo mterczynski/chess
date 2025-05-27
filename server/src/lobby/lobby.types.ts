@@ -1,12 +1,11 @@
 import { Board, Game, GameState, Move, Player } from "game-engine";
-import { User } from "src/user/user";
 
 export interface Lobby {
     id: number;
     name: string;
     password: string;
     gameInstance: Game;
-    users: User[];
+    playerSessions: string[]; // Track unique player sessions (by session id or random token)
 }
 
 export interface LobbyDetailsDto {
@@ -17,6 +16,7 @@ export interface LobbyDetailsDto {
     currentPlayer: Player | null;
     board: Board;
     availableMoves: Move[];
+    playerCount: number; // Add player count
 }
 
 export interface LobbySummaryDto {
