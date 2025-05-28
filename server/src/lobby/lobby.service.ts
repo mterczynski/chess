@@ -27,8 +27,8 @@ export class LobbyService {
 
     constructor(@Inject() private userService: UserService) {}
 
-    createLobby(body: CreateLobbyDto) {
-        const user = this.userService.getUserById(Number(body.userId));
+    async createLobby(body: CreateLobbyDto) {
+        const user = await this.userService.getUserById(Number(body.userId));
 
         if (!user) {
             throw new NotFoundException("User with provided id not found");
