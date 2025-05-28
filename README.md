@@ -6,8 +6,11 @@ This repository contains `game-engine` and `client` - a UI made in React for pla
 
 Prerequisites:
 
-- NodeJS
-- npm
+- [NodeJS](https://nodejs.org/en/download)
+- npm (comes installed with NodeJS)
+- [PostgreSQL](https://www.postgresql.org/download/)
+- [pgAdmin](https://www.pgadmin.org/download/)
+- [Insomnia REST API Client](https://insomnia.rest/download)
 
 | Tool Versions         | Node.js | npm    |
 |----------------------|---------|--------|
@@ -18,6 +21,8 @@ Prerequisites:
 # This command will install all required dependencies in all packages (thanks to npm workspaces)
 npm i
 ```
+
+Setup pgAdmin and PostgreSQL (described in detail in [Server's Readme](./server/README.md))
 
 ## Available npm scripts
 
