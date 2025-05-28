@@ -29,8 +29,7 @@
     "license": "MIT",
     "dependencies": {
         "lodash": "^4.17.21",
-        "typescript": "^4.4.3",
-        "sqlite3": "^5.1.7"
+        "typescript": "^4.4.3"
     },
     "devDependencies": {
         "@types/lodash": "^4.14.175",
