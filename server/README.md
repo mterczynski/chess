@@ -27,9 +27,16 @@
 
 ## Project setup
 
+1.
+
 ```bash
 $ npm install
 ```
+
+2. Create .env file (copy .env.example file)
+3. Install postgreSQL, link for windows: https://www.postgresql.org/download/windows/
+4. Install pgAdmin, setup a new postgres server
+5. In scope of that server, create a database named `chess`  
 
 ## Compile and run the project
 
