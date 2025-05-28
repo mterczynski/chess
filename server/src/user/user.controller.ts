@@ -5,15 +5,21 @@ import { UserService } from "./user.service";
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
-    @Post('register')
+    @Post("register")
     async registerUser(@Body() body: { name: string; password: string }) {
-        const user = await this.userService.registerUser(body.name, body.password);
+        const user = await this.userService.registerUser(
+            body.name,
+            body.password,
+        );
         return { id: user.id, name: user.name };
     }
 
-    @Post('login')
+    @Post("login")
     async loginUser(@Body() body: { name: string; password: string }) {
-        const user = await this.userService.validateUser(body.name, body.password);
+        const user = await this.userService.validateUser(
+            body.name,
+            body.password,
+        );
         return { id: user.id, name: user.name };
     }
 }
