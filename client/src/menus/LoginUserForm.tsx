@@ -53,6 +53,7 @@ export const LoginUserForm = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const [loggedIn, setLoggedIn] = useState(false);
     const jwtKey = settings.localStorageKeys.jwt;
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -76,11 +77,14 @@ export const LoginUserForm = () => {
                 if (data.token) {
                     localStorage.setItem(jwtKey, data.token);
                 }
+                setLoggedIn(true);
             }
         } catch {
             setError("Login failed.");
         }
     };
+
+    if (loggedIn) return null;
 
     return (
         <Wrapper>
