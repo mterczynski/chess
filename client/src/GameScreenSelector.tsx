@@ -7,17 +7,40 @@ import { GameMode } from "./GameMode";
 import { LobbyList } from "./menus/LobbyList";
 import { RegisterUserForm } from "./menus/RegisterUserForm";
 import { settings } from "./settings";
+import { LoginUserForm } from "./menus/LoginUserForm";
+
+const OnlineModeScreenSelector = () => {
+    const [showLogin, setShowLogin] = useState(true); // toggle between register/login
+    const jwtKey = settings.localStorageKeys.jwt;
+    const hasJwt =
+        typeof window !== "undefined" && localStorage.getItem(jwtKey);
+
+    // Show register user form first, then lobby list
+    if (!hasJwt) {
+        if (showLogin) {
+            return (
+                <RegisterUserForm
+                // onToggle={() => setShowLogin(false)}
+                // showLogin={showLogin}
+                />
+            );
+        } else {
+            return (
+                <LoginUserForm
+                // onToggle={() => setShowLogin(false)}
+                // showLogin={showLogin}
+                />
+            );
+        }
+    }
+
+    return <LobbyList />;
+};
 
 export const GameScreenSelector = () => {
     const gameClientContext = useContext(GameClientContext);
     const mode = gameClientContext.gameMode;
     const setMode = gameClientContext.setGameMode;
-    const username = gameClientContext.username;
-
-    // Check for JWT token in localStorage (using env var)
-    const jwtKey = settings.localStorageKeys.jwt;
-    const hasJwt =
-        typeof window !== "undefined" && localStorage.getItem(jwtKey);
 
     if (!mode) {
         return <ModeSelectionScreen onSelect={setMode} />;
@@ -29,11 +52,7 @@ export const GameScreenSelector = () => {
     }
 
     if (mode === GameMode.VS_PLAYER_ONLINE) {
-        // Show register user form first, then lobby list
-        if (!username && !hasJwt) {
-            return <RegisterUserForm />;
-        }
-        return <LobbyList />;
+        return <OnlineModeScreenSelector />;
     }
 
     if (
