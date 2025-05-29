@@ -51,10 +51,12 @@ const Button = styled.button<{ gray?: boolean }>`
 
 export const RegisterUserForm = () => {
     const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
     const gameClientContext = useContext(GameClientContext);
 
     const validateName = (value: string) => /^[a-zA-Z0-9_-]{1,15}$/.test(value);
+    const validatePassword = (value: string) => value.length >= 6;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -66,12 +68,16 @@ export const RegisterUserForm = () => {
             );
             return;
         }
+        if (!validatePassword(password)) {
+            setError("Password must be at least 6 characters.");
+            return;
+        }
 
         try {
-            const res = await fetch(`${settings.serverURL}/user`, {
+            const res = await fetch(`${settings.serverURL}/user/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name }),
+                body: JSON.stringify({ name, password }),
             });
             if (!res.ok) {
                 const data = await res.json();
@@ -82,7 +88,14 @@ export const RegisterUserForm = () => {
                 }
                 return;
             } else {
+                const data = await res.json();
                 gameClientContext.setUsername(name);
+                if (data.token) {
+                    localStorage.setItem(
+                        settings.localStorageKeys.jwt,
+                        data.token,
+                    );
+                }
             }
         } catch {
             setError("Registration failed.");
@@ -104,17 +117,19 @@ export const RegisterUserForm = () => {
                     autoCapitalize="off"
                     maxLength={15}
                 />
+                <Input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    maxLength={64}
+                />
                 {error && <div style={{ color: "red" }}>{error}</div>}
                 <ButtonRow>
                     <Button type="button" gray>
                         Back
                     </Button>
-                    <Button
-                        type="submit"
-                        onSubmit={() => gameClientContext.setUsername(name)}
-                    >
-                        Register
-                    </Button>
+                    <Button type="submit">Register</Button>
                 </ButtonRow>
             </Form>
         </Wrapper>
