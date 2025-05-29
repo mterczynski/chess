@@ -31,7 +31,9 @@ const RestartButton = styled.button`
     color: #fff;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: background 0.2s, border 0.2s;
+    transition:
+        background 0.2s,
+        border 0.2s;
     &:hover {
         background: #2d8cff;
         border: 2px solid #2d8cff;
@@ -60,8 +62,8 @@ export const InfoBar = () => {
             (opening) =>
                 moveHistory.length >= opening.moves.length &&
                 opening.moves.every((move, index) =>
-                    areMovesEqual(move, moveHistory[index])
-                )
+                    areMovesEqual(move, moveHistory[index]),
+                ),
         );
 
         return (

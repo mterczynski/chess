@@ -1,9 +1,13 @@
 import { Controller, Post, Body } from "@nestjs/common";
 import { UserService } from "./user.service";
+import { JwtService } from "@nestjs/jwt";
 
 @Controller("user")
 export class UserController {
-    constructor(private readonly userService: UserService) {}
+    constructor(
+        private readonly userService: UserService,
+        private readonly jwtService: JwtService,
+    ) {}
 
     @Post("register")
     async registerUser(@Body() body: { name: string; password: string }) {
@@ -11,7 +15,9 @@ export class UserController {
             body.name,
             body.password,
         );
-        return { id: user.id, name: user.name };
+        const payload = { sub: user.id, name: user.name };
+        const token = this.jwtService.sign(payload);
+        return { id: user.id, name: user.name, token };
     }
 
     @Post("login")
@@ -20,6 +26,8 @@ export class UserController {
             body.name,
             body.password,
         );
-        return { id: user.id, name: user.name };
+        const payload = { sub: user.id, name: user.name };
+        const token = this.jwtService.sign(payload);
+        return { id: user.id, name: user.name, token };
     }
 }
