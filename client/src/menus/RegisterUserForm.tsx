@@ -79,23 +79,18 @@ export const RegisterUserForm = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name, password }),
             });
+            const data = await res.json();
             if (!res.ok) {
-                const data = await res.json();
                 if (data.message === "User name already taken") {
                     setError("User name already taken");
                 } else {
                     setError(data.message || "Registration failed.");
                 }
                 return;
-            } else {
-                const data = await res.json();
-                gameClientContext.setUsername(name);
-                if (data.token) {
-                    localStorage.setItem(
-                        settings.localStorageKeys.jwt,
-                        data.token,
-                    );
-                }
+            }
+            setError(null); // Clear any previous error on success
+            if (data.token) {
+                localStorage.setItem(settings.localStorageKeys.jwt, data.token);
             }
         } catch {
             setError("Registration failed.");

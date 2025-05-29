@@ -10,26 +10,61 @@ import { settings } from "./settings";
 import { LoginUserForm } from "./menus/LoginUserForm";
 
 const OnlineModeScreenSelector = () => {
-    const [showLogin, setShowLogin] = useState(true); // toggle between register/login
+    const [showRegister, setShowRegister] = useState(false); // false = login, true = register
     const jwtKey = settings.localStorageKeys.jwt;
     const hasJwt =
         typeof window !== "undefined" && localStorage.getItem(jwtKey);
 
-    // Show register user form first, then lobby list
     if (!hasJwt) {
-        if (showLogin) {
+        if (showRegister) {
             return (
-                <RegisterUserForm
-                // onToggle={() => setShowLogin(false)}
-                // showLogin={showLogin}
-                />
+                <>
+                    <RegisterUserForm />
+                    <div style={{ textAlign: "center", marginTop: 16 }}>
+                        <span>
+                            Already have an account?{" "}
+                            <a
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setShowRegister(false);
+                                }}
+                                style={{
+                                    color: "#2d8cff",
+                                    textDecoration: "underline",
+                                    cursor: "pointer",
+                                }}
+                            >
+                                Sign in here
+                            </a>
+                        </span>
+                    </div>
+                </>
             );
         } else {
             return (
-                <LoginUserForm
-                // onToggle={() => setShowLogin(false)}
-                // showLogin={showLogin}
-                />
+                <>
+                    <LoginUserForm />
+                    <div style={{ textAlign: "center", marginTop: 16 }}>
+                        <span>
+                            Don&apos;t have an account?{" "}
+                            <a
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setShowRegister(true);
+                                }}
+                                style={{
+                                    color: "#2d8cff",
+                                    textDecoration: "underline",
+                                    cursor: "pointer",
+                                }}
+                            >
+                                Register now
+                            </a>
+                        </span>
+                    </div>
+                </>
             );
         }
     }

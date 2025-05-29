@@ -53,9 +53,7 @@ export const LoginUserForm = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
-    const gameClientContext = useContext(GameClientContext);
-    const jwtKey = (import.meta as any).env.VITE_JWT_STORAGE_KEY || "chess_jwtToken";
-
+    const jwtKey = settings.localStorageKeys.jwt;
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
@@ -75,7 +73,6 @@ export const LoginUserForm = () => {
                 return;
             } else {
                 const data = await res.json();
-                gameClientContext.setUsername(name);
                 if (data.token) {
                     localStorage.setItem(jwtKey, data.token);
                 }
