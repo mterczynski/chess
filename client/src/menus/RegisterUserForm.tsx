@@ -35,7 +35,11 @@ const ButtonRow = styled.div`
     gap: 1rem;
 `;
 
-export const RegisterUserForm = () => {
+export const RegisterUserForm = ({
+    onRegister,
+}: {
+    onRegister?: () => void;
+}) => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
@@ -77,6 +81,7 @@ export const RegisterUserForm = () => {
             setError(null); // Clear any previous error on success
             if (data.token) {
                 localStorage.setItem(settings.localStorageKeys.jwt, data.token);
+                if (onRegister) onRegister();
             }
         } catch {
             setError("Registration failed.");

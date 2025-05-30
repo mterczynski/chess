@@ -35,7 +35,7 @@ const ButtonRow = styled.div`
     gap: 1rem;
 `;
 
-export const LoginUserForm = () => {
+export const LoginUserForm = ({ onLogin }: { onLogin?: () => void }) => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
@@ -62,6 +62,7 @@ export const LoginUserForm = () => {
                 const data = await res.json();
                 if (data.token) {
                     localStorage.setItem(jwtKey, data.token);
+                    if (onLogin) onLogin();
                 }
                 setLoggedIn(true);
             }

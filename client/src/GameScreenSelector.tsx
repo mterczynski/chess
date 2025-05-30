@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Board } from "./board/Board";
 import { GameClientContext } from "./contexts/GameClientContext";
 import { PlayerSelectionScreen } from "./menus/PlayerSelectionScreen";
@@ -12,14 +12,26 @@ import { LoginUserForm } from "./menus/LoginUserForm";
 const OnlineModeScreenSelector = () => {
     const [showRegister, setShowRegister] = useState(false); // false = login, true = register
     const jwtKey = settings.localStorageKeys.jwt;
-    const hasJwt =
-        typeof window !== "undefined" && localStorage.getItem(jwtKey);
+    const [hasJwt, setHasJwt] = useState(
+        typeof window !== "undefined" && !!localStorage.getItem(jwtKey),
+    );
+
+    useEffect(() => {
+        const handleStorage = () => {
+            setHasJwt(!!localStorage.getItem(jwtKey));
+        };
+        window.addEventListener("storage", handleStorage);
+        return () => window.removeEventListener("storage", handleStorage);
+    }, [jwtKey]);
+
+    // Optionally, update hasJwt after registration/login in the same tab
+    // You can call setHasJwt(true) in your registration/login form after saving the token
 
     if (!hasJwt) {
         if (showRegister) {
             return (
                 <>
-                    <RegisterUserForm />
+                    <RegisterUserForm onRegister={() => setHasJwt(true)} />
                     <div style={{ textAlign: "center", marginTop: 16 }}>
                         <span>
                             Already have an account?{" "}
@@ -44,7 +56,7 @@ const OnlineModeScreenSelector = () => {
         } else {
             return (
                 <>
-                    <LoginUserForm />
+                    <LoginUserForm onLogin={() => setHasJwt(true)} />
                     <div style={{ textAlign: "center", marginTop: 16 }}>
                         <span>
                             Don&apos;t have an account?{" "}
