@@ -5,7 +5,7 @@ import { isDraw } from "game-engine/src/utils";
 export function handleGameEnd(
     gameState: GameState,
     playerSelection: Player,
-    gameMode: GameMode
+    gameMode: GameMode,
 ) {
     const isGameDrawn = isDraw(gameState);
 
@@ -30,7 +30,7 @@ export function handleGameEnd(
             } else if (gameState === GameState.BLACK_WON) {
                 alert("You lost");
             } else if (isGameDrawn) {
-                alert("Game drawn"); // TODO - add more descriptive messages that mention draw reason
+                throw new Error("Game draw should have been handled earlier");
             }
         } else {
             if (gameState === GameState.BLACK_WON) {
@@ -38,7 +38,7 @@ export function handleGameEnd(
             } else if (gameState === GameState.WHITE_WON) {
                 alert("You lost");
             } else if (isGameDrawn) {
-                alert("Game drawn"); // TODO - add more descriptive messages that mention draw reason
+                throw new Error("Game draw should have been handled earlier");
             }
         }
     } else if (gameMode === GameMode.VS_PLAYER_OFFLINE) {
@@ -47,7 +47,7 @@ export function handleGameEnd(
         } else if (gameState === GameState.BLACK_WON) {
             alert("Black won");
         } else if (isGameDrawn) {
-            alert("Game drawn"); // TODO - add more descriptive messages that mention draw reason
+            throw new Error("Game draw should have been handled earlier");
         }
     }
 }
