@@ -3,15 +3,13 @@ import { User } from "src/user/user";
 
 export interface Lobby {
     id: number;
-    name: string;
-    password: string;
+    password?: string;
     gameInstance: Game;
     users: User[];
 }
 
 export interface LobbyDetailsDto {
     id: number;
-    name: string;
     moves: number;
     gameState: GameState;
     currentPlayer: Player | null;
@@ -21,15 +19,14 @@ export interface LobbyDetailsDto {
 
 export interface LobbySummaryDto {
     id: number;
-    name: string;
     moves: number;
     gameState: GameState;
 }
 
 export interface CreateLobbyDto {
+    // userId is now injected from controller, not from client
     userId: string;
-    name: string;
-    password: string;
+    password?: string;
 }
 
 export interface MoveDto {

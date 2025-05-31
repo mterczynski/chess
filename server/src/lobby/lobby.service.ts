@@ -28,37 +28,30 @@ export class LobbyService {
     constructor(@Inject() private userService: UserService) {}
 
     async createLobby(body: CreateLobbyDto) {
+        // userId is now always injected from controller, not from client
+        if (!body.userId || isNaN(Number(body.userId))) {
+            throw new BadRequestException(
+                "userId is required and must be a valid number",
+            );
+        }
         const user = await this.userService.getUserById(Number(body.userId));
 
         if (!user) {
             throw new NotFoundException("User with provided id not found");
         }
-        if (
-            typeof body.name !== "string" ||
-            typeof body.password !== "string"
-        ) {
-            throw new BadRequestException("Name and password must be strings.");
-        }
-        if (
-            this.lobbies.some(
-                (lobby) =>
-                    lobby.name === body.name &&
-                    lobby.password === body.password,
-            )
-        ) {
-            throw new ConflictException(
-                "A lobby with this name and password already exists.",
+        if (body.password && typeof body.password !== "string") {
+            throw new BadRequestException(
+                "Password must be a string if provided.",
             );
         }
         this.lobbies.push({
             id: this.idCounter++,
-            name: body.name,
             password: body.password,
             gameInstance: new Game(),
             users: [user],
         });
 
-        return { id: this.idCounter - 1, name: body.name };
+        return { id: this.idCounter - 1 };
     }
 
     // todo - cover with unit test
@@ -74,9 +67,9 @@ export class LobbyService {
     getLobbies(): LobbySummaryDto[] {
         return this.lobbies.map((lobby) => ({
             id: lobby.id,
-            name: lobby.name,
             moves: lobby.gameInstance.getMoveHistory().length,
             gameState: lobby.gameInstance.getState(),
+            users: lobby.users,
         }));
     }
 
@@ -93,7 +86,6 @@ export class LobbyService {
 
         return {
             id: lobby.id,
-            name: lobby.name,
             moves: lobby.gameInstance.getMoveHistory().length,
             gameState: lobby.gameInstance.getState(),
             currentPlayer: lobby.gameInstance.getCurrentPlayer(),

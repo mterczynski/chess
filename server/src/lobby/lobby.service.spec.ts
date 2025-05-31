@@ -3,13 +3,13 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { LobbyService } from "./lobby.service";
 import {
     BadRequestException,
-    ConflictException,
     ForbiddenException,
     NotFoundException,
 } from "@nestjs/common";
 import { GameState, ChessFile, Move } from "game-engine";
 import { UserService } from "../user/user.service";
 import { User } from "../user/user";
+import { JwtModule } from "@nestjs/jwt";
 
 describe("LobbyService", () => {
     let service: LobbyService;
@@ -25,6 +25,10 @@ describe("LobbyService", () => {
                     entities: [User],
                     synchronize: true,
                 }),
+                JwtModule.register({
+                    secret: "mocksecret",
+                    signOptions: { expiresIn: "7d" },
+                }),
                 TypeOrmModule.forFeature([User]),
             ],
             providers: [UserService, LobbyService],
@@ -37,54 +41,46 @@ describe("LobbyService", () => {
     describe("createLobby", () => {
         it("should create a lobby with valid data", async () => {
             const result = await service.createLobby({
-                name: "test",
                 password: "pw",
                 userId: "1",
             });
-            expect(result).toEqual({ id: 1, name: "test" });
+            expect(result).toEqual({ id: 1 });
         });
 
-        it("should throw ConflictException for duplicate name+password", async () => {
+        it("should allow duplicate passwords as long as userIds are unique", async () => {
+            // Register a second user and get their id
+            const user2 = await userService.registerUser(
+                "testuser2",
+                "password456",
+            );
             await service.createLobby({
-                name: "test",
                 password: "pw",
                 userId: "1",
             });
             await expect(
                 service.createLobby({
-                    name: "test",
                     password: "pw",
-                    userId: "1",
+                    userId: user2.id.toString(),
                 }),
-            ).rejects.toThrow(ConflictException);
+            ).resolves.not.toThrow();
         });
 
-        it("should allow same name with different password", async () => {
+        it("should allow different passwords", async () => {
             await service.createLobby({
-                name: "test",
                 password: "pw1",
                 userId: "1",
             });
             await expect(
                 service.createLobby({
-                    name: "test",
                     password: "pw2",
                     userId: "1",
                 }),
             ).resolves.not.toThrow();
         });
 
-        it("should throw BadRequestException for non-string name or password", async () => {
+        it("should throw BadRequestException for non-string password", async () => {
             await expect(
                 service.createLobby({
-                    name: 123 as any,
-                    password: "pw",
-                    userId: "1",
-                }),
-            ).rejects.toThrow(BadRequestException);
-            await expect(
-                service.createLobby({
-                    name: "test",
                     password: 123 as any,
                     userId: "1",
                 }),
@@ -94,23 +90,39 @@ describe("LobbyService", () => {
         it("should throw NotFoundException for non-existent user", async () => {
             await expect(
                 service.createLobby({
-                    name: "test",
                     password: "pw",
                     userId: "999",
                 }),
             ).rejects.toThrow(NotFoundException);
+        });
+
+        it("should create a lobby with valid data and no password", async () => {
+            const result = await service.createLobby({
+                userId: "1",
+            });
+            expect(result).toEqual({ id: 2 }); // id:2 because previous test creates id:1
+        });
+
+        it("should throw BadRequestException if userId is missing or invalid", async () => {
+            await expect(
+                service.createLobby({ password: "pw" } as any)
+            ).rejects.toThrow(BadRequestException);
+            await expect(
+                service.createLobby({ password: "pw", userId: undefined as any })
+            ).rejects.toThrow(BadRequestException);
+            await expect(
+                service.createLobby({ password: "pw", userId: "notanumber" })
+            ).rejects.toThrow(BadRequestException);
         });
     });
 
     describe("getLobbies", () => {
         it("should list all lobbies without passwords", async () => {
             await service.createLobby({
-                name: "lobby1",
                 password: "pw1",
                 userId: "1",
             });
             await service.createLobby({
-                name: "lobby2",
                 password: "pw2",
                 userId: "1",
             });
@@ -118,7 +130,6 @@ describe("LobbyService", () => {
             expect(Array.isArray(lobbies)).toBe(true);
             expect(lobbies.length).toBe(2);
             expect(lobbies[0]).toHaveProperty("id");
-            expect(lobbies[0]).toHaveProperty("name");
             expect(lobbies[0]).toHaveProperty("moves");
             expect(lobbies[0]).toHaveProperty("gameState");
             expect(lobbies[0]).not.toHaveProperty("password");
@@ -131,7 +142,6 @@ describe("LobbyService", () => {
 
         beforeEach(async () => {
             lobbyCreateResult = await service.createLobby({
-                name: "lobby1",
                 password: "pw1",
                 userId: "1",
             });
@@ -142,7 +152,6 @@ describe("LobbyService", () => {
             const lobby = service.getLobby(lobbyId, "pw1");
             expect(lobby).toMatchObject({
                 id: 1,
-                name: "lobby1",
                 moves: 0,
                 gameState: GameState.UNSTARTED,
             });
@@ -166,7 +175,6 @@ describe("LobbyService", () => {
 
     it("should make a valid move when password is correct", async () => {
         await service.createLobby({
-            name: "lobby1",
             password: "pw1",
             userId: "1",
         });
@@ -183,7 +191,6 @@ describe("LobbyService", () => {
 
     it("should throw BadRequestException for incorrect password", async () => {
         await service.createLobby({
-            name: "lobby1",
             password: "pw1",
             userId: "1",
         });
@@ -208,7 +215,6 @@ describe("LobbyService", () => {
 
     it("should throw BadRequestException for invalid move and have correct message", async () => {
         await service.createLobby({
-            name: "lobby1",
             password: "pw1",
             userId: "1",
         });

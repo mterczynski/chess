@@ -56,9 +56,11 @@ const LobbyItem = styled.div`
     }
 `;
 
+// todo - share API types between client and server
 type Lobby = {
     id: number;
     name: string;
+    users: { id: number; name: string }[];
     moves: number;
 };
 
@@ -93,7 +95,7 @@ export const LobbyList: React.FC<{}> = () => {
                         key={lobby.id}
                         onClick={() => console.log("Lobby clicked")}
                     >
-                        <span>{lobby.name}</span>
+                        <span>{lobby.users?.[0].name}</span>
                         <span>{lobby.moves} moves</span>
                     </LobbyItem>
                 ))}
