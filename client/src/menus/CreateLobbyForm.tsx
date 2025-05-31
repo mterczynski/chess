@@ -48,9 +48,13 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack }) => {
 
         // password is optional
         try {
+            const jwt = localStorage.getItem(settings.localStorageKeys.jwt);
             const res = await fetch(`${settings.serverURL}/lobby`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(jwt ? { Authorization: `Bearer ${jwt}` } : {}),
+                },
                 body: JSON.stringify({ password: password || undefined }),
             });
             if (!res.ok) {

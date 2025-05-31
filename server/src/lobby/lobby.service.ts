@@ -28,15 +28,17 @@ export class LobbyService {
     constructor(@Inject() private userService: UserService) {}
 
     async createLobby(body: CreateLobbyDto) {
+        // userId is now always injected from controller, not from client
+        if (!body.userId || isNaN(Number(body.userId))) {
+            throw new BadRequestException("userId is required and must be a valid number");
+        }
         const user = await this.userService.getUserById(Number(body.userId));
 
         if (!user) {
             throw new NotFoundException("User with provided id not found");
         }
         if (body.password && typeof body.password !== "string") {
-            throw new BadRequestException(
-                "Password must be a string if provided.",
-            );
+            throw new BadRequestException("Password must be a string if provided.");
         }
         this.lobbies.push({
             id: this.idCounter++,

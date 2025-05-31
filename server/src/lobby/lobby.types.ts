@@ -24,6 +24,7 @@ export interface LobbySummaryDto {
 }
 
 export interface CreateLobbyDto {
+    // userId is now injected from controller, not from client
     userId: string;
     password?: string;
 }
