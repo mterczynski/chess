@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { CreateLobbyForm } from "./CreateLobbyForm";
 import { settings } from "../settings";
 
 const Wrapper = styled.div`
@@ -8,24 +7,6 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     margin-top: 2rem;
-`;
-
-const CreateButton = styled.button`
-    margin-bottom: 2rem;
-    padding: 1rem 2.5rem;
-    font-size: 1.1rem;
-    border-radius: 8px;
-    border: 2px solid #222;
-    background: #2d8cff;
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    transition:
-        background 0.2s,
-        color 0.2s;
-    &:hover {
-        background: #1861ad;
-    }
 `;
 
 const LobbyListContainer = styled.div`
@@ -66,7 +47,6 @@ type Lobby = {
 
 export const LobbyList: React.FC<{}> = () => {
     const [lobbies, setLobbies] = useState<Lobby[]>([]);
-    const [showCreateForm, setShowCreateForm] = useState(false);
 
     const fetchLobbies = () => {
         fetch(`${settings.serverURL}/lobby`)
@@ -79,15 +59,8 @@ export const LobbyList: React.FC<{}> = () => {
         fetchLobbies();
     }, []);
 
-    if (showCreateForm) {
-        return <CreateLobbyForm onBack={() => setShowCreateForm(false)} onLobbyCreated={fetchLobbies} />;
-    }
-
     return (
         <Wrapper>
-            <CreateButton onClick={() => setShowCreateForm(true)}>
-                Create New Lobby
-            </CreateButton>
             <LobbyListContainer>
                 {lobbies.length === 0 && (
                     <div style={{ textAlign: "center", color: "#888" }}>
