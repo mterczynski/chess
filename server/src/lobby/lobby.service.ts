@@ -1,27 +1,30 @@
 import {
     Injectable,
     BadRequestException,
-    ConflictException,
     NotFoundException,
     Inject,
     ForbiddenException,
 } from "@nestjs/common";
 import { Game } from "game-engine";
 import { Observable, Subject } from "rxjs";
-import {
+import type {
     CreateLobbyDto,
-    Lobby,
     LobbyDetailsDto,
     LobbySummaryDto,
     LobbyUpdateDto,
     MoveDto,
-} from "./lobby.types";
-import { UserService } from "../user";
+} from "../../../shared/api/types";
+import { User, UserService } from "../user";
 
 @Injectable()
 export class LobbyService {
     private idCounter = 1;
-    private lobbies: Lobby[] = [];
+    private lobbies: {
+        id: number;
+        password?: string;
+        gameInstance: Game;
+        users: User[];
+    }[] = [];
     private lobbySseSubjects: { [lobbyId: number]: Subject<LobbyUpdateDto> } =
         {};
 
