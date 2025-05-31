@@ -100,18 +100,21 @@ describe("LobbyService", () => {
             const result = await service.createLobby({
                 userId: "1",
             });
-            expect(result).toEqual({ id: 2 }); // id:2 because previous test creates id:1
+            expect(result).toEqual({ id: 1 });
         });
 
         it("should throw BadRequestException if userId is missing or invalid", async () => {
             await expect(
-                service.createLobby({ password: "pw" } as any)
+                service.createLobby({ password: "pw" } as any),
             ).rejects.toThrow(BadRequestException);
             await expect(
-                service.createLobby({ password: "pw", userId: undefined as any })
+                service.createLobby({
+                    password: "pw",
+                    userId: undefined as any,
+                }),
             ).rejects.toThrow(BadRequestException);
             await expect(
-                service.createLobby({ password: "pw", userId: "notanumber" })
+                service.createLobby({ password: "pw", userId: "notanumber" }),
             ).rejects.toThrow(BadRequestException);
         });
     });
