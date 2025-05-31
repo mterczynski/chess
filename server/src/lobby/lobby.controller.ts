@@ -17,7 +17,7 @@ export class LobbyController {
     constructor(private readonly lobbyService: LobbyService) {}
 
     @Post()
-    createLobby(@Body() body: CreateLobbyDto) {
+    createLobby(@Body() body: { password?: string; userId: string }) {
         return this.lobbyService.createLobby(body);
     }
 

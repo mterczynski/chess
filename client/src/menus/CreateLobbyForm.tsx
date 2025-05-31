@@ -39,7 +39,6 @@ interface CreateLobbyFormProps {
 }
 
 export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack }) => {
-    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
 
@@ -47,23 +46,18 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack }) => {
         e.preventDefault();
         setError(null);
 
-        if (!name.trim() || !password.trim()) {
-            setError("Name and password are required.");
-            return;
-        }
-
+        // password is optional
         try {
             const res = await fetch(`${settings.serverURL}/lobby`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, password }),
+                body: JSON.stringify({ password: password || undefined }),
             });
             if (!res.ok) {
                 const data = await res.json();
                 setError(data.message || "Failed to create lobby.");
                 return;
             }
-            // Optionally: refresh lobby list or redirect
             onBack();
         } catch {
             setError("Failed to create lobby.");
@@ -75,18 +69,8 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack }) => {
             <h2>Create New Lobby</h2>
             <Form onSubmit={handleSubmit}>
                 <Input
-                    type="text"
-                    placeholder="Lobby Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    autoFocus
-                    spellCheck={false}
-                    autoCorrect="off"
-                    autoCapitalize="off"
-                />
-                <Input
                     type="password"
-                    placeholder="Password"
+                    placeholder="Password (optional)"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="new-password"

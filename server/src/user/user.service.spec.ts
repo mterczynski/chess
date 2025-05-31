@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserService } from "./user.service";
 import { User } from "./user";
 import { BadRequestException, ConflictException } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
+import { JwtModule, JwtService } from "@nestjs/jwt";
 import { UserController } from "./user.controller";
 
 describe("UserController", () => {
@@ -20,6 +20,10 @@ describe("UserController", () => {
                     dropSchema: true,
                     entities: [User],
                     synchronize: true,
+                }),
+                JwtModule.register({
+                    secret: "mocksecret",
+                    signOptions: { expiresIn: "7d" },
                 }),
                 TypeOrmModule.forFeature([User]),
             ],
