@@ -68,15 +68,19 @@ export const LobbyList: React.FC<{}> = () => {
     const [lobbies, setLobbies] = useState<Lobby[]>([]);
     const [showCreateForm, setShowCreateForm] = useState(false);
 
-    useEffect(() => {
+    const fetchLobbies = () => {
         fetch(`${settings.serverURL}/lobby`)
             .then((res) => res.json())
             .then((data) => setLobbies(data))
             .catch(() => setLobbies([]));
+    };
+
+    useEffect(() => {
+        fetchLobbies();
     }, []);
 
     if (showCreateForm) {
-        return <CreateLobbyForm onBack={() => setShowCreateForm(false)} />;
+        return <CreateLobbyForm onBack={() => setShowCreateForm(false)} onLobbyCreated={fetchLobbies} />;
     }
 
     return (

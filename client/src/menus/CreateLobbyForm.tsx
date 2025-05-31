@@ -36,9 +36,10 @@ const ButtonRow = styled.div`
 
 interface CreateLobbyFormProps {
     onBack: () => void;
+    onLobbyCreated?: () => void;
 }
 
-export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack }) => {
+export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack, onLobbyCreated }) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
 
@@ -62,6 +63,7 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack }) => {
                 setError(data.message || "Failed to create lobby.");
                 return;
             }
+            if (onLobbyCreated) onLobbyCreated();
             onBack();
         } catch {
             setError("Failed to create lobby.");
