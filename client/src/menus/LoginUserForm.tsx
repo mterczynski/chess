@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { settings } from "../settings";
-import { GameClientContext } from "../contexts/GameClientContext";
 import { Button } from "./Button";
 
 const Wrapper = styled.div`

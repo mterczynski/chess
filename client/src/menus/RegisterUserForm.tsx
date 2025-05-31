@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { settings } from "../settings";
-import { GameClientContext } from "../contexts/GameClientContext";
 import { Button } from "./Button";
 
 const Wrapper = styled.div`
@@ -43,7 +42,6 @@ export const RegisterUserForm = ({
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
-    const gameClientContext = useContext(GameClientContext);
 
     const validateName = (value: string) => /^[a-zA-Z0-9_-]{1,15}$/.test(value);
     const validatePassword = (value: string) => value.length >= 6;
