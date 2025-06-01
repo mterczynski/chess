@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { settings } from "../settings";
-import type { LobbyDto } from "../../../shared/api/types";
+import { LobbyDto } from "chess-shared";
 
 const Wrapper = styled.div`
     display: flex;

@@ -13,7 +13,7 @@ import type {
     LobbySummaryDto,
     LobbyUpdateDto,
     MoveDto,
-} from "../../../shared/api/types";
+} from "chess-shared/api/types";
 import { User, UserService } from "../user";
 
 @Injectable()
