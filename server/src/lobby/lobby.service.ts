@@ -14,17 +14,13 @@ import type {
     LobbyUpdateDto,
     MoveDto,
 } from "chess-shared/api/types";
-import { User, UserService } from "../user";
+import { UserService } from "../user";
+import { Lobby } from "./lobby.types";
 
 @Injectable()
 export class LobbyService {
     private idCounter = 1;
-    private lobbies: {
-        id: number;
-        password?: string;
-        gameInstance: Game;
-        users: User[];
-    }[] = [];
+    private lobbies: Lobby[] = [];
     private lobbySseSubjects: { [lobbyId: number]: Subject<LobbyUpdateDto> } =
         {};
 
