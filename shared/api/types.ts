@@ -1,6 +1,4 @@
 // Shared DTOs and API types for both client and server
-// Place in shared/api/types.ts
-
 import type { GameState, Player, Move, Board } from "game-engine";
 
 export interface LobbyUserDto {
