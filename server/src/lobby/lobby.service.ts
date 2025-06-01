@@ -13,7 +13,7 @@ import type {
     LobbySummaryDto,
     LobbyUpdateDto,
     MoveDto,
-} from "chess-shared/api/types";
+} from "chess-shared";
 import { UserService } from "../user";
 import { Lobby } from "./lobby.types";
 
@@ -68,6 +68,7 @@ export class LobbyService {
             id: lobby.id,
             moves: lobby.gameInstance.getMoveHistory().length,
             gameState: lobby.gameInstance.getState(),
+            creatorName: lobby.users[0].name,
             users: lobby.users,
         }));
     }

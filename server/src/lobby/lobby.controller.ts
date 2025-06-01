@@ -12,8 +12,8 @@ import {
 import { Move } from "game-engine";
 import { LobbyService } from "./lobby.service";
 import { map, Observable } from "rxjs";
-import { LobbyUpdateDto } from "./lobby.types";
 import { JwtAuthGuard } from "../user/jwt-auth.guard";
+import { LobbyUpdateDto } from "chess-shared";
 
 @Controller("lobby")
 export class LobbyController {
