@@ -33,7 +33,7 @@ function parsePort(port: string | undefined, fallback: number): number {
         TypeOrmModule.forFeature([User]),
         JwtModule.register({
             secret: process.env.JWT_SECRET || "supersecret",
-            signOptions: { expiresIn: "7d" },
+            signOptions: { expiresIn: "365d" },
         }),
         DevtoolsModule.register({
             http: process.env.NODE_ENV !== "production",
