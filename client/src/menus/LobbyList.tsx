@@ -3,6 +3,11 @@ import styled from "styled-components";
 import { settings } from "../settings";
 import { LobbyDto } from "chess-shared";
 
+// Patch type to include hasPassword for now
+export interface LobbyDtoWithPassword extends LobbyDto {
+    hasPassword: boolean;
+}
+
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -39,7 +44,7 @@ const LobbyItem = styled.div`
 `;
 
 export const LobbyList: React.FC<{}> = () => {
-    const [lobbies, setLobbies] = useState<LobbyDto[]>([]);
+    const [lobbies, setLobbies] = useState<LobbyDtoWithPassword[]>([]);
 
     const fetchLobbies = () => {
         fetch(`${settings.serverURL}/lobby`)
@@ -65,7 +70,26 @@ export const LobbyList: React.FC<{}> = () => {
                         key={lobby.id}
                         onClick={() => console.log("Lobby clicked")}
                     >
-                        <span>{lobby.users?.[0].name}</span>
+                        <span
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 8,
+                            }}
+                        >
+                            {lobby.users?.[0].name}
+                            {lobby.hasPassword && (
+                                <img
+                                    src={"/assets/lock.png"}
+                                    alt="locked"
+                                    style={{
+                                        width: 18,
+                                        height: 18,
+                                        marginLeft: 4,
+                                    }}
+                                />
+                            )}
+                        </span>
                         <span>{lobby.moves} moves</span>
                     </LobbyItem>
                 ))}
