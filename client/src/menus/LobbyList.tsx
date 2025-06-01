@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { settings } from "../settings";
+import { LobbyDto } from "chess-shared";
 
 const Wrapper = styled.div`
     display: flex;
@@ -37,16 +38,8 @@ const LobbyItem = styled.div`
     }
 `;
 
-// todo - share API types between client and server
-type Lobby = {
-    id: number;
-    name: string;
-    users: { id: number; name: string }[];
-    moves: number;
-};
-
 export const LobbyList: React.FC<{}> = () => {
-    const [lobbies, setLobbies] = useState<Lobby[]>([]);
+    const [lobbies, setLobbies] = useState<LobbyDto[]>([]);
 
     const fetchLobbies = () => {
         fetch(`${settings.serverURL}/lobby`)

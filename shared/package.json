@@ -1,0 +1,10 @@
+{
+    "name": "chess-shared",
+    "version": "1.0.0",
+    "description": "Shared API types between client and server.",
+    "main": "api/types.ts",
+    "scripts": {},
+    "keywords": [],
+    "author": "",
+    "license": "MIT"
+}

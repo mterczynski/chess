@@ -13,9 +13,11 @@ echo "Unlinking packages...";
 
 cd "$REPO_ROOT/client";
 npm unlink game-engine || true; # "If this command fails, ignore the error and continue."
+npm unlink chess-shared || true;
 
 cd "$REPO_ROOT/server";
 npm unlink game-engine || true; # "If this command fails, ignore the error and continue."
+npm unlink chess-shared || true;
 
 echo "Linking packages...";
 
@@ -23,12 +25,16 @@ cd "$REPO_ROOT/game-engine";
 npm run build;
 cd "$REPO_ROOT/game-engine/build";
 npm link;
+cd "$REPO_ROOT/shared";
+npm link;
 
 cd "$REPO_ROOT/client";
 npm link game-engine;
+npm link chess-shared;
 
 cd "$REPO_ROOT/server";
 npm link game-engine;
+npm link chess-shared;
 
 echo "Packages linked";
 

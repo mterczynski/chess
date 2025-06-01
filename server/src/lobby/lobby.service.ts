@@ -1,22 +1,21 @@
 import {
     Injectable,
     BadRequestException,
-    ConflictException,
     NotFoundException,
     Inject,
     ForbiddenException,
 } from "@nestjs/common";
 import { Game } from "game-engine";
 import { Observable, Subject } from "rxjs";
-import {
+import type {
     CreateLobbyDto,
-    Lobby,
     LobbyDetailsDto,
     LobbySummaryDto,
     LobbyUpdateDto,
     MoveDto,
-} from "./lobby.types";
+} from "chess-shared/api/types";
 import { UserService } from "../user";
+import { Lobby } from "./lobby.types";
 
 @Injectable()
 export class LobbyService {
