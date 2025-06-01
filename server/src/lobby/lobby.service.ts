@@ -70,6 +70,7 @@ export class LobbyService {
             gameState: lobby.gameInstance.getState(),
             creatorName: lobby.users[0].name,
             users: lobby.users,
+            hasPassword: !!lobby.password,
         }));
     }
 

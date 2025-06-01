@@ -136,6 +136,9 @@ describe("LobbyService", () => {
             expect(lobbies[0]).toHaveProperty("moves");
             expect(lobbies[0]).toHaveProperty("gameState");
             expect(lobbies[0]).not.toHaveProperty("password");
+            expect(lobbies[0]).toHaveProperty("hasPassword");
+            // Check correct value for hasPassword
+            expect(lobbies[0].hasPassword).toBe(true);
         });
     });
 

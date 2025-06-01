@@ -27,6 +27,8 @@ export interface LobbySummaryDto {
     moves: number;
     gameState: GameState;
     creatorName: string;
+    users: LobbyUserDto[];
+    hasPassword: boolean;
 }
 
 export interface CreateLobbyDto {
