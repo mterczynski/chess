@@ -41,6 +41,12 @@ export const GameClientContext = React.createContext<{
     playerTurnTimeoutRef: React.MutableRefObject<any>;
     gameMode: GameMode | null;
     setGameMode: React.Dispatch<React.SetStateAction<GameMode | null>>;
+    settings: {
+        showPossibleMoves: boolean;
+    };
+    setSettings: React.Dispatch<
+        React.SetStateAction<{ showPossibleMoves: boolean }>
+    >;
 }>({} as any);
 
 export const GameClientContextProvider = ({
@@ -56,6 +62,7 @@ export const GameClientContextProvider = ({
     const [promotionMenuPosition, setPromotionMenuPosition] =
         useState<Position | null>(null); // stores null or promoting position
     const [gameMode, setGameMode] = useState<GameMode | null>(null);
+    const [settings, setSettings] = useState({ showPossibleMoves: true });
 
     const {
         availableMovesForPlayer,
@@ -138,6 +145,8 @@ export const GameClientContextProvider = ({
                 playerTurnTimeoutRef,
                 gameMode,
                 setGameMode,
+                settings,
+                setSettings,
             }}
         >
             {children}
