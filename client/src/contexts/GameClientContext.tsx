@@ -80,6 +80,12 @@ export const GameClientContextProvider = ({
     }, []);
 
     useEffect(() => {
+        if (!settings.showPossibleMoves) {
+            setAvailableMoves([]);
+        }
+    }, [settings.showPossibleMoves]);
+
+    useEffect(() => {
         if (
             playerSelection !== null &&
             currentPlayer !== playerSelection &&
@@ -128,7 +134,9 @@ export const GameClientContextProvider = ({
                     mapIndexToChessFile(selectedPiece.fileIndex) &&
                 move.from.rank === mapRankIndexToRank(selectedPiece.tileIndex),
         );
-        setAvailableMoves(availableSelectedPieceMoves);
+        setAvailableMoves(
+            settings.showPossibleMoves ? availableSelectedPieceMoves : [],
+        );
     }, [selectedPiece, availableMovesForPlayer]);
 
     return (
