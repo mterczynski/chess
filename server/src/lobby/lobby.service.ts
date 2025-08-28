@@ -13,7 +13,7 @@ import type {
     LobbySummaryDto,
     LobbyUpdateDto,
     MoveDto,
-} from "chess-shared";
+} from "./lobby-types";
 import { UserService } from "../user";
 import { Lobby } from "./lobby.types";
 import { validateNoProfanity } from "../utils/obscenity-filter";

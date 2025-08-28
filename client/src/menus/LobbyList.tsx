@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { settings } from "../settings";
-import { LobbyDto } from "chess-shared";
+
+// Local type definition to avoid module linking issues
+interface LobbyUserDto {
+    id: number;
+    name: string;
+}
+
+interface LobbyDto {
+    id: number;
+    creatorName: string;
+    users: LobbyUserDto[];
+    moves: number;
+}
 
 // Patch type to include hasPassword for now
 export interface LobbyDtoWithPassword extends LobbyDto {
+    name: string;
     hasPassword: boolean;
 }
 
@@ -73,22 +86,26 @@ export const LobbyList: React.FC<{}> = () => {
                         <span
                             style={{
                                 display: "flex",
-                                alignItems: "center",
-                                gap: 8,
+                                flexDirection: "column",
+                                alignItems: "flex-start",
+                                gap: 2,
                             }}
                         >
-                            {lobby.name}
-                            {lobby.hasPassword && (
-                                <img
-                                    src={"/assets/lock.png"}
-                                    alt="locked"
-                                    style={{
-                                        width: 18,
-                                        height: 18,
-                                        marginLeft: 4,
-                                    }}
-                                />
-                            )}
+                            <div style={{ fontWeight: "bold" }}>{lobby.name}</div>
+                            <div style={{ fontSize: "0.9em", color: "#666" }}>
+                                by {lobby.creatorName}
+                                {lobby.hasPassword && (
+                                    <img
+                                        src={"/assets/lock.png"}
+                                        alt="locked"
+                                        style={{
+                                            width: 16,
+                                            height: 16,
+                                            marginLeft: 6,
+                                        }}
+                                    />
+                                )}
+                            </div>
                         </span>
                         <span>{lobby.moves} moves</span>
                     </LobbyItem>
