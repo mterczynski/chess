@@ -11,7 +11,7 @@ import styled from "styled-components";
 import { useCallback, useContext } from "react";
 import { GameClientContext } from "../contexts/GameClientContext";
 import { GameEngineContext } from "../contexts/GameEngineContext";
-import { AvailableMoveDestination } from "./AvailableMoveDestination";
+import { AvailableMoveDestination, SelectedPieceHighlight } from "./AvailableMoveDestination";
 import { settings } from "../settings";
 import { GameMode } from "../GameMode";
 
@@ -47,6 +47,11 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
                 rank: mapRankIndexToRank(tileIndex),
             })
         );
+
+    const isSelectedPiece = 
+        gameClientContext.selectedPiece &&
+        gameClientContext.selectedPiece.fileIndex === fileIndex &&
+        gameClientContext.selectedPiece.tileIndex === tileIndex;
 
     const onClick = useCallback(() => {
         if (
@@ -99,6 +104,7 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
                 ></PieceComponent>
             )}
 
+            {isSelectedPiece && <SelectedPieceHighlight />}
             {isAvailableMoveDestinationPosition && <AvailableMoveDestination />}
         </TileBackground>
     );
