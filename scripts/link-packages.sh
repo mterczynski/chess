@@ -6,7 +6,7 @@ set -e
 # - BASH_SOURCE[0] is the path to this script (build.sh)
 # - dirname gets the directory part of that path
 # - cd ... && pwd changes to that directory and prints its absolute path
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 echo "Unlinking packages...";
