@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { settings } from "../settings";
 import { Button } from "./Button";
+import { validateNoProfanityClient } from "../utils/obscenity-filter";
 
 const Wrapper = styled.div`
     display: flex;
@@ -40,6 +41,7 @@ interface CreateLobbyFormProps {
 }
 
 export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack, onLobbyCreated }) => {
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
 
@@ -47,7 +49,24 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack, onLobb
         e.preventDefault();
         setError(null);
 
-        // password is optional
+        // Validate lobby name
+        if (!name || name.trim().length === 0) {
+            setError("Lobby name is required");
+            return;
+        }
+        
+        if (name.length > 50) {
+            setError("Lobby name must be 50 characters or less");
+            return;
+        }
+        
+        // Check for profanity in the lobby name
+        const profanityError = validateNoProfanityClient(name, "Lobby name");
+        if (profanityError) {
+            setError(profanityError);
+            return;
+        }
+
         try {
             const jwt = localStorage.getItem(settings.localStorageKeys.jwt);
             const res = await fetch(`${settings.serverURL}/lobby`, {
@@ -56,7 +75,10 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack, onLobb
                     "Content-Type": "application/json",
                     ...(jwt ? { Authorization: `Bearer ${jwt}` } : {}),
                 },
-                body: JSON.stringify({ password: password || undefined }),
+                body: JSON.stringify({ 
+                    name: name.trim(), 
+                    password: password || undefined 
+                }),
             });
             if (!res.ok) {
                 const data = await res.json();
@@ -74,6 +96,18 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack, onLobb
         <Wrapper>
             <h2>Create New Lobby</h2>
             <Form onSubmit={handleSubmit}>
+                <Input
+                    type="text"
+                    placeholder="Lobby Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    autoFocus
+                    spellCheck={false}
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    maxLength={50}
+                    required
+                />
                 <Input
                     type="password"
                     placeholder="Password (optional)"

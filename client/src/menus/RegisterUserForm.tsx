@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { settings } from "../settings";
 import { Button } from "./Button";
+import { validateNoProfanityClient } from "../utils/obscenity-filter";
 
 const Wrapper = styled.div`
     display: flex;
@@ -56,6 +57,14 @@ export const RegisterUserForm = ({
             );
             return;
         }
+        
+        // Check for profanity in the name
+        const profanityError = validateNoProfanityClient(name, "User name");
+        if (profanityError) {
+            setError(profanityError);
+            return;
+        }
+        
         if (!validatePassword(password)) {
             setError("Password must be at least 6 characters.");
             return;

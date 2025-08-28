@@ -80,6 +80,18 @@ describe("UserController", () => {
         ).rejects.toThrow(BadRequestException);
     });
 
+    it("should not allow usernames with profanity", async () => {
+        await expect(
+            controller.registerUser({ name: "fuck", password: "password123" }),
+        ).rejects.toThrow(BadRequestException);
+        await expect(
+            controller.registerUser({ name: "shit", password: "password123" }),
+        ).rejects.toThrow(BadRequestException);
+        await expect(
+            controller.registerUser({ name: "ass", password: "password123" }),
+        ).rejects.toThrow(BadRequestException);
+    });
+
     it("should not allow short passwords", async () => {
         await expect(
             controller.registerUser({ name: "user_2", password: "123" }),
