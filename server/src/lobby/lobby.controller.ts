@@ -21,7 +21,7 @@ export class LobbyController {
 
     @Post()
     @UseGuards(JwtAuthGuard)
-    createLobby(@Req() req, @Body() body: { password?: string }) {
+    createLobby(@Req() req, @Body() body: { name: string; password?: string }) {
         // userId from JWT
         const userId = req.user?.sub;
         if (!userId) throw new Error("No userId in JWT");

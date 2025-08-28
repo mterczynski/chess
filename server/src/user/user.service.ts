@@ -9,6 +9,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./user";
 import * as bcrypt from "bcryptjs";
+import { validateNoProfanity } from "../utils/obscenity-filter";
 
 @Injectable()
 export class UserService {
@@ -24,6 +25,14 @@ export class UserService {
                 "Name must be 1-15 characters: letters, digits, hyphens, or underscores.",
             );
         }
+        
+        // Check for profanity in the name
+        try {
+            validateNoProfanity(name, "User name");
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+        
         // Validate password: at least 6 characters
         if (!password || password.length < 6) {
             throw new BadRequestException("Password must be at least 6 characters.");

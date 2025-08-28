@@ -24,6 +24,7 @@ export interface LobbyDetailsDto {
 
 export interface LobbySummaryDto {
     id: number;
+    name: string;
     moves: number;
     gameState: GameState;
     creatorName: string;
@@ -33,6 +34,7 @@ export interface LobbySummaryDto {
 
 export interface CreateLobbyDto {
     userId: string;
+    name: string;
     password?: string;
 }
 

@@ -77,7 +77,7 @@ export const LobbyList: React.FC<{}> = () => {
                                 gap: 8,
                             }}
                         >
-                            {lobby.users?.[0].name}
+                            {lobby.name}
                             {lobby.hasPassword && (
                                 <img
                                     src={"/assets/lock.png"}

@@ -16,6 +16,7 @@ import type {
 } from "chess-shared";
 import { UserService } from "../user";
 import { Lobby } from "./lobby.types";
+import { validateNoProfanity } from "../utils/obscenity-filter";
 
 @Injectable()
 export class LobbyService {
@@ -33,6 +34,23 @@ export class LobbyService {
                 "userId is required and must be a valid number",
             );
         }
+        
+        // Validate lobby name
+        if (!body.name || typeof body.name !== "string") {
+            throw new BadRequestException("Lobby name is required and must be a string");
+        }
+        
+        if (body.name.length < 1 || body.name.length > 50) {
+            throw new BadRequestException("Lobby name must be 1-50 characters long");
+        }
+        
+        // Check for profanity in the lobby name
+        try {
+            validateNoProfanity(body.name, "Lobby name");
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+        
         const user = await this.userService.getUserById(Number(body.userId));
 
         if (!user) {
@@ -45,6 +63,7 @@ export class LobbyService {
         }
         this.lobbies.push({
             id: this.idCounter++,
+            name: body.name,
             password: body.password,
             gameInstance: new Game(),
             users: [user],
@@ -66,6 +85,7 @@ export class LobbyService {
     getLobbies(): LobbySummaryDto[] {
         return this.lobbies.map((lobby) => ({
             id: lobby.id,
+            name: lobby.name,
             moves: lobby.gameInstance.getMoveHistory().length,
             gameState: lobby.gameInstance.getState(),
             creatorName: lobby.users[0].name,
