@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { settings } from "../settings";
 import { Button } from "./Button";
+import { UserNavbar } from "./UserNavbar";
 
 const Wrapper = styled.div`
     display: flex;
@@ -39,7 +40,10 @@ interface CreateLobbyFormProps {
     onLobbyCreated?: () => void;
 }
 
-export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack, onLobbyCreated }) => {
+export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({
+    onBack,
+    onLobbyCreated,
+}) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
 
@@ -72,6 +76,7 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({ onBack, onLobb
 
     return (
         <Wrapper>
+            <UserNavbar />
             <h2>Create New Lobby</h2>
             <Form onSubmit={handleSubmit}>
                 <Input

@@ -4,6 +4,7 @@ import { LobbyList } from "./menus/LobbyList";
 import { settings } from "./settings";
 import styled from "styled-components";
 import { AuthScreen } from "./menus/AuthScreen";
+import { UserNavbar } from "./menus/UserNavbar";
 
 const CreateButton = styled.button`
     margin-bottom: 2rem;
@@ -55,6 +56,7 @@ const OnlineModeScreenSelector = () => {
 
     return (
         <>
+            <UserNavbar />
             <CreateButton
                 style={{ margin: "2rem auto", display: "block" }}
                 onClick={() => setShowCreateForm(true)}
