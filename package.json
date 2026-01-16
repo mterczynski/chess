@@ -8,7 +8,7 @@
         "server"
     ],
     "scripts": {
-        "postinstall": "sh scripts/link-packages.sh",
+        "postinstall": "bash scripts/link-packages.sh",
         "start": "cd ./client && npm start",
         "start:server": "cd ./server && npm start",
         "test": "jest && cd server && npm test",
