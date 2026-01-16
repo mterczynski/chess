@@ -34,6 +34,15 @@ Setup pgAdmin and PostgreSQL (described in detail in [Server's Readme](./server/
 -   🧪 `test`: runs the tests in all repositories (todo: make it work for e2e server tests too)
 -   🧪 `test:watch`: same as above but in watch mode
 -   🧪 `test:coverage`: runs all tests, produces coverage (open `coverage\lcov-report\index.html` in the browser to see the results)
+-   📋 `spec:lint`: validates markdown documentation in docs/ folder
+-   📋 `spec:lint:fix`: auto-fixes markdown issues in documentation
+-   📋 `spec:check`: runs all spec validation checks
+-   📋 `spec:toc`: generates/updates table of contents in ONLINE_MULTIPLAYER_SPEC.md
+
+## 📚 Documentation
+
+-   **[Online Multiplayer Specification](./docs/ONLINE_MULTIPLAYER_SPEC.md)** - Complete spec for online multiplayer features (RULE-001 to RULE-007)
+-   **[Contributing Guidelines](./CONTRIBUTING.md)** - How to contribute using spec-driven development
 
 ## 🚧 Work progress
 

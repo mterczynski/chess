@@ -24,6 +24,12 @@ interface SelectedPiece {
     tileIndex: number;
 }
 
+interface OnlineLobbyState {
+    selectedLobbyId: number | null;
+    lobbyPassword: string | null;
+    currentScreen: 'list' | 'create' | 'room';
+}
+
 /** Context responsible for handling client specific events & data */
 export const GameClientContext = React.createContext<{
     selectedPiece: SelectedPiece | null;
@@ -41,6 +47,11 @@ export const GameClientContext = React.createContext<{
     playerTurnTimeoutRef: React.MutableRefObject<any>;
     gameMode: GameMode | null;
     setGameMode: React.Dispatch<React.SetStateAction<GameMode | null>>;
+    // Online lobby state
+    onlineLobby: OnlineLobbyState;
+    selectLobby: (id: number, password: string) => void;
+    leaveLobby: () => void;
+    setLobbyScreen: (screen: OnlineLobbyState['currentScreen']) => void;
 }>({} as any);
 
 export const GameClientContextProvider = ({
@@ -56,6 +67,11 @@ export const GameClientContextProvider = ({
     const [promotionMenuPosition, setPromotionMenuPosition] =
         useState<Position | null>(null); // stores null or promoting position
     const [gameMode, setGameMode] = useState<GameMode | null>(null);
+    const [onlineLobby, setOnlineLobby] = useState<OnlineLobbyState>({
+        selectedLobbyId: null,
+        lobbyPassword: null,
+        currentScreen: 'list',
+    });
 
     const {
         availableMovesForPlayer,
@@ -70,6 +86,26 @@ export const GameClientContextProvider = ({
 
     const selectPlayer = useCallback((player: Player | null) => {
         setPlayerSelection(player);
+    }, []);
+
+    const selectLobby = useCallback((id: number, password: string) => {
+        setOnlineLobby({
+            selectedLobbyId: id,
+            lobbyPassword: password,
+            currentScreen: 'room',
+        });
+    }, []);
+
+    const leaveLobby = useCallback(() => {
+        setOnlineLobby({
+            selectedLobbyId: null,
+            lobbyPassword: null,
+            currentScreen: 'list',
+        });
+    }, []);
+
+    const setLobbyScreen = useCallback((screen: OnlineLobbyState['currentScreen']) => {
+        setOnlineLobby(prev => ({ ...prev, currentScreen: screen }));
     }, []);
 
     useEffect(() => {
@@ -138,6 +174,10 @@ export const GameClientContextProvider = ({
                 playerTurnTimeoutRef,
                 gameMode,
                 setGameMode,
+                onlineLobby,
+                selectLobby,
+                leaveLobby,
+                setLobbyScreen,
             }}
         >
             {children}

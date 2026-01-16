@@ -18,7 +18,11 @@
         "build:engine": "cd ./game-engine && npm run build",
         "build": "sh scripts/build.sh",
         "cleanup": "sh scripts/cleanup.sh",
-        "deploy": "sh scripts/deploy.sh"
+        "deploy": "sh scripts/deploy.sh",
+        "spec:lint": "markdownlint-cli2 \"docs/**/*.md\"",
+        "spec:lint:fix": "markdownlint-cli2 --fix \"docs/**/*.md\"",
+        "spec:check": "echo 'Checking spec documentation...' && npm run spec:lint",
+        "spec:toc": "markdown-toc -i docs/ONLINE_MULTIPLAYER_SPEC.md"
     },
     "keywords": [
         "chess",
@@ -40,6 +44,8 @@
         "@types/jest": "^27.0.2",
         "@types/lodash": "^4.14.175",
         "jest": "^27.2.4",
+        "markdown-toc": "^1.2.0",
+        "markdownlint-cli2": "^0.20.0",
         "ts-jest": "^27.0.5"
     }
 }

@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { CreateLobbyForm } from "./menus/CreateLobbyForm";
 import { LobbyList } from "./menus/LobbyList";
+import { LobbyRoom } from "./menus/LobbyRoom";
 import { settings } from "./settings";
 import styled from "styled-components";
 import { AuthScreen } from "./menus/AuthScreen";
 import { UserNavbar } from "./menus/UserNavbar";
+import { GameClientContext } from "./contexts/GameClientContext";
 
 const CreateButton = styled.button`
     margin-bottom: 2rem;
@@ -26,11 +28,12 @@ const CreateButton = styled.button`
 
 const OnlineModeScreenSelector = () => {
     const [showRegister, setShowRegister] = useState(false); // false = login, true = register
-    const [showCreateForm, setShowCreateForm] = useState(false);
     const jwtKey = settings.localStorageKeys.jwt;
     const [hasJwt, setHasJwt] = useState(
         typeof window !== "undefined" && !!localStorage.getItem(jwtKey),
     );
+
+    const { onlineLobby, setLobbyScreen, leaveLobby } = useContext(GameClientContext);
 
     useEffect(() => {
         const handleStorage = () => {
@@ -50,16 +53,34 @@ const OnlineModeScreenSelector = () => {
         );
     }
 
-    if (showCreateForm) {
-        return <CreateLobbyForm onBack={() => setShowCreateForm(false)} />;
+    // Show LobbyRoom if user selected a lobby
+    if (onlineLobby.currentScreen === 'room' && onlineLobby.selectedLobbyId) {
+        return (
+            <LobbyRoom
+                lobbyId={onlineLobby.selectedLobbyId}
+                password={onlineLobby.lobbyPassword || ""}
+                onBack={leaveLobby}
+            />
+        );
     }
 
+    // Show CreateLobbyForm
+    if (onlineLobby.currentScreen === 'create') {
+        return (
+            <CreateLobbyForm 
+                onBack={() => setLobbyScreen('list')} 
+                onLobbyCreated={() => setLobbyScreen('list')}
+            />
+        );
+    }
+
+    // Default: Show lobby list
     return (
         <>
             <UserNavbar />
             <CreateButton
                 style={{ margin: "2rem auto", display: "block" }}
-                onClick={() => setShowCreateForm(true)}
+                onClick={() => setLobbyScreen('create')}
             >
                 Create New Lobby
             </CreateButton>

@@ -2,3 +2,5 @@
 /coverage
 /.idea
 /build
+# Specify CLI - prevent credential leakage
+.github/
