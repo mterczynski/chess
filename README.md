@@ -41,7 +41,7 @@ Setup pgAdmin and PostgreSQL (described in detail in [Server's Readme](./server/
 | ------------- | ------------ | ----------------------------------------------------------------------------------------------------- |
 | `game-engine` | 🟩🟩🟩🟩⬛⬛ | core logic is mostly implemented, performance can be improved, missing draw by agreement, no clocks, bots are too easy                                                              |
 | `client`      | 🟩🟩🟩🟩⬛⬛ | game engine is implemented, both sides are playable, but are responsivness issues |
-| `server`      | ⬛⬛⬛⬛⬛⬛ | started on 24.05.2025, lobby creation works |
+| `server`      | 🟩⬛⬛⬛⬛⬛ | lobby creation, a few unrefined endpoints, makinvg moves works, insomnia collection, some tests |
 
 ## Preview
 
