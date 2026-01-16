@@ -10,8 +10,32 @@ on:
             - main
 
 jobs:
-    test:
-        name: Run All Tests (Node ${{ matrix.node-version }})
+    game-engine-tests:
+        name: Game Engine Tests (Node ${{ matrix.node-version }})
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: ["24.1.0", "18.20.8"]
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run game-engine tests
+              run: npm run test:game-engine
+
+    server-tests:
+        name: Server Tests (Node ${{ matrix.node-version }})
         runs-on: ubuntu-latest
 
         strategy:
@@ -46,8 +70,32 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
-            - name: Run all tests
-              run: npm run test:ci
+            - name: Run server tests
+              run: npm run test:server
               env:
                   DATABASE_URL: postgresql://test:test@localhost:5432/chess_test
                   JWT_SECRET: test-secret-key-for-ci
+
+    client-tests:
+        name: Client Tests (Node ${{ matrix.node-version }})
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: ["24.1.0", "18.20.8"]
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run client tests
+              run: npm run test:client
