@@ -1,0 +1,110 @@
+name: Test All Components
+
+on:
+    workflow_dispatch: # Allows manual triggering from GitHub UI
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    game-engine-tests:
+        name: Game Engine Tests
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "18"
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run game-engine tests
+              run: npm test
+              working-directory: ./game-engine
+
+    client-tests:
+        name: Client Tests
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "18"
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run client tests
+              run: npm test
+              working-directory: ./client
+
+    server-tests:
+        name: Server Tests
+        runs-on: ubuntu-latest
+
+        services:
+            postgres:
+                image: postgres:15
+                env:
+                    POSTGRES_USER: test
+                    POSTGRES_PASSWORD: test
+                    POSTGRES_DB: chess_test
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+                ports:
+                    - 5432:5432
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "18"
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run server tests
+              run: npm run test:ci
+              working-directory: ./server
+              env:
+                  DATABASE_URL: postgresql://test:test@localhost:5432/chess_test
+                  JWT_SECRET: test-secret-key-for-ci
+
+    all-tests-summary:
+        name: All Tests Summary
+        runs-on: ubuntu-latest
+        needs: [game-engine-tests, client-tests, server-tests]
+        if: always()
+
+        steps:
+            - name: Check test results
+              run: |
+                  if [ "${{ needs.game-engine-tests.result }}" != "success" ] || \
+                     [ "${{ needs.client-tests.result }}" != "success" ] || \
+                     [ "${{ needs.server-tests.result }}" != "success" ]; then
+                    echo "❌ Some tests failed"
+                    exit 1
+                  else
+                    echo "✅ All tests passed"
+                  fi
