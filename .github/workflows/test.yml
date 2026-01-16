@@ -13,10 +13,10 @@ jobs:
     game-engine-tests:
         name: Game Engine Tests (Node ${{ matrix.node-version }})
         runs-on: ubuntu-latest
-        
+
         strategy:
             matrix:
-                node-version: ['24.1.0', '18.20.8']
+                node-version: ["24.1.0", "18.20.8"]
 
         steps:
             - name: Checkout code
@@ -38,10 +38,10 @@ jobs:
     client-tests:
         name: Client Tests (Node ${{ matrix.node-version }})
         runs-on: ubuntu-latest
-        
+
         strategy:
             matrix:
-                node-version: ['24.1.0', '18.20.8']
+                node-version: ["24.1.0", "18.20.8"]
 
         steps:
             - name: Checkout code
@@ -63,10 +63,10 @@ jobs:
     server-tests:
         name: Server Tests (Node ${{ matrix.node-version }})
         runs-on: ubuntu-latest
-        
+
         strategy:
             matrix:
-                node-version: ['24.1.0', '18.20.8']
+                node-version: ["24.1.0", "18.20.8"]
 
         services:
             postgres:
