@@ -29,6 +29,7 @@ function parsePort(port: string | undefined, fallback: number): number {
             database: process.env.POSTGRES_DB || "chess",
             entities: [User],
             synchronize: true,
+            ssl: process.env.POSTGRES_HOST?.includes('supabase') ? { rejectUnauthorized: false } : false,
         }),
         TypeOrmModule.forFeature([User]),
         JwtModule.register({
