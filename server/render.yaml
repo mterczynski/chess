@@ -1,0 +1,26 @@
+services:
+    - type: web
+      name: chess-server
+      runtime: node
+      region: frankfurt # or oregon for US
+      plan: free
+      buildCommand: npm install && npm run build
+      startCommand: npm run start:prod
+      envVars:
+          - key: NODE_ENV
+            value: production
+          - key: POSTGRES_HOST
+            value: aws-1-eu-west-2.pooler.supabase.com
+          - key: POSTGRES_PORT
+            value: 6543
+          - key: POSTGRES_USER
+            sync: false # Set in Render dashboard
+          - key: POSTGRES_PASSWORD
+            sync: false # Set in Render dashboard
+          - key: POSTGRES_DB
+            value: postgres
+          - key: JWT_SECRET
+            generateValue: true # Auto-generate secure secret
+          - key: ALLOWED_ORIGINS
+            value: http://localhost:5173,http://localhost:3000
+      healthCheckPath: /

@@ -177,6 +177,66 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 `Insomnia_Collection.yaml` can be imported to [Insomnia REST](https://insomnia.rest/) for API testing
 
-## Render.com deployed service link
+## Deployment to Render.com
+
+### Setup Instructions
+
+1. **Create Render Account:**
+   - Go to [render.com](https://render.com) and sign up
+   - Connect your GitHub account
+
+2. **Create New Web Service:**
+   - Dashboard → "New +" → "Web Service"
+   - Connect this repository
+   - Use these settings:
+     - **Name:** `chess-server`
+     - **Region:** Frankfurt (or Oregon for US)
+     - **Branch:** `main`
+     - **Root Directory:** `server`
+     - **Runtime:** Node
+     - **Build Command:** `npm install && npm run build`
+     - **Start Command:** `npm run start:prod`
+
+3. **Configure Environment Variables:**
+   In Render dashboard, add these env vars:
+   ```
+   NODE_ENV=production
+   POSTGRES_HOST=aws-1-eu-west-2.pooler.supabase.com
+   POSTGRES_PORT=6543
+   POSTGRES_USER=postgres.YOUR_PROJECT_REF
+   POSTGRES_PASSWORD=your-supabase-password
+   POSTGRES_DB=postgres
+   JWT_SECRET=your-super-secret-jwt-key
+   ALLOWED_ORIGINS=https://your-client-url.com
+   ```
+
+4. **Get Service ID for GitHub Actions:**
+   - In Render dashboard, go to your service
+   - Service ID is in the URL: `srv-XXXXX`
+   - Get API key from: Account Settings → API Keys
+
+5. **Setup GitHub Secrets:**
+   In GitHub repo: Settings → Secrets → Actions, add:
+   - `RENDER_SERVICE_ID`: Your service ID (srv-XXXXX)
+   - `RENDER_API_KEY`: Your Render API key
+
+### Manual Deployment
+
+To deploy manually via GitHub Actions:
+1. Go to Actions tab
+2. Select "Deploy Server to Render"
+3. Click "Run workflow"
+4. Select environment and confirm
+
+### Auto-deployment
+
+Currently set to **manual trigger only**. To enable auto-deploy on push to main, uncomment in `.github/workflows/deploy-server.yml`:
+```yaml
+on:
+  push:
+    branches: [main]
+```
+
+### Dashboard Link
 
 https://dashboard.render.com/web/srv-d0qeo195pdvs73ai12jg/deploys/dep-d0qeo1h5pdvs73ai12p0
