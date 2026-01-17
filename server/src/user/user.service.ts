@@ -7,7 +7,7 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "./user";
+import { User } from "../../entities";
 import * as bcrypt from "bcryptjs";
 
 @Injectable()
@@ -26,7 +26,9 @@ export class UserService {
         }
         // Validate password: at least 6 characters
         if (!password || password.length < 6) {
-            throw new BadRequestException("Password must be at least 6 characters.");
+            throw new BadRequestException(
+                "Password must be at least 6 characters.",
+            );
         }
 
         // Check for duplicate name
@@ -37,7 +39,10 @@ export class UserService {
 
         // Hash the password before saving
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = this.userRepository.create({ name, password: hashedPassword });
+        const user = this.userRepository.create({
+            name,
+            password: hashedPassword,
+        });
         return this.userRepository.save(user);
     }
 

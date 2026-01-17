@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserService } from "./user.service";
-import { User } from "./user";
+import { User } from "../../entities";
 import { BadRequestException, ConflictException } from "@nestjs/common";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { UserController } from "./user.controller";

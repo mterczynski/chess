@@ -1,5 +1,5 @@
 import { Game } from "game-engine";
-import { User } from "src/user/user";
+import { User } from "../../entities";
 
 export interface Lobby {
     id: number;

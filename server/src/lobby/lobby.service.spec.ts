@@ -8,7 +8,7 @@ import {
 } from "@nestjs/common";
 import { GameState, ChessFile, Move } from "game-engine";
 import { UserService } from "../user/user.service";
-import { User } from "../user/user";
+import { User } from "../../entities";
 import { JwtModule } from "@nestjs/jwt";
 
 describe("LobbyService", () => {

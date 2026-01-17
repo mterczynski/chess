@@ -9,7 +9,7 @@ import { DevtoolsModule } from "@nestjs/devtools-integration";
 import { UserController } from "./user/user.controller";
 import { UserService } from "./user/user.service";
 import { LobbyService } from "./lobby/lobby.service";
-import { User } from "./user/user";
+import { User } from "../entities";
 
 function parsePort(port: string | undefined, fallback: number): number {
     if (!port) return fallback;
