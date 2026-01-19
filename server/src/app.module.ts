@@ -29,7 +29,9 @@ function parsePort(port: string | undefined, fallback: number): number {
             database: process.env.POSTGRES_DB || "chess",
             entities: [User],
             synchronize: true,
-            ssl: process.env.POSTGRES_HOST?.includes('supabase') ? { rejectUnauthorized: false } : false,
+            ssl: process.env.POSTGRES_HOST?.includes("supabase")
+                ? { rejectUnauthorized: false }
+                : false,
         }),
         TypeOrmModule.forFeature([User]),
         JwtModule.register({
@@ -37,7 +39,9 @@ function parsePort(port: string | undefined, fallback: number): number {
             signOptions: { expiresIn: "365d" },
         }),
         DevtoolsModule.register({
-            http: process.env.NODE_ENV !== "production",
+            http:
+                process.env.NODE_ENV !== "production" &&
+                process.env.NODE_ENV !== "test",
         }),
     ],
     controllers: [AppController, LobbyController, UserController],
