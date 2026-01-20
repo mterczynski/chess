@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import "./App.css";
+import { AuthProvider } from "./contexts/AuthContext";
 import { GameClientContextProvider } from "./contexts/GameClientContext";
 import { GameEngineContextProvider } from "./contexts/GameEngineContext";
 import { GameScreenSelector } from "./GameScreenSelector";
@@ -13,14 +14,16 @@ const SettingsIcon = styled.div`
 function App() {
     return (
         <div className="App">
-            <GameEngineContextProvider>
-                <GameClientContextProvider>
-                    <>
-                        <SettingsIcon>⚙️</SettingsIcon>
-                        <GameScreenSelector />
-                    </>
-                </GameClientContextProvider>
-            </GameEngineContextProvider>
+            <AuthProvider>
+                <GameEngineContextProvider>
+                    <GameClientContextProvider>
+                        <>
+                            <SettingsIcon>⚙️</SettingsIcon>
+                            <GameScreenSelector />
+                        </>
+                    </GameClientContextProvider>
+                </GameEngineContextProvider>
+            </AuthProvider>
         </div>
     );
 }

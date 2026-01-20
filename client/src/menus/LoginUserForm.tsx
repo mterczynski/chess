@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { settings } from "../settings";
+import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "../contexts/AuthContext";
+import { api, ApiError } from "../api/client";
 import { Button } from "./Button";
 
 const Wrapper = styled.div`
@@ -39,7 +41,23 @@ export const LoginUserForm = ({ onLogin }: { onLogin?: () => void }) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
     const [loggedIn, setLoggedIn] = useState(false);
-    const jwtKey = settings.localStorageKeys.jwt;
+    const { login } = useAuth();
+
+    const loginMutation = useMutation({
+        mutationFn: () => api.user.login(name, password),
+        onSuccess: (data) => {
+            setError(null);
+            if (data.token) {
+                login(data.token);
+                if (onLogin) onLogin();
+            }
+            setLoggedIn(true);
+        },
+        onError: (error: ApiError) => {
+            setError(error.message || "Login failed.");
+        },
+    });
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
@@ -47,27 +65,7 @@ export const LoginUserForm = ({ onLogin }: { onLogin?: () => void }) => {
             setError("Please enter both username and password.");
             return;
         }
-        try {
-            const res = await fetch(`${settings.serverURL}/user/login`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, password }),
-            });
-            if (!res.ok) {
-                const data = await res.json();
-                setError(data.message || "Login failed.");
-                return;
-            } else {
-                const data = await res.json();
-                if (data.token) {
-                    localStorage.setItem(jwtKey, data.token);
-                    if (onLogin) onLogin();
-                }
-                setLoggedIn(true);
-            }
-        } catch {
-            setError("Login failed.");
-        }
+        loginMutation.mutate();
     };
 
     if (loggedIn) return null;

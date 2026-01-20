@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { settings } from "../settings";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { api, ApiError } from "../api/client";
 import { Button } from "./Button";
 import { UserNavbar } from "./UserNavbar";
 
@@ -46,32 +47,26 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({
 }) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const queryClient = useQueryClient();
+
+    const createLobbyMutation = useMutation({
+        mutationFn: () => api.lobby.create(password || undefined),
+        onSuccess: () => {
+            setError(null);
+            // Invalidate lobbies query to trigger a refetch
+            queryClient.invalidateQueries({ queryKey: ["lobbies"] });
+            if (onLobbyCreated) onLobbyCreated();
+            onBack();
+        },
+        onError: (error: ApiError) => {
+            setError(error.message || "Failed to create lobby.");
+        },
+    });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
-
-        // password is optional
-        try {
-            const jwt = localStorage.getItem(settings.localStorageKeys.jwt);
-            const res = await fetch(`${settings.serverURL}/lobby`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    ...(jwt ? { Authorization: `Bearer ${jwt}` } : {}),
-                },
-                body: JSON.stringify({ password: password || undefined }),
-            });
-            if (!res.ok) {
-                const data = await res.json();
-                setError(data.message || "Failed to create lobby.");
-                return;
-            }
-            if (onLobbyCreated) onLobbyCreated();
-            onBack();
-        } catch {
-            setError("Failed to create lobby.");
-        }
+        createLobbyMutation.mutate();
     };
 
     return (

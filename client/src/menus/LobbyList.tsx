@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { settings } from "../settings";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../api/client";
 import { LobbyDto } from "chess-shared";
 
 // Patch type to include hasPassword for now
@@ -44,23 +45,21 @@ const LobbyItem = styled.div`
 `;
 
 export const LobbyList: React.FC<{}> = () => {
-    const [lobbies, setLobbies] = useState<LobbyDtoWithPassword[]>([]);
-
-    const fetchLobbies = () => {
-        fetch(`${settings.serverURL}/lobby`)
-            .then((res) => res.json())
-            .then((data) => setLobbies(data))
-            .catch(() => setLobbies([]));
-    };
-
-    useEffect(() => {
-        fetchLobbies();
-    }, []);
+    const { data: lobbies = [], isLoading } = useQuery({
+        queryKey: ["lobbies"],
+        queryFn: api.lobby.list,
+        refetchInterval: 3000, // Auto-refresh every 3 seconds
+    });
 
     return (
         <Wrapper>
             <LobbyListContainer>
-                {lobbies.length === 0 && (
+                {isLoading && (
+                    <div style={{ textAlign: "center", color: "#888" }}>
+                        Loading lobbies...
+                    </div>
+                )}
+                {!isLoading && lobbies.length === 0 && (
                     <div style={{ textAlign: "center", color: "#888" }}>
                         No lobbies available.
                     </div>

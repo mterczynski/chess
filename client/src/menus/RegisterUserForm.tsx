@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { settings } from "../settings";
+import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "../contexts/AuthContext";
+import { api, ApiError } from "../api/client";
 import { Button } from "./Button";
 
 const Wrapper = styled.div`
@@ -42,6 +44,25 @@ export const RegisterUserForm = ({
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const { login } = useAuth();
+
+    const registerMutation = useMutation({
+        mutationFn: () => api.user.register(name, password),
+        onSuccess: (data) => {
+            setError(null);
+            if (data.token) {
+                login(data.token);
+                if (onRegister) onRegister();
+            }
+        },
+        onError: (error: ApiError) => {
+            if (error.data?.message === "User name already taken") {
+                setError("User name already taken");
+            } else {
+                setError(error.message || "Registration failed.");
+            }
+        },
+    });
 
     const validateName = (value: string) => /^[a-zA-Z0-9_-]{1,15}$/.test(value);
     const validatePassword = (value: string) => value.length >= 6;
@@ -61,29 +82,7 @@ export const RegisterUserForm = ({
             return;
         }
 
-        try {
-            const res = await fetch(`${settings.serverURL}/user/register`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, password }),
-            });
-            const data = await res.json();
-            if (!res.ok) {
-                if (data.message === "User name already taken") {
-                    setError("User name already taken");
-                } else {
-                    setError(data.message || "Registration failed.");
-                }
-                return;
-            }
-            setError(null); // Clear any previous error on success
-            if (data.token) {
-                localStorage.setItem(settings.localStorageKeys.jwt, data.token);
-                if (onRegister) onRegister();
-            }
-        } catch {
-            setError("Registration failed.");
-        }
+        registerMutation.mutate();
     };
 
     return (
