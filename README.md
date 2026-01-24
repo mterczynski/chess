@@ -28,7 +28,7 @@ Setup pgAdmin and PostgreSQL (described in detail in [Server's Readme](./server/
 
 -   🚀 `start`: runs the `client` application on http://localhost:5173 (if available)
 -   🚀 `start:server`: runs the `server` application on http://localhost:3000 (if available)
--   🔗 `postinstall` - links the packages (run automatically after `npm install`)
+-   🔗 `postinstall` - builds the game-engine (run automatically after `npm install`)
 -   📦 `build`: builds all packages (for deployment, not required for local development)
 -   🧽 `cleanup`: clears all generated/built/installed content (such as /coverage, /dist, /node_modules)
 -   🧪 `test`: runs the tests in all repositories (todo: make it work for e2e server tests too)
