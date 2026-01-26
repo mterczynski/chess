@@ -40,7 +40,7 @@ Setup pgAdmin and PostgreSQL (described in detail in [Server's Readme](./server/
 | Repository    | Progress     | Comments                                                                                              |
 | ------------- | ------------ | ----------------------------------------------------------------------------------------------------- |
 | `game-engine` | 🟩🟩🟩🟩⬛⬛ | core logic is mostly implemented, performance can be improved, missing draw by agreement, no clocks, bots are too easy                                                              |
-| `client`      | 🟩🟩🟩🟩⬛⬛ | game engine is implemented, both sides are playable, but are responsivness issues |
+| `client`      | 🟩🟩🟩🟩⬛⬛ | game engine is implemented, both sides are playable, but there are responsivness issues |
 | `server`      | 🟩⬛⬛⬛⬛⬛ | lobby creation, a few unrefined endpoints, makinvg moves works, insomnia collection, some tests |
 
 ## Preview
