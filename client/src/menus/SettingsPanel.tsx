@@ -108,31 +108,37 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onClose }) => {
     const { settings, updateSettings, resetSettings } =
         useContext(SettingsContext);
 
-    const handleColorChange = (path: string[], value: string) => {
-        if (path.length === 3 && path[0] === "colors" && path[1] === "tile") {
-            // Handle tile colors (dark/light)
-            updateSettings({
-                colors: {
-                    ...settings.colors,
-                    tile: {
-                        ...settings.colors.tile,
-                        [path[2]]: value,
-                    },
+    const handleTileLightColorChange = (value: string) => {
+        updateSettings({
+            colors: {
+                ...settings.colors,
+                tile: {
+                    ...settings.colors.tile,
+                    light: value,
                 },
-            });
-        } else if (
-            path.length === 2 &&
-            path[0] === "colors" &&
-            path[1] === "background"
-        ) {
-            // Handle background color
-            updateSettings({
-                colors: {
-                    ...settings.colors,
-                    background: value,
+            },
+        });
+    };
+
+    const handleTileDarkColorChange = (value: string) => {
+        updateSettings({
+            colors: {
+                ...settings.colors,
+                tile: {
+                    ...settings.colors.tile,
+                    dark: value,
                 },
-            });
-        }
+            },
+        });
+    };
+
+    const handleBackgroundColorChange = (value: string) => {
+        updateSettings({
+            colors: {
+                ...settings.colors,
+                background: value,
+            },
+        });
     };
 
     const handleReset = () => {
@@ -152,10 +158,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onClose }) => {
                             type="color"
                             value={settings.colors.tile.light}
                             onChange={(e) =>
-                                handleColorChange(
-                                    ["colors", "tile", "light"],
-                                    e.target.value
-                                )
+                                handleTileLightColorChange(e.target.value)
                             }
                         />
                         <ColorPreview color={settings.colors.tile.light} />
@@ -170,10 +173,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onClose }) => {
                             type="color"
                             value={settings.colors.tile.dark}
                             onChange={(e) =>
-                                handleColorChange(
-                                    ["colors", "tile", "dark"],
-                                    e.target.value
-                                )
+                                handleTileDarkColorChange(e.target.value)
                             }
                         />
                         <ColorPreview color={settings.colors.tile.dark} />
@@ -188,10 +188,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onClose }) => {
                             type="color"
                             value={settings.colors.background}
                             onChange={(e) =>
-                                handleColorChange(
-                                    ["colors", "background"],
-                                    e.target.value
-                                )
+                                handleBackgroundColorChange(e.target.value)
                             }
                         />
                         <ColorPreview color={settings.colors.background} />
