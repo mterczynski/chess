@@ -12,12 +12,10 @@ body {
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: black;
 }
 
 .App {
     text-align: center;
-    background-color: black;
 }
 
 .App-logo {
