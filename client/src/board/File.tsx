@@ -1,5 +1,7 @@
 import { Piece } from "game-engine";
+import { useContext } from "react";
 import styled from "styled-components";
+import { SettingsContext } from "../contexts/SettingsContext";
 import { settings } from "../settings";
 import { Tile } from "./Tile";
 
@@ -20,6 +22,8 @@ interface FileProps {
 }
 
 export const File = ({ file, fileIndex }: FileProps) => {
+    const { settings: userSettings } = useContext(SettingsContext);
+
     return (
         <FileContainer>
             {file.slice(1).map((tile, tileIndex) => {
@@ -30,8 +34,8 @@ export const File = ({ file, fileIndex }: FileProps) => {
                         key={tileIndex}
                         tileColor={
                             (fileIndex + tileIndex) % 2
-                                ? settings.colors.tile.light
-                                : settings.colors.tile.dark
+                                ? userSettings.colors.tile.light
+                                : userSettings.colors.tile.dark
                         }
                         piece={tile}
                     ></Tile>
