@@ -49,6 +49,26 @@ Even with free-tier usage, attach billing and set an alert to avoid surprises:
 3. Run:
 
 ```bash
+cp terraform.tfvars.example terraform.tfvars
+```
+
+## Variables (`terraform.tfvars`)
+Create and update `terraform.tfvars` in this folder with:
+
+```hcl
+project_id       = "your-gcp-project-id"
+region           = "europe-west1"
+server_image_uri = "gcr.io/your-gcp-project-id/chess-api:latest"
+database_url     = "postgres://user:password@host:5432/chess"
+```
+
+Variable details:
+- `project_id` (required): GCP project ID where Cloud Run will be created
+- `region` (optional, default `europe-west1`): Cloud Run region
+- `server_image_uri` (required): Full container image URL for the backend
+- `database_url` (required, sensitive): Database connection string passed to Cloud Run as `DATABASE_URL`
+
+```bash
 terraform init
 terraform plan
 terraform apply
