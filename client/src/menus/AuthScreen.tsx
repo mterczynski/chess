@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { RegisterUserForm } from "./RegisterUserForm";
 import { LoginUserForm } from "./LoginUserForm";
 
@@ -10,10 +11,12 @@ export function AuthScreen({
     setShowRegister: (v: boolean) => void;
     setHasJwt: (v: boolean) => void;
 }) {
+    const [name, setName] = useState("");
+
     if (showRegister) {
         return (
             <>
-                <RegisterUserForm onRegister={() => setHasJwt(true)} />
+                <RegisterUserForm onRegister={() => setHasJwt(true)} name={name} setName={setName} />
                 <div style={{ textAlign: "center", marginTop: 16 }}>
                     <span>
                         Already have an account?{" "}
@@ -38,7 +41,7 @@ export function AuthScreen({
     } else {
         return (
             <>
-                <LoginUserForm onLogin={() => setHasJwt(true)} />
+                <LoginUserForm onLogin={() => setHasJwt(true)} name={name} setName={setName} />
                 <div style={{ textAlign: "center", marginTop: 16 }}>
                     <span>
                         Don&apos;t have an account?{" "}

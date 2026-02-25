@@ -38,10 +38,13 @@ const ButtonRow = styled.div`
 
 export const RegisterUserForm = ({
     onRegister,
+    name,
+    setName,
 }: {
     onRegister?: () => void;
+    name: string;
+    setName: (v: string) => void;
 }) => {
-    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
     const { login } = useAuth();

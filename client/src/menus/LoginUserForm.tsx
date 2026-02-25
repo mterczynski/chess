@@ -36,8 +36,15 @@ const ButtonRow = styled.div`
     gap: 1rem;
 `;
 
-export const LoginUserForm = ({ onLogin }: { onLogin?: () => void }) => {
-    const [name, setName] = useState("");
+export const LoginUserForm = ({
+    onLogin,
+    name,
+    setName,
+}: {
+    onLogin?: () => void;
+    name: string;
+    setName: (v: string) => void;
+}) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
     const [loggedIn, setLoggedIn] = useState(false);
