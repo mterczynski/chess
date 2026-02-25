@@ -27,6 +27,8 @@ Chess game server built with [NestJS](https://github.com/nestjs/nest) framework.
 
 Users and lobbies are stored in-memory (no database required).
 
+Previous version used TypeORM with PostgreSQL, currently available on branch `postgres_backup`.
+
 ## Project setup
 
 ```bash
