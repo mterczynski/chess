@@ -1,7 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserService } from "./user.service";
-import { User } from "../../entities";
 import { BadRequestException, ConflictException } from "@nestjs/common";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { UserController } from "./user.controller";
@@ -14,18 +12,10 @@ describe("UserController", () => {
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             imports: [
-                TypeOrmModule.forRoot({
-                    type: "sqlite",
-                    database: ":memory:",
-                    dropSchema: true,
-                    entities: [User],
-                    synchronize: true,
-                }),
                 JwtModule.register({
                     secret: "mocksecret",
                     signOptions: { expiresIn: "7d" },
                 }),
-                TypeOrmModule.forFeature([User]),
             ],
             providers: [UserService, JwtService],
             controllers: [UserController],

@@ -25,83 +25,13 @@
 
 Chess game server built with [NestJS](https://github.com/nestjs/nest) framework.
 
+Users and lobbies are stored in-memory (no database required).
+
 ## Project setup
 
 ```bash
 npm install
 ```
-
-## Database Setup
-
-### Local Development (Recommended)
-
-**Use local PostgreSQL for development.** Supabase is for production only.
-
-1. **Install PostgreSQL:**
-   - [Download PostgreSQL](https://www.postgresql.org/download/)
-   - Or use Docker: `docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:15`
-
-2. **Configure `.env`:**
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Default local config (already in .env.example):
-   ```env
-   POSTGRES_HOST=localhost
-   POSTGRES_PORT=5432
-   POSTGRES_USER=postgres
-   POSTGRES_PASSWORD=postgres
-   POSTGRES_DB=chess
-   ```
-
-3. **Start server:**
-   ```bash
-   npm run start:dev
-   ```
-   
-   TypeORM will automatically create tables on first run.
-
-### Production (Supabase)
-
-**Only use Supabase for production deployments.**
-
-1. **Create Supabase Project:**
-   - Go to [supabase.com](https://supabase.com/dashboard)
-   - Click "New Project"
-   - Choose region (e.g., West Europe - London)
-   - Set database password (save it!)
-
-2. **Get Connection Details:**
-   - Click **"Connect"** button (top bar)
-   - Select **Method: "Transaction pooler"** (NOT Direct connection!)
-   - Click **"View parameters"**
-
-3. **Update production `.env`:**
-   ```env
-   # Comment out local, use Supabase:
-   POSTGRES_HOST=aws-1-eu-west-2.pooler.supabase.com
-   POSTGRES_PORT=6543
-   POSTGRES_USER=postgres.YOUR_PROJECT_REF
-   POSTGRES_PASSWORD=your-supabase-password
-   POSTGRES_DB=postgres
-   ```
-   
-   **Important:** 
-   - Use **Transaction pooler** host (ends with `.pooler.supabase.com`)
-   - User format: `postgres.YOUR_PROJECT_REF` (with dot!)
-   - Port: `6543` (not 5432)
-
-1.
-
-```bash
-$ npm install
-```
-
-2. Create .env file (copy .env.example file)
-3. Install postgreSQL, link for windows: https://www.postgresql.org/download/windows/
-4. Install pgAdmin, setup a new postgres server
-5. In scope of that server, create a database named `chess`  
 
 ## Compile and run the project
 
@@ -157,7 +87,7 @@ Check out a few resources that may come in handy when working with NestJS:
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Nest is an MIT-licensed open project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
 ## Stay in touch
 

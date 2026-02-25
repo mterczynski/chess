@@ -1,5 +1,4 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { TypeOrmModule } from "@nestjs/typeorm";
 import { LobbyService } from "./lobby.service";
 import {
     BadRequestException,
@@ -8,7 +7,6 @@ import {
 } from "@nestjs/common";
 import { GameState, ChessFile, Move } from "game-engine";
 import { UserService } from "../user/user.service";
-import { User } from "../../entities";
 import { JwtModule } from "@nestjs/jwt";
 
 describe("LobbyService", () => {
@@ -18,18 +16,10 @@ describe("LobbyService", () => {
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             imports: [
-                TypeOrmModule.forRoot({
-                    type: "sqlite",
-                    database: ":memory:",
-                    dropSchema: true,
-                    entities: [User],
-                    synchronize: true,
-                }),
                 JwtModule.register({
                     secret: "mocksecret",
                     signOptions: { expiresIn: "7d" },
                 }),
-                TypeOrmModule.forFeature([User]),
             ],
             providers: [UserService, LobbyService],
         }).compile();

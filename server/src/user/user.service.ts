@@ -5,17 +5,13 @@ import {
     NotFoundException,
     UnauthorizedException,
 } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
 import { User } from "../../entities";
 import * as bcrypt from "bcryptjs";
 
 @Injectable()
 export class UserService {
-    constructor(
-        @InjectRepository(User)
-        private readonly userRepository: Repository<User>,
-    ) {}
+    private users: User[] = [];
+    private idCounter = 1;
 
     async registerUser(name: string, password: string): Promise<User> {
         // Validate name: 1-15 chars, letters, digits, hyphens, underscores
@@ -32,22 +28,24 @@ export class UserService {
         }
 
         // Check for duplicate name
-        const existing = await this.userRepository.findOne({ where: { name } });
+        const existing = this.users.find((u) => u.name === name);
         if (existing) {
             throw new ConflictException("User name already taken");
         }
 
         // Hash the password before saving
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = this.userRepository.create({
+        const user: User = {
+            id: this.idCounter++,
             name,
             password: hashedPassword,
-        });
-        return this.userRepository.save(user);
+        };
+        this.users.push(user);
+        return user;
     }
 
     async validateUser(name: string, password: string): Promise<User> {
-        const user = await this.userRepository.findOne({ where: { name } });
+        const user = this.users.find((u) => u.name === name);
         if (!user) throw new NotFoundException("User not found");
 
         // Check if the password matches
@@ -58,6 +56,7 @@ export class UserService {
     }
 
     async getUserById(userId: number): Promise<User | null> {
-        return this.userRepository.findOne({ where: { id: userId } });
+        return this.users.find((u) => u.id === userId) ?? null;
     }
 }
+
