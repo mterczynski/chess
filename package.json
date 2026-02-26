@@ -5,10 +5,11 @@
     "workspaces": [
         "client",
         "game-engine",
-        "server"
+        "server",
+        "shared"
     ],
     "scripts": {
-        "postinstall": "bash scripts/link-packages.sh",
+        "postinstall": "npm run build:engine",
         "start": "cd ./client && npm start",
         "start:server": "cd ./server && npm start",
         "test": "jest && cd server && npm test",

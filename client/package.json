@@ -4,6 +4,8 @@
     "private": true,
     "dependencies": {
         "@tanstack/react-query": "^5.90.19",
+        "chess-shared": "*",
+        "game-engine": "*",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "styled-components": "^5.3.5"
