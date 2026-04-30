@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Game getBoard returns correct board after first move 1`] = `
-Object {
-  "A": Array [
+{
+  "A": [
     null,
-    Object {
+    {
       "hasMoved": false,
       "player": "WHITE",
       "type": "R",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -17,23 +17,23 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "hasMoved": false,
       "player": "BLACK",
       "type": "R",
     },
   ],
-  "B": Array [
+  "B": [
     null,
-    Object {
+    {
       "player": "WHITE",
       "type": "N",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -41,22 +41,22 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "player": "BLACK",
       "type": "N",
     },
   ],
-  "C": Array [
+  "C": [
     null,
-    Object {
+    {
       "player": "WHITE",
       "type": "B",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -64,22 +64,22 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "player": "BLACK",
       "type": "B",
     },
   ],
-  "D": Array [
+  "D": [
     null,
-    Object {
+    {
       "player": "WHITE",
       "type": "Q",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -87,23 +87,23 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "player": "BLACK",
       "type": "Q",
     },
   ],
-  "E": Array [
+  "E": [
     null,
-    Object {
+    {
       "hasMoved": false,
       "player": "WHITE",
       "type": "K",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -111,23 +111,23 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "hasMoved": false,
       "player": "BLACK",
       "type": "K",
     },
   ],
-  "F": Array [
+  "F": [
     null,
-    Object {
+    {
       "player": "WHITE",
       "type": "B",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -135,22 +135,22 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "player": "BLACK",
       "type": "B",
     },
   ],
-  "G": Array [
+  "G": [
     null,
-    Object {
+    {
       "player": "WHITE",
       "type": "N",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -158,23 +158,23 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "player": "BLACK",
       "type": "N",
     },
   ],
-  "H": Array [
+  "H": [
     null,
-    Object {
+    {
       "hasMoved": false,
       "player": "WHITE",
       "type": "R",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -182,11 +182,11 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "hasMoved": false,
       "player": "BLACK",
       "type": "R",
@@ -196,15 +196,15 @@ Object {
 `;
 
 exports[`Game getBoard returns starting board when called on new game 1`] = `
-Object {
-  "A": Array [
+{
+  "A": [
     null,
-    Object {
+    {
       "hasMoved": false,
       "player": "WHITE",
       "type": "R",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -212,23 +212,23 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "hasMoved": false,
       "player": "BLACK",
       "type": "R",
     },
   ],
-  "B": Array [
+  "B": [
     null,
-    Object {
+    {
       "player": "WHITE",
       "type": "N",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -236,22 +236,22 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "player": "BLACK",
       "type": "N",
     },
   ],
-  "C": Array [
+  "C": [
     null,
-    Object {
+    {
       "player": "WHITE",
       "type": "B",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -259,22 +259,22 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "player": "BLACK",
       "type": "B",
     },
   ],
-  "D": Array [
+  "D": [
     null,
-    Object {
+    {
       "player": "WHITE",
       "type": "Q",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -282,23 +282,23 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "player": "BLACK",
       "type": "Q",
     },
   ],
-  "E": Array [
+  "E": [
     null,
-    Object {
+    {
       "hasMoved": false,
       "player": "WHITE",
       "type": "K",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -306,23 +306,23 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "hasMoved": false,
       "player": "BLACK",
       "type": "K",
     },
   ],
-  "F": Array [
+  "F": [
     null,
-    Object {
+    {
       "player": "WHITE",
       "type": "B",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -330,22 +330,22 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "player": "BLACK",
       "type": "B",
     },
   ],
-  "G": Array [
+  "G": [
     null,
-    Object {
+    {
       "player": "WHITE",
       "type": "N",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -353,23 +353,23 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "player": "BLACK",
       "type": "N",
     },
   ],
-  "H": Array [
+  "H": [
     null,
-    Object {
+    {
       "hasMoved": false,
       "player": "WHITE",
       "type": "R",
     },
-    Object {
+    {
       "player": "WHITE",
       "type": "P",
     },
@@ -377,11 +377,11 @@ Object {
     null,
     null,
     null,
-    Object {
+    {
       "player": "BLACK",
       "type": "P",
     },
-    Object {
+    {
       "hasMoved": false,
       "player": "BLACK",
       "type": "R",

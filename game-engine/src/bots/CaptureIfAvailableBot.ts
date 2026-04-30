@@ -1,8 +1,8 @@
 import { Board } from "../Board";
 import { Move } from "../Moves";
 import { PieceType } from "../pieces";
-import { isAttackingMove } from "../utils/isAttackingMove";
-import * as _ from "lodash";
+import { isAttackingMove } from "../utils";
+import _ from "lodash";
 
 export class CaptureIfAvailableBot {
     /**

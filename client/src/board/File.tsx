@@ -8,10 +8,6 @@ const FileContainer = styled.div`
     flex-direction: column-reverse;
     width: 100%;
     height: 100%;
-
-    :first-child {
-        border-left: ${settings.borderStyle};
-    }
 `;
 
 interface FileProps {

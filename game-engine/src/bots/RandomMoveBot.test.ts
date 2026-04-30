@@ -1,6 +1,6 @@
 import { RandomMoveBot } from "./RandomMoveBot";
 import { Move } from "../Moves";
-import { ChessFile } from "../positions/ChessFile";
+import { ChessFile } from "../positions";
 import { getEmptyBoard } from "game-engine/test-utils/getEmptyBoard";
 
 describe("RandomMoveBot", () => {

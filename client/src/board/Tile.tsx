@@ -18,15 +18,9 @@ import { GameMode } from "../GameMode";
 const TileBackground = styled.div<{ color: string }>`
     position: relative;
     background: ${({ color }) => color};
-    border-top: ${settings.borderStyle};
-    border-right: ${settings.borderStyle};
 
     width: 100%;
     height: 100%;
-
-    :first-child {
-        border-bottom: ${settings.borderStyle};
-    }
 `;
 
 interface TileProps {

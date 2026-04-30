@@ -1,5 +1,5 @@
 import { addToFile } from "./addToFile";
-import { ChessFile } from "../positions";
+import { ChessFile } from "./ChessFile";
 
 describe('addToFile', () => {
     it('should not allow floating point numbers', () => {

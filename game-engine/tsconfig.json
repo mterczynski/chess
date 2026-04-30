@@ -7,7 +7,12 @@
     "strict": true,                                      /* Enable all strict type-checking options. */
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "outDir": "build",
-    "declaration": true
+    "declaration": true,
+    "types": ["jest", "node"]
   },
-  "include": ["./src/index.ts"],
+  "include": [
+    "./src/**/*.ts",
+    "./e2e-tests/**/*.ts",
+    "./test-utils/**/*.ts"
+  ],
 }

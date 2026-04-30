@@ -9,6 +9,9 @@ import { UserController } from "./user/user.controller";
 import { UserService } from "./user/user.service";
 import { LobbyService } from "./lobby/lobby.service";
 
+const isTestRuntime =
+    process.env.NODE_ENV === "test" || process.env.JEST_WORKER_ID !== undefined;
+
 @Module({
     imports: [
         ConfigModule.forRoot({ isGlobal: true }),
@@ -16,11 +19,9 @@ import { LobbyService } from "./lobby/lobby.service";
             secret: process.env.JWT_SECRET || "supersecret",
             signOptions: { expiresIn: "365d" },
         }),
-        DevtoolsModule.register({
-            http:
-                process.env.NODE_ENV !== "production" &&
-                process.env.NODE_ENV !== "test",
-        }),
+        ...(!isTestRuntime && process.env.NODE_ENV !== "production"
+            ? [DevtoolsModule.register({ http: true })]
+            : []),
     ],
     controllers: [AppController, LobbyController, UserController],
     providers: [AppService, UserService, LobbyService],

@@ -1,5 +1,5 @@
-import { Game } from "../src/Game";
-import { ChessFile } from "../src/positions";
+import { Game } from "../src";
+import { ChessFile } from "../src";
 
 export function playFoolsMate(): Game {
     const game = new Game();
