@@ -1,7 +1,7 @@
-import { Game } from "../src";
-import { Board } from "../src";
-import { Piece } from "../src";
-import { ChessFile } from "../src";
+import { Game } from "../src/Game";
+import { Board } from "../src/Board";
+import { Piece } from "../src/pieces";
+import { ChessFile } from "../src/positions";
 
 export const getEmptyBoard = (): Board => {
     const getEmptyFile = (): (Piece | null)[] => Array(Game.boardSize + 1).fill(null);

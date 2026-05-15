@@ -106,7 +106,6 @@ export class LobbyService {
         }
         try {
             lobby.gameInstance.move(body.move);
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
             throw new BadRequestException("Invalid move");
         }
