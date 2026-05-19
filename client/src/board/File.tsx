@@ -3,7 +3,9 @@ import styled from "styled-components";
 import { settings } from "../settings";
 import { Tile } from "./Tile";
 
-const FileContainer = styled.div`
+const FileContainer = styled.div.attrs({
+    "data-board-file": "true",
+})`
     display: flex;
     flex-direction: column-reverse;
     width: 100%;

@@ -21,10 +21,10 @@ const BoardContainer = styled.div<{ useBlackPerspective?: boolean }>`
     max-width: 560px;
     max-height: 560px;
     /* Ensure child columns (files) have right border except last */
-    & > div {
+    & > [data-board-file="true"] {
         border-right: 2px solid black;
     }
-    & > div:last-child {
+    & > [data-board-file="true"]:last-of-type {
         border-right: none;
     }
 `;
