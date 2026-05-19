@@ -20,7 +20,6 @@ const PromotionMenuContainer = styled.div<{ position: Position }>`
     position: absolute;
     left: ${({ position }) =>
         mapFileToFileIndex(position.file) * FILE_WIDTH_PERCENT}%;
-    top: 0;
     width: ${FILE_WIDTH_PERCENT}%;
     display: flex;
     flex-direction: column;
@@ -32,12 +31,11 @@ const PieceSquare = styled.div`
     aspect-ratio: 1;
     box-sizing: border-box;
     border: ${settings.borderStyle};
-    border-top: none;
     background: #d0bf04c1;
     cursor: pointer;
 
-    :first-child {
-        border-top: ${settings.borderStyle};
+    & + & {
+        border-top: none;
     }
 `;
 
