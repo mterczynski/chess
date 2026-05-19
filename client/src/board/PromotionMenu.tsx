@@ -17,17 +17,20 @@ import { settings } from "../settings";
 const PromotionMenuContainer = styled.div<{ position: Position }>`
     position: absolute;
     left: ${({ position }) =>
-        mapFileToFileIndex(position.file) * (settings.tileSizeInPx + 2)}px;
+        mapFileToFileIndex(position.file) * 12.5}%;
+    top: 0;
+    width: 12.5%;
     display: flex;
     flex-direction: column;
 `;
 
 const PieceSquare = styled.div`
     position: relative;
-    width: ${settings.tileSizeInPx}px;
-    height: ${settings.tileSizeInPx}px;
-    border-bottom: ${settings.borderStyle};
-    border-left: ${settings.borderStyle};
+    width: 100%;
+    aspect-ratio: 1;
+    box-sizing: border-box;
+    border: ${settings.borderStyle};
+    border-top: none;
     background: #d0bf04c1;
     cursor: pointer;
 
