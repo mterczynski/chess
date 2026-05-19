@@ -14,12 +14,14 @@ import { Piece } from "./Piece";
 import { GameEngineContext } from "../contexts/GameEngineContext";
 import { settings } from "../settings";
 
+const FILE_WIDTH_PERCENT = 100 / 8;
+
 const PromotionMenuContainer = styled.div<{ position: Position }>`
     position: absolute;
     left: ${({ position }) =>
-        mapFileToFileIndex(position.file) * 12.5}%;
+        mapFileToFileIndex(position.file) * FILE_WIDTH_PERCENT}%;
     top: 0;
-    width: 12.5%;
+    width: ${FILE_WIDTH_PERCENT}%;
     display: flex;
     flex-direction: column;
 `;
