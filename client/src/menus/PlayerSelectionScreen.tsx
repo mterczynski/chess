@@ -25,7 +25,7 @@ const Container = styled.div`
     z-index: 1000;
 `;
 
-const Button = styled.button<{ $background?: string; color?: string }>`
+const Button = styled.button<{ $background?: string; $color?: string }>`
     cursor: pointer;
     font-size: 1.4rem;
     margin: 1.2rem 1.2rem 0 1.2rem;
@@ -33,7 +33,7 @@ const Button = styled.button<{ $background?: string; color?: string }>`
     border-radius: 12px;
     border: 2px solid #fff;
     background: ${({ $background }) => $background || "#fff"};
-    color: ${({ color }) => color || "#222"};
+    color: ${({ $color }) => $color || "#222"};
     font-weight: 600;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: background 0.2s, color 0.2s, transform 0.1s, border 0.2s;

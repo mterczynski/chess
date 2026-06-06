@@ -15,9 +15,9 @@ import { AvailableMoveDestination } from "./AvailableMoveDestination";
 import { settings } from "../settings";
 import { GameMode } from "../GameMode";
 
-const TileBackground = styled.div<{ color: string }>`
+const TileBackground = styled.div<{ $color: string }>`
     position: relative;
-    background: ${({ color }) => color};
+    background: ${({ $color }) => $color};
     border-top: ${settings.borderStyle};
     border-right: ${settings.borderStyle};
 
@@ -91,7 +91,7 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
     }, [gameClientContext, fileIndex, gameEngineContext, piece, tileIndex]);
 
     return (
-        <TileBackground color={tileColor} onClick={onClick}>
+        <TileBackground $color={tileColor} onClick={onClick}>
             {piece && (
                 <PieceComponent
                     pieceType={piece.type}
