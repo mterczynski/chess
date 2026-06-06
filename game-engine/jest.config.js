@@ -8,4 +8,10 @@ module.exports = {
     '<rootDir>/e2e-tests/**/*.test.ts',
     '<rootDir>/test-utils/**/*.test.ts'
   ],
+    globals: {
+        'ts-jest': {
+            tsconfig: './tsconfig.test.json',
+        },
+    },
 };
+
