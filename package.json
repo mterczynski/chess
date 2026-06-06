@@ -31,7 +31,6 @@
     "author": "mterczynski",
     "license": "MIT",
     "dependencies": {
-        "@emotion/is-prop-valid": "^1.4.0",
         "@nestjs/jwt": "^11.0.2",
         "@nestjs/passport": "^11.0.5",
         "jsonwebtoken": "^9.0.3",
