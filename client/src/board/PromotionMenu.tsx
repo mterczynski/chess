@@ -17,7 +17,7 @@ import { settings } from "../settings";
 const PromotionMenuContainer = styled.div<{ position: Position }>`
     position: absolute;
     left: ${({ position }) =>
-        mapFileToFileIndex(position.file) * (settings.tileSizeInPx + 2)}px;
+    mapFileToFileIndex(position.file) * (settings.tileSizeInPx + 2)}px;
     display: flex;
     flex-direction: column;
 `;

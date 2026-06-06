@@ -40,7 +40,6 @@
         "@nestjs/cli": "^11.0.21",
         "@nestjs/schematics": "^11.1.0",
         "@nestjs/testing": "^11.1.24",
-        "@nestjs/typeorm": "^11.0.1",
         "@swc/cli": "^0.8.1",
         "@swc/core": "^1.15.40",
         "@types/express": "^5.0.6",
@@ -59,7 +58,6 @@
         "ts-loader": "^9.6.0",
         "ts-node": "^10.9.2",
         "tsconfig-paths": "^4.2.0",
-        "typeorm": "^0.3.28",
         "typescript": "5.9.3",
         "typescript-eslint": "^8.60.1"
     },

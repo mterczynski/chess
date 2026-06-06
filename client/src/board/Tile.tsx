@@ -18,9 +18,15 @@ import { GameMode } from "../GameMode";
 const TileBackground = styled.div<{ color: string }>`
     position: relative;
     background: ${({ color }) => color};
+    border-top: ${settings.borderStyle};
+    border-right: ${settings.borderStyle};
 
     width: 100%;
     height: 100%;
+
+    :first-child {
+        border-bottom: ${settings.borderStyle};
+    }
 `;
 
 interface TileProps {
@@ -46,7 +52,7 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
         if (
             gameClientContext.gameMode === GameMode.VS_BOT &&
             gameEngineContext.currentPlayer !==
-                gameClientContext.playerSelection
+            gameClientContext.playerSelection
         ) {
             return;
         }
@@ -55,7 +61,7 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
         const isOwnPieceSelected =
             !isEmptyTile &&
             ((gameClientContext.gameMode === GameMode.VS_BOT &&
-                piece.player === gameClientContext.playerSelection) ||
+                    piece.player === gameClientContext.playerSelection) ||
                 (gameClientContext.gameMode === GameMode.VS_PLAYER_OFFLINE &&
                     piece.player === gameEngineContext.currentPlayer));
         const availableMoveToSelectedTile =
