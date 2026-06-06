@@ -15,13 +15,13 @@ const Title = styled.h2`
     color: white;
 `;
 
-const ModeButton = styled.button<{ color: string; disabled?: boolean }>`
+const ModeButton = styled.button<{ $color: string; disabled?: boolean }>`
     margin: 0.5rem 0;
     padding: 1rem 2.5rem;
     font-size: 1.2rem;
     border-radius: 8px;
     border: 2px solid #222;
-    background: ${({ color }) => color};
+    background: ${({ $color }) => $color};
     color: ${({ disabled }) => (disabled ? "#aaa" : "#fff")};
     font-weight: 600;
     cursor: pointer;
@@ -47,17 +47,17 @@ export const ModeSelectionScreen: React.FC<ModeSelectionScreenProps> = ({
 }) => (
     <Wrapper>
         <Title>Select Game Mode</Title>
-        <ModeButton color="#ffb347" onClick={() => onSelect(GameMode.VS_BOT)}>
+        <ModeButton $color="#ffb347" onClick={() => onSelect(GameMode.VS_BOT)}>
             🤖 Play vs Bot
         </ModeButton>
         <ModeButton
-            color="#6ee7b7"
+            $color="#6ee7b7"
             onClick={() => onSelect(GameMode.VS_PLAYER_OFFLINE)}
         >
             🧑 Play vs Player locally
         </ModeButton>
         <ModeButton
-            color="#7dd3fc"
+            $color="#7dd3fc"
             onClick={() => onSelect(GameMode.VS_PLAYER_ONLINE)}
         >
             🌐 Play vs Player online (work in progress)
