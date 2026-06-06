@@ -13,7 +13,7 @@ import type {
     LobbySummaryDto,
     LobbyUpdateDto,
     MoveDto,
-} from "chess-shared";
+} from "api-contracts";
 import { UserService } from "../user";
 import { Lobby } from "./lobby.types";
 

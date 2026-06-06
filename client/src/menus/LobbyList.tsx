@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../api/client";
-import { LobbyDto } from "chess-shared";
+import { LobbyDto } from "api-contracts";
 
 // Patch type to include hasPassword for now
 export interface LobbyDtoWithPassword extends LobbyDto {
