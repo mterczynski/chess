@@ -94,7 +94,7 @@ export const LoginUserForm = ({ onLogin }: { onLogin?: () => void }) => {
                 />
                 {error && <div style={{ color: "red" }}>{error}</div>}
                 <ButtonRow>
-                    <Button type="button" gray>
+                    <Button type="button" $gray={true}>
                         Back
                     </Button>
                     <Button type="submit">Login</Button>

@@ -109,7 +109,7 @@ export const RegisterUserForm = ({
                 />
                 {error && <div style={{ color: "red" }}>{error}</div>}
                 <ButtonRow>
-                    <Button type="button" gray>
+                    <Button type="button" $gray>
                         Back
                     </Button>
                     <Button type="submit">Register</Button>

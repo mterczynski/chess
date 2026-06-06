@@ -24,7 +24,7 @@ const TileBackground = styled.div<{ color: string }>`
     width: 100%;
     height: 100%;
 
-    :first-child {
+    &:first-child {
         border-bottom: ${settings.borderStyle};
     }
 `;
