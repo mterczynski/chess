@@ -7,15 +7,15 @@ import { PromotionMenu } from "./PromotionMenu";
 import { GameClientContext } from "../contexts/GameClientContext";
 import { Player } from "game-engine";
 
-const BoardContainer = styled.div<{ useBlackPerspective?: boolean }>`
+const BoardContainer = styled.div<{ $useBlackPerspective?: boolean }>`
     display: flex;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: ${({ useBlackPerspective }) =>
-        useBlackPerspective ? "translate(50%, 50%)" : "translate(-50%, -50%)"};
-    rotate: ${({ useBlackPerspective }) =>
-        useBlackPerspective ? "180deg" : "0deg"};
+    transform: ${({ $useBlackPerspective }) =>
+    $useBlackPerspective ? "translate(50%, 50%)" : "translate(-50%, -50%)"};
+    rotate: ${({ $useBlackPerspective }) =>
+    $useBlackPerspective ? "180deg" : "0deg"};
     width: 100%;
     height: 100%;
     max-width: 560px;
@@ -38,7 +38,7 @@ export const Board = () => {
         <>
             <InfoBar />
             <BoardContainer
-                useBlackPerspective={
+                $useBlackPerspective={
                     gameClientContext.playerSelection === Player.BLACK
                 }
             >

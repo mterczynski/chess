@@ -8,14 +8,14 @@ interface PieceProps {
     color: Player;
 }
 
-const PieceImg = styled.img<{ useBlackPerspective: boolean }>`
+const PieceImg = styled.img<{ $useBlackPerspective: boolean }>`
     position: absolute;
     display: block;
     left: 50%;
     top: 50%;
-    transform: ${({ useBlackPerspective }) =>
-        useBlackPerspective ? "translate(50%, 50%)" : "translate(-50%, -50%)"};
-    ${({ useBlackPerspective }) => useBlackPerspective && "rotate: 180deg;"}
+    transform: ${({ $useBlackPerspective }) =>
+        $useBlackPerspective ? "translate(50%, 50%)" : "translate(-50%, -50%)"};
+    ${({ $useBlackPerspective }) => $useBlackPerspective && "rotate: 180deg;"}
 
     width: 80%;
     height: 80%;
@@ -48,7 +48,7 @@ export const Piece = ({ pieceType, color }: PieceProps) => {
             draggable={false}
             src={mapVariablesToImage[color][pieceType]}
             alt={`${color.toLowerCase()} ${pieceType}`}
-            useBlackPerspective={
+            $useBlackPerspective={
                 gameClientContext.playerSelection === Player.BLACK
             }
         ></PieceImg>

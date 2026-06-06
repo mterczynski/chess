@@ -86,7 +86,7 @@ export const CreateLobbyForm: React.FC<CreateLobbyFormProps> = ({
                 />
                 {error && <div style={{ color: "red" }}>{error}</div>}
                 <ButtonRow>
-                    <Button type="button" gray onClick={onBack}>
+                    <Button type="button" $gray onClick={onBack}>
                         Back
                     </Button>
                     <Button type="submit">Create</Button>

@@ -14,10 +14,10 @@ import { Piece } from "./Piece";
 import { GameEngineContext } from "../contexts/GameEngineContext";
 import { settings } from "../settings";
 
-const PromotionMenuContainer = styled.div<{ position: Position }>`
+const PromotionMenuContainer = styled.div<{ $position: Position }>`
     position: absolute;
-    left: ${({ position }) =>
-        mapFileToFileIndex(position.file) * (settings.tileSizeInPx + 2)}px;
+    left: ${({ $position }) =>
+    mapFileToFileIndex($position.file) * (settings.tileSizeInPx + 2)}px;
     display: flex;
     flex-direction: column;
 `;
@@ -31,8 +31,11 @@ const PieceSquare = styled.div`
     background: #d0bf04c1;
     cursor: pointer;
 
-    :first-child {
+    &:first-child {
         border-top: ${settings.borderStyle};
+    }
+    &:last-child {
+        border-bottom: none;
     }
 `;
 
@@ -66,7 +69,7 @@ export const PromotionMenu = () => {
 
         return (
             <PromotionMenuContainer
-                position={gameClientContext.promotionMenuPosition}
+                $position={gameClientContext.promotionMenuPosition}
             >
                 <PieceSquare onClick={() => onClick(PieceType.KNIGHT)}>
                     <Piece color={player} pieceType={PieceType.KNIGHT}></Piece>

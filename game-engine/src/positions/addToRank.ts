@@ -1,5 +1,5 @@
 import { Game } from "../Game";
-import { Rank } from "../positions";
+import { Rank } from "./Rank";
 
 export function addToRank(currentRank: Rank, ranksToAdd: number): Rank | null {
     if(!Number.isInteger(ranksToAdd)) {
