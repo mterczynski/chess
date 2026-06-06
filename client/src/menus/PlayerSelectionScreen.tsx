@@ -67,7 +67,7 @@ export const PlayerSelectionScreen = ({ mode }: PlayerSelectionScreenProps) => {
                 <Button
                     onClick={() => gameClientContext.selectPlayer(Player.BLACK)}
                     $background="#222"
-                    color="white"
+                    $color="white"
                 >
                     Black
                 </Button>

@@ -34,6 +34,9 @@ const PieceSquare = styled.div`
     :first-child {
         border-top: ${settings.borderStyle};
     }
+    :last-child {
+        border-bottom: none;
+    }
 `;
 
 export const PromotionMenu = () => {
