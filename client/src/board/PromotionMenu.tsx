@@ -31,10 +31,10 @@ const PieceSquare = styled.div`
     background: #d0bf04c1;
     cursor: pointer;
 
-    :first-child {
+    &:first-child {
         border-top: ${settings.borderStyle};
     }
-    :last-child {
+    &:last-child {
         border-bottom: none;
     }
 `;
