@@ -13,7 +13,7 @@ import { Move } from "game-engine";
 import { LobbyService } from "./lobby.service";
 import { map, Observable } from "rxjs";
 import { JwtAuthGuard } from "../user/jwt-auth.guard";
-import { LobbyUpdateDto } from "chess-shared";
+import { LobbyUpdateDto } from "api-contracts";
 
 @Controller("lobby")
 export class LobbyController {
