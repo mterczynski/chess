@@ -55,6 +55,13 @@ export const ModeSelectionScreen: React.FC<ModeSelectionScreenProps> = ({
         </ModeButton>
 
         <ModeButton
+            $color="radial-gradient(circle at center, #1a2f7a 0%, #000 100%)"
+            onClick={() => onSelect(GameMode.VS_GEMINI)}
+        >
+            ✨ Play vs Gemini
+        </ModeButton>
+
+        <ModeButton
             $color="#6ee7b7"
             onClick={() => onSelect(GameMode.VS_PLAYER_OFFLINE)}
         >

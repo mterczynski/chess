@@ -3,6 +3,7 @@ import "./App.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import { GameClientContextProvider } from "./contexts/GameClientContext";
 import { GameEngineContextProvider } from "./contexts/GameEngineContext";
+import { GeminiSettingsContextProvider } from "./gemini/GeminiSettingsContext";
 import { GameScreenSelector } from "./GameScreenSelector";
 
 const SettingsIcon = styled.div`
@@ -17,10 +18,12 @@ function App() {
             <AuthProvider>
                 <GameEngineContextProvider>
                     <GameClientContextProvider>
-                        <>
-                            <SettingsIcon>⚙️</SettingsIcon>
-                            <GameScreenSelector />
-                        </>
+                        <GeminiSettingsContextProvider>
+                            <>
+                                <SettingsIcon>⚙️</SettingsIcon>
+                                <GameScreenSelector />
+                            </>
+                        </GeminiSettingsContextProvider>
                     </GameClientContextProvider>
                 </GameEngineContextProvider>
             </AuthProvider>

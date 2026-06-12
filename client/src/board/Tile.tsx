@@ -13,7 +13,7 @@ import { GameClientContext } from "../contexts/GameClientContext";
 import { GameEngineContext } from "../contexts/GameEngineContext";
 import { AvailableMoveDestination } from "./AvailableMoveDestination";
 import { settings } from "../settings";
-import { GameMode } from "../GameMode";
+import { GameMode, isVsAiMode } from "../GameMode";
 
 const TileBackground = styled.div<{ $color: string }>`
     position: relative;
@@ -50,7 +50,7 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
 
     const onClick = useCallback(() => {
         if (
-            gameClientContext.gameMode === GameMode.VS_BOT &&
+            isVsAiMode(gameClientContext.gameMode) &&
             gameEngineContext.currentPlayer !==
             gameClientContext.playerSelection
         ) {
@@ -60,7 +60,7 @@ export const Tile = ({ piece, tileColor, fileIndex, tileIndex }: TileProps) => {
         const isEmptyTile = piece === null;
         const isOwnPieceSelected =
             !isEmptyTile &&
-            ((gameClientContext.gameMode === GameMode.VS_BOT &&
+            ((isVsAiMode(gameClientContext.gameMode) &&
                     piece.player === gameClientContext.playerSelection) ||
                 (gameClientContext.gameMode === GameMode.VS_PLAYER_OFFLINE &&
                     piece.player === gameEngineContext.currentPlayer));

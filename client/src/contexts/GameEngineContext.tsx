@@ -9,6 +9,7 @@ export const GameEngineContext = React.createContext<{
     state: GameState;
     board: Board;
     restartGame: () => void;
+    undoLastMove: () => void;
     moveHistory: Move[];
 }>(null as any);
 
@@ -37,6 +38,14 @@ export const GameEngineContextProvider = ({
         syncState();
     }, []);
 
+    // Game doesn't support undoing, so replay all moves except the last one
+    const undoLastMove = useCallback(() => {
+        const previousMoves = game.current.getMoveHistory().slice(0, -1);
+        game.current = new Game();
+        previousMoves.forEach((move) => game.current.move(move));
+        syncState();
+    }, []);
+
     var initial = game.current.getAvailableMovesForPlayer();
 
     const [availableMovesForPlayer, setAvailableMovesForPlayer] =
@@ -60,6 +69,7 @@ export const GameEngineContextProvider = ({
                 board,
                 moveHistory,
                 restartGame,
+                undoLastMove,
             }}
         >
             {children}

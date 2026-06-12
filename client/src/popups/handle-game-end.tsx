@@ -1,5 +1,5 @@
 import { GameState, Player } from "game-engine";
-import { GameMode } from "../GameMode";
+import { GameMode, isVsAiMode } from "../GameMode";
 import { isDraw } from "game-engine/src/utils";
 
 export function handleGameEnd(
@@ -23,7 +23,7 @@ export function handleGameEnd(
         return alert("Draw by stalemate");
     }
 
-    if (gameMode === GameMode.VS_BOT) {
+    if (isVsAiMode(gameMode)) {
         if (playerSelection === Player.WHITE) {
             if (gameState === GameState.WHITE_WON) {
                 alert("You won");
