@@ -1,0 +1,4 @@
+project_id       = "your-actual-gcp-project-id"
+region           = "europe-west1"
+server_image_uri = "gcr.io/your-project/chess-api:latest"
+database_url     = "postgres://user:password@host:5432/chess"
