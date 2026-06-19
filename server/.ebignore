@@ -1,0 +1,15 @@
+# Ignore development files
+node_modules/
+npm-debug.log
+.git
+.gitignore
+.eslintrc.js
+.prettierrc
+tsconfig.json
+tsconfig.build.json
+src/
+test/
+*.test.ts
+*.spec.ts
+.env.local
+.env.development
